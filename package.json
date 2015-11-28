@@ -1,0 +1,21 @@
+{
+  "name": "allyoop",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test": "standard --verbose | snazzy ./lib/**/*.js",
+    "start": "node_modules/react-native/packager/packager.sh"
+  },
+  "dependencies": {
+    "bluebird": "^3.0.5",
+    "moment-timezone": "^0.4.1",
+    "react-native": "^0.14.2",
+    "react-redux": "^3.1.0",
+    "redux": "^3.0.4",
+    "redux-thunk": "^1.0.0",
+    "whatwg-fetch": "^0.10.1"
+  },
+  "devDependencies": {
+    "snazzy": "^2.0.1"
+  }
+}

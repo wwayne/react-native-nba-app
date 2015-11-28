@@ -1,0 +1,28 @@
+{
+  "retainLines": true,
+  "compact": true,
+  "comments": false,
+  "whitelist": [
+    "es6.arrowFunctions",
+    "es6.blockScoping",
+    "es6.classes",
+    "es6.destructuring",
+    "es6.parameters",
+    "es6.properties.computed",
+    "es6.properties.shorthand",
+    "es6.spread",
+    "es6.modules",
+    "es6.templateLiterals",
+    "es7.trailingFunctionCommas",
+    "es7.objectRestSpread",
+    "es7.asyncFunctions",
+    "es7.classProperties",
+    "es7.decorators",
+    "es7.exportExtensions",
+    "regenerator",
+    "flow",
+    "react",
+    "react.displayName"
+  ],
+  "sourceMaps": false
+}
