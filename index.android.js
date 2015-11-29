@@ -2,15 +2,15 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  */
-'use strict';
+'use strict'
 
-var React = require('react-native');
+var React = require('react-native')
 var {
   AppRegistry,
   StyleSheet,
   Text,
   View,
-} = React;
+} = React
 
 var allyoop = React.createClass({
   render: function() {
@@ -26,9 +26,9 @@ var allyoop = React.createClass({
           Shake or press menu button for dev menu
         </Text>
       </View>
-    );
+    )
   }
-});
+})
 
 var styles = StyleSheet.create({
   container: {
@@ -47,6 +47,6 @@ var styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-});
+})
 
-AppRegistry.registerComponent('allyoop', () => allyoop);
+AppRegistry.registerComponent('allyoop', () => allyoop)
