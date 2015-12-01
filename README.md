@@ -1,4 +1,6 @@
-## NBA app built with React Native and Redux
+## NBA app built with React Native and Redux 
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
+[![Circle CI](https://circleci.com/gh/wwayne/react-native-nba-app/tree/master.svg?style=svg)](https://circleci.com/gh/wwayne/react-native-nba-app/tree/master)
 
 ![current_design_screenshot](https://cloud.githubusercontent.com/assets/5305874/11449716/3cc44c84-95bb-11e5-8955-b1b16a608951.png)
 
