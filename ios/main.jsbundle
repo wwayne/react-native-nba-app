@@ -60494,7 +60494,7 @@ marginBottom:3},
 processUnstart:{
 fontSize:22,
 position:'relative',
-top:10},
+top:13},
 
 infoScorePanel:{
 flex:1,
@@ -60504,7 +60504,7 @@ justifyContent:'center'},
 infoScore:{
 color:'#fff',
 fontWeight:'100',
-fontSize:34,
+fontSize:32,
 textAlign:'center',
 width:50},
 
@@ -60642,7 +60642,7 @@ color:'#bf5f34'},
 por:{
 city:'Portland',
 team:'Trail Blazers',
-color:'#bb4249'},
+color:'#3c3b3b'},
 
 sac:{
 city:'Sacramento',
@@ -60686,7 +60686,9 @@ __d('allyoop/lib/components/game/GameDetail.js',function(global, require, module
 
 'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _utilsTeamMap=require(
 'allyoop/lib/utils/team-map.js');var _utilsTeamMap2=_interopRequireDefault(_utilsTeamMap);var _reactNativeIcons=require(
-'react-native-icons/index.ios.js');'use strict';var 
+'react-native-icons/index.ios.js');var _GamePlayers=require(
+
+'allyoop/lib/components/game/GamePlayers.js');var _GamePlayers2=_interopRequireDefault(_GamePlayers);'use strict';var 
 
 GameDetail=(function(_Component){_inherits(GameDetail,_Component);
 function GameDetail(props){_classCallCheck(this,GameDetail);
@@ -60779,11 +60781,11 @@ var homeCss=selectedIndex === 0?'Active':'Inactive';
 var visitorCss=selectedIndex === 1?'Active':'Inactive';
 
 return (
-_reactNative2.default.createElement(_reactNative.View,null,
+_reactNative2.default.createElement(_reactNative.View,{style:{flex:1}},
 
 _reactNative2.default.createElement(_reactNative.View,{style:[styles.nav,styles['background' + cssType]]},
 _reactNative2.default.createElement(_reactNative.TouchableHighlight,{onPress:this.onBackPress.bind(this),underlayColor:'transparent',style:{width:80}},
-_reactNative2.default.createElement(_reactNativeIcons.Icon,{name:'ion|ios-arrow-left',size:30,color:'#fff',style:styles.backNav}))),
+_reactNative2.default.createElement(_reactNativeIcons.Icon,{name:'ion|ios-arrow-left',size:28,color:'#fff',style:styles.backNav}))),
 
 
 
@@ -60799,7 +60801,7 @@ _reactNative2.default.createElement(_reactNative.View,{style:styles.gameInfo},
 _reactNative2.default.createElement(_reactNative.Text,{style:[styles.infoProcess,styles['process' + cssType]]},gameProcess),
 game.type !== 'unstart' && 
 _reactNative2.default.createElement(_reactNative.View,{style:styles.infoScorePanel},
-_reactNative2.default.createElement(_reactNative.View,{style:styles.infoScoreBlcok},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.infoScoreBlock},
 _reactNative2.default.createElement(_reactNative.Text,{style:styles.infoSide},'Home'),
 _reactNative2.default.createElement(_reactNative.Text,{style:styles.infoScore},game.home.score)),
 
@@ -60830,10 +60832,13 @@ _reactNative2.default.createElement(_reactNative.View,{style:homeCss === 'Active
 _reactNative2.default.createElement(_reactNative.TouchableHighlight,{onPress:this.onChange.bind(this,1),underlayColor:'transparent',style:[styles.segPanel,styles['segPanel' + visitorCss]]},
 _reactNative2.default.createElement(_reactNative.View,{style:styles.segPanelInner},
 _reactNative2.default.createElement(_reactNative.Text,{style:[styles.segTeam,styles['segTeam' + visitorCss]]},teamValues[1]),
-_reactNative2.default.createElement(_reactNative.View,{style:visitorCss === 'Active'?{backgroundColor:_utilsTeamMap2.default[visitorAbb].color,height:4}:{opacity:0}}))))));}}]);return GameDetail;})(_reactNative.Component);exports.default = GameDetail;
+_reactNative2.default.createElement(_reactNative.View,{style:visitorCss === 'Active'?{backgroundColor:_utilsTeamMap2.default[visitorAbb].color,height:4}:{opacity:0}})))),
 
 
 
+
+game.detail.loaded && 
+_reactNative2.default.createElement(_GamePlayers2.default,{detail:selectedIndex === 0?game.detail.data.home:game.detail.data.visitor})));}}]);return GameDetail;})(_reactNative.Component);exports.default = GameDetail;
 
 
 
@@ -60850,18 +60855,20 @@ standing:_reactNative.PropTypes.object};
 var styles=_reactNative.StyleSheet.create({
 
 nav:{
-paddingTop:13,
+height:40,
+paddingTop:5,
 paddingLeft:5},
 
 backNav:{
-height:15,
-width:40},
+height:40,
+position:'relative',
+left:-8,
+width:50},
 
 
 sumContainer:{
-flex:1,
-flexDirection:'row',
-height:170},
+flex:5,
+flexDirection:'row'},
 
 
 team:{
@@ -60869,9 +60876,8 @@ alignItems:'center',
 flex:1},
 
 teamLogo:{
-width:95,
-height:95,
-marginTop:2},
+width:75,
+height:75},
 
 teamCity:{
 color:'#fff',
@@ -60904,7 +60910,7 @@ flexDirection:'column'},
 infoProcess:{
 color:'#fff',
 fontSize:13,
-marginTop:43,
+marginTop:18,
 marginBottom:3},
 
 processUnstart:{
@@ -60918,14 +60924,15 @@ flexDirection:'row'},
 
 infoScoreBlock:{
 alignItems:'center',
-flex:1},
+flex:1,
+width:60},
 
 infoScore:{
 alignSelf:'center',
 color:'#fff',
 fontWeight:'200',
 flex:9,
-fontSize:40},
+fontSize:35},
 
 infoSide:{
 alignSelf:'center',
@@ -60941,13 +60948,12 @@ marginTop:7,
 marginLeft:15,
 marginRight:15,
 width:2 / _reactNative.PixelRatio.get(),
-height:65},
+height:55},
 
 
 segment:{
-flex:1,
-flexDirection:'row',
-height:35},
+height:35,
+flexDirection:'row'},
 
 segPanel:{
 flex:1},
@@ -60973,6 +60979,200 @@ color:'#222'},
 
 segTeamInactive:{
 color:'#7F7F7F'}});module.exports = exports.default;
+});
+__d('allyoop/lib/components/game/GamePlayers.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
+
+
+
+
+
+
+
+
+
+'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);'use strict';var 
+
+PlayerRow=(function(_Component){_inherits(PlayerRow,_Component);function PlayerRow(){_classCallCheck(this,PlayerRow);_get(Object.getPrototypeOf(PlayerRow.prototype),'constructor',this).apply(this,arguments);}_createClass(PlayerRow,[{key:'render',value:
+function render(){var 
+player=this.props.player;
+console.log(player);
+return (
+_reactNative2.default.createElement(_reactNative.View,{style:styles.playerbox},
+_reactNative2.default.createElement(_reactNative.View,{style:[styles.p2,styles.p2Name]},_reactNative2.default.createElement(_reactNative.Text,{style:styles.pName},player.first_name.substring(0,1) + '.' + player.last_name)),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.starting_position?player.starting_position:'-'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.points))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.assists))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},parseInt(player.rebounds_defensive,10) + parseInt(player.rebounds_offensive,10)))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.field_goals_made + ' - ' + player.field_goals_attempted))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.blocks))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.steals))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.three_pointers_made + ' - ' + player.three_pointers_attempted))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.free_throws_made + ' - ' + player.free_throws_attempted))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.turnovers))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.fouls))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.plus_minus))),
+_reactNative2.default.createElement(_reactNative.View,{style:[styles.p1,styles.lastP1]},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataBox},player.minutes)))));}}]);return PlayerRow;})(_reactNative.Component);
+
+
+
+
+
+PlayerRow.propTypes = {
+player:_reactNative.PropTypes.object};var 
+
+
+
+GamePlayers=(function(_Component2){_inherits(GamePlayers,_Component2);
+
+function GamePlayers(props){_classCallCheck(this,GamePlayers);
+_get(Object.getPrototypeOf(GamePlayers.prototype),'constructor',this).call(this,props);
+this.state = {
+dataSource:new _reactNative.ListView.DataSource({
+rowHasChanged:function(row1,row2){return row1 !== row2;}})};}_createClass(GamePlayers,[{key:'componentDidMount',value:
+
+
+
+
+function componentDidMount(){var 
+detail=this.props.detail;
+this.updateDataSource(detail);}},{key:'componentWillReceiveProps',value:
+
+
+function componentWillReceiveProps(props){var 
+detail=props.detail;
+this.updateDataSource(detail);}},{key:'updateDataSource',value:
+
+
+function updateDataSource(detail){var 
+dataSource=this.state.dataSource;
+var rows=Object.assign([],detail.player);
+rows.unshift({});
+
+this.setState({
+dataSource:dataSource.cloneWithRows(rows)});}},{key:'renderTitle',value:
+
+
+
+function renderTitle(index){
+return (
+_reactNative2.default.createElement(_reactNative.View,{style:[styles.playerbox,styles.titleRow],key:index},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p2}),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'P'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'PTS'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'AST'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'REB'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'FG'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'BLK'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'STL'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'3PT'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'FT'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'TO'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'PF'))),
+_reactNative2.default.createElement(_reactNative.View,{style:styles.p1},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'+/-'))),
+_reactNative2.default.createElement(_reactNative.View,{style:[styles.p1,styles.lastP1]},_reactNative2.default.createElement(_reactNative.View,{style:{flexDirection:'column',flex:1}},_reactNative2.default.createElement(_reactNative.Text,{style:styles.title},'MIN')))));}},{key:'renderRow',value:
+
+
+
+
+function renderRow(player,_,i){
+console.log(player,i);
+var index=parseInt(i,10);
+if(index === 0){
+return this.renderTitle(index);}
+
+return _reactNative2.default.createElement(PlayerRow,{player:player,key:index});}},{key:'render',value:
+
+
+function render(){var 
+dataSource=this.state.dataSource;
+return (
+
+
+
+
+_reactNative2.default.createElement(_reactNative.ScrollView,{
+automaticallyAdjustContentInsets:false,
+horizontal:true,
+style:styles.scrollView},
+
+
+_reactNative2.default.createElement(_reactNative.ListView,{
+dataSource:dataSource,
+renderRow:this.renderRow.bind(this),
+style:styles.listView})));}}]);return GamePlayers;})(_reactNative.Component);exports.default = GamePlayers;
+
+
+
+
+
+
+GamePlayers.propTypes = {
+data:_reactNative.PropTypes.object};
+
+
+var styles=_reactNative.StyleSheet.create({
+
+scrollView:{
+flex:13,
+width:400},
+
+
+listView:{
+flex:1,
+flexDirection:'column',
+marginBottom:48,
+marginRight:30,
+width:800},
+
+
+playerbox:{
+alignItems:'stretch',
+borderBottomColor:'#c2c2c2',
+borderBottomWidth:1,
+flex:1,
+flexDirection:'row',
+height:30},
+
+titleRow:{
+borderBottomColor:'#c2c2c2',
+borderBottomWidth:2,
+borderStyle:'solid'},
+
+
+title:{
+alignSelf:'center',
+color:'#7F7F7F',
+fontSize:12},
+
+pName:{
+color:'#222',
+fontSize:12,
+paddingLeft:5},
+
+dataBox:{
+alignSelf:'center',
+color:'#222',
+fontSize:11},
+
+p1:{
+alignItems:'center',
+borderRightColor:'#c2c2c2',
+borderRightWidth:1,
+flex:1,
+flexDirection:'row'},
+
+lastP1:{
+borderRightWidth:0},
+
+p2:{
+borderRightColor:'#c2c2c2',
+borderRightWidth:1,
+flex:2,
+flexDirection:'row'},
+
+p2Name:{
+alignItems:'center',
+flexDirection:'row'}});module.exports = exports.default;
 });
 __d('allyoop/lib/components/share/GameNavigatorBar.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
 
@@ -61047,4 +61247,4 @@ actions:(0,_redux.bindActionCreators)(_actions2.default,dispatch)};})(
 Player);module.exports = exports.default;
 });
 ;require("allyoop/index.ios.js");
-__SSTOKENSTRING = "@generated SignedSource<<4c136dfa80ca32eff8477f1ad9d41b51>>";
+__SSTOKENSTRING = "@generated SignedSource<<27ff91a03a3d476ecf2b7b72c342eab9>>";
