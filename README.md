@@ -7,6 +7,7 @@
 Still in highly development, both design and code
 
 ## Game live
+![Game live gif](http://g.recordit.co/FOoJ7YFkTs.gif)
 
 
 ## Run in device
