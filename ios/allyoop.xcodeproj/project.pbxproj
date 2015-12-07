@@ -25,7 +25,7 @@
 		B003DD751C09EDA3000D1852 /* FAKIcon.h in Resources */ = {isa = PBXBuildFile; fileRef = B003DD731C09EDA3000D1852 /* FAKIcon.h */; };
 		B003DD761C09EDA3000D1852 /* FAKIcon.m in Resources */ = {isa = PBXBuildFile; fileRef = B003DD741C09EDA3000D1852 /* FAKIcon.m */; };
 		B003DD781C09EE7B000D1852 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B003DD771C09EE7B000D1852 /* Images.xcassets */; };
-		B0A734111C10971700198028 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B0A734101C10971700198028 /* main.jsbundle */; };
+		B06E4F281C15189C004B1EEF /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B06E4F271C15189C004B1EEF /* main.jsbundle */; };
 		B0BCA2A91C0BD28E0034908C /* FAKIonIcons.h in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */; };
 		B0BCA2AA1C0BD28E0034908C /* FAKIonIcons.m in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A71C0BD28E0034908C /* FAKIonIcons.m */; };
 		B0BCA2AB1C0BD28E0034908C /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A81C0BD28E0034908C /* ionicons.ttf */; };
@@ -142,7 +142,7 @@
 		B003DD731C09EDA3000D1852 /* FAKIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIcon.h; sourceTree = "<group>"; };
 		B003DD741C09EDA3000D1852 /* FAKIcon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIcon.m; sourceTree = "<group>"; };
 		B003DD771C09EE7B000D1852 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B0A734101C10971700198028 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		B06E4F271C15189C004B1EEF /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIonIcons.h; sourceTree = "<group>"; };
 		B0BCA2A71C0BD28E0034908C /* FAKIonIcons.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIonIcons.m; sourceTree = "<group>"; };
 		B0BCA2A81C0BD28E0034908C /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
@@ -307,7 +307,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				B0A734101C10971700198028 /* main.jsbundle */,
+				B06E4F271C15189C004B1EEF /* main.jsbundle */,
 				B003DD791C09F0C8000D1852 /* icon */,
 				13B07FAE1A68108700A75B9A /* allyoop */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -565,7 +565,7 @@
 				B003DD751C09EDA3000D1852 /* FAKIcon.h in Resources */,
 				B003DD761C09EDA3000D1852 /* FAKIcon.m in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				B0A734111C10971700198028 /* main.jsbundle in Resources */,
+				B06E4F281C15189C004B1EEF /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

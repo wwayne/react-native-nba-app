@@ -55596,8 +55596,8 @@ __d('allyoop/lib/containers/Game.js',function(global, require, module, exports) 
 'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _actions=require(
 
 'allyoop/lib/actions/index.js');var _actions2=_interopRequireDefault(_actions);var _componentsGameGameList=require(
-'allyoop/lib/components/game/GameList.js');var _componentsGameGameList2=_interopRequireDefault(_componentsGameGameList);var _componentsShareGameNavigatorBar=require(
-'allyoop/lib/components/share/GameNavigatorBar.js');var _componentsShareGameNavigatorBar2=_interopRequireDefault(_componentsShareGameNavigatorBar);'use strict';var 
+'allyoop/lib/components/game/GameList.js');var _componentsGameGameList2=_interopRequireDefault(_componentsGameGameList);var _componentsShareNavigatorBar=require(
+'allyoop/lib/components/share/NavigatorBar.js');var _componentsShareNavigatorBar2=_interopRequireDefault(_componentsShareNavigatorBar);'use strict';var 
 
 Game=(function(_Component){_inherits(Game,_Component);function Game(){_classCallCheck(this,Game);_get(Object.getPrototypeOf(Game.prototype),'constructor',this).apply(this,arguments);}_createClass(Game,[{key:'componentDidMount',value:
 
@@ -55620,7 +55620,7 @@ initialRoute:{
 name:'GameList',
 component:_componentsGameGameList2.default},
 
-navigationBar:_reactNative2.default.createElement(_componentsShareGameNavigatorBar2.default,null),
+navigationBar:_reactNative2.default.createElement(_componentsShareNavigatorBar2.default,null),
 renderScene:this.renderScene.bind(this)}));}}]);return Game;})(_reactNative.Component);
 
 
@@ -55672,7 +55672,7 @@ function getGameGeneral(){
 return function(dispatch,getStore){
 var channel=new _channel2.default();
 
-channel.getGameGeneral(dateArray[0],dateArray[1],'02').
+channel.getGameGeneral(dateArray[0],dateArray[1],dateArray[2]).
 then(function(data){
 return dispatch({
 type:_constant.GAME.INFO,
@@ -55702,7 +55702,7 @@ data:game.detail.data});}}
 
 
 var channel=new _channel2.default();
-return channel.getGameDetail(dateArray[0],dateArray[1],'02',id).
+return channel.getGameDetail(dateArray[0],dateArray[1],dateArray[2],id).
 then(function(data){
 return dispatch({
 type:_constant.GAME.DETAIL,
@@ -60719,16 +60719,23 @@ var indicator=true;
 if(!game.detail.loaded){
 setTimeout(function(){
 actions.getGameDetail(game.id,game.type);
-interval = _this.keepRequest(game);},
-100);}else 
-{
-indicator = false;
-interval = this.keepRequest(game);}
-
-
-this.setState({
+interval = _this.keepRequest(game);
+_this.setState({
 interval:interval,
-indicator:indicator});}},{key:'componentWillReceiveProps',value:
+indicator:indicator});},
+
+1000);}else 
+{
+setTimeout(function(){
+indicator = false;
+interval = _this.keepRequest(game);
+_this.setState({
+interval:interval,
+indicator:indicator});},
+
+1000);}}},{key:'componentWillReceiveProps',value:
+
+
 
 
 
@@ -61238,20 +61245,15 @@ p2Name:{
 alignItems:'center',
 flexDirection:'row'}});module.exports = exports.default;
 });
-__d('allyoop/lib/components/share/GameNavigatorBar.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
+__d('allyoop/lib/components/share/NavigatorBar.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
 
-'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _NavigatorBar2=require(
 
-'allyoop/lib/components/share/NavigatorBar.js');var _NavigatorBar3=_interopRequireDefault(_NavigatorBar2);'use strict';var 
 
-GameNavigatorBar=(function(_NavigatorBar){_inherits(GameNavigatorBar,_NavigatorBar);function GameNavigatorBar(){_classCallCheck(this,GameNavigatorBar);_get(Object.getPrototypeOf(GameNavigatorBar.prototype),'constructor',this).apply(this,arguments);}_createClass(GameNavigatorBar,[{key:'render',value:
-function render(){
-return (
-_reactNative2.default.createElement(_reactNative.View,null));}}]);return GameNavigatorBar;})(_NavigatorBar3.default);exports.default = GameNavigatorBar;module.exports = exports.default;
-});
-__d('allyoop/lib/components/share/NavigatorBar.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
 
-'react-native/Libraries/react-native/react-native.js');'use strict';var 
+
+
+
+'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);'use strict';var 
 
 NavigatorBar=(function(_Component){_inherits(NavigatorBar,_Component);
 function NavigatorBar(props){_classCallCheck(this,NavigatorBar);
@@ -61277,9 +61279,14 @@ presentedIndex:props.navState.routeStack.length - 1});}},{key:'onPressBack',valu
 
 function onPressBack(){var 
 navigator=this.props.navigator;
-navigator.pop();}}]);return NavigatorBar;})(_reactNative.Component);exports.default = NavigatorBar;module.exports = exports.default;
+navigator.pop();}},{key:'render',value:
+
+
+function render(){
+return (
+_reactNative2.default.createElement(_reactNative.View,null));}}]);return NavigatorBar;})(_reactNative.Component);exports.default = NavigatorBar;module.exports = exports.default;
 });
-__d('allyoop/lib/containers/Player.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactReduxNative=require(
+__d('allyoop/lib/containers/Player.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactReduxNative=require(
 
 'react-redux/native.js');var _redux=require(
 'redux/lib/index.js');var _reactNative=require(
@@ -61288,21 +61295,35 @@ __d('allyoop/lib/containers/Player.js',function(global, require, module, exports
 
 'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _actions=require(
 
-'allyoop/lib/actions/index.js');var _actions2=_interopRequireDefault(_actions);'use strict';var 
+'allyoop/lib/actions/index.js');var _actions2=_interopRequireDefault(_actions);var _componentsPlayerPlayerIndex=require(
+'allyoop/lib/components/player/PlayerIndex.js');var _componentsPlayerPlayerIndex2=_interopRequireDefault(_componentsPlayerPlayerIndex);var _componentsShareNavigatorBar=require(
+'allyoop/lib/components/share/NavigatorBar.js');var _componentsShareNavigatorBar2=_interopRequireDefault(_componentsShareNavigatorBar);'use strict';var 
 
-Player=(function(_Component){_inherits(Player,_Component);function Player(){_classCallCheck(this,Player);_get(Object.getPrototypeOf(Player.prototype),'constructor',this).apply(this,arguments);}_createClass(Player,[{key:'render',value:
+Player=(function(_Component){_inherits(Player,_Component);function Player(){_classCallCheck(this,Player);_get(Object.getPrototypeOf(Player.prototype),'constructor',this).apply(this,arguments);}_createClass(Player,[{key:'renderScene',value:
+
+function renderScene(route,navigator){
+if(route.component){
+var _Component2=route.component;
+return _reactNative2.default.createElement(_Component2,_extends({navigator:navigator,route:route},this.props));}}},{key:'render',value:
+
+
 
 function render(){
 return (
-_reactNative2.default.createElement(_reactNative.View,null));}}]);return Player;})(_reactNative.Component);exports.default = 
+_reactNative2.default.createElement(_reactNative.Navigator,{
+initialRoute:{
+name:'PlayerIndex',
+component:_componentsPlayerPlayerIndex2.default},
+
+navigationBar:_reactNative2.default.createElement(_componentsShareNavigatorBar2.default,null),
+renderScene:this.renderScene.bind(this)}));}}]);return Player;})(_reactNative.Component);exports.default = 
+
 
 
 
 
 (0,_reactReduxNative.connect)(function(state){
-return {
-playList:state.playList,
-search:state.search};},
+return {};},
 
 function(dispatch){
 return {
@@ -61310,5 +61331,144 @@ actions:(0,_redux.bindActionCreators)(_actions2.default,dispatch)};})(
 
 Player);module.exports = exports.default;
 });
+__d('allyoop/lib/components/player/PlayerIndex.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
+
+
+
+
+
+
+'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _reactNativeIcons=require(
+'react-native-icons/index.ios.js');var _PlayerSearch=require(
+
+'allyoop/lib/components/player/PlayerSearch.js');var _PlayerSearch2=_interopRequireDefault(_PlayerSearch);'use strict';var 
+
+PlayerIndex=(function(_Component){_inherits(PlayerIndex,_Component);function PlayerIndex(){_classCallCheck(this,PlayerIndex);_get(Object.getPrototypeOf(PlayerIndex.prototype),'constructor',this).apply(this,arguments);}_createClass(PlayerIndex,[{key:'onPressAdd',value:
+
+function onPressAdd(){var 
+navigator=this.props.navigator;
+navigator.push({
+name:'PlayerSearch',
+component:_PlayerSearch2.default});}},{key:'onPressGallary',value:
+
+
+
+function onPressGallary(){}},{key:'render',value:
+
+
+
+function render(){
+return (
+_reactNative2.default.createElement(_reactNative.View,{style:styles.container},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.navigation},
+_reactNative2.default.createElement(_reactNative.TouchableHighlight,{
+onPress:this.onPressAdd.bind(this),
+underlayColor:'transparent',
+style:styles.addIcon},
+_reactNative2.default.createElement(_reactNativeIcons.Icon,{
+name:'ion|plus-round',
+size:20,
+color:'#fff',
+style:styles.addIcon})),
+
+_reactNative2.default.createElement(_reactNative.TouchableHighlight,{
+onPress:this.onPressGallary.bind(this),
+underlayColor:'transparent',
+style:styles.gallaryIcon},
+_reactNative2.default.createElement(_reactNativeIcons.Icon,{
+name:'ion|ios-browsers-outline',
+size:20,
+color:'#fff',
+style:styles.gallaryIcon})))));}}]);return PlayerIndex;})(_reactNative.Component);exports.default = PlayerIndex;
+
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+backgroundColor:'#465484'},
+
+
+navigation:{
+flexDirection:'row',
+height:45},
+
+addIcon:{
+height:30,
+width:30},
+
+gallaryIcon:{
+height:30,
+width:30}});module.exports = exports.default;
+});
+__d('allyoop/lib/components/player/PlayerSearch.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
+
+
+
+
+
+
+
+'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _reactNativeIcons=require(
+'react-native-icons/index.ios.js');'use strict';var 
+
+PlayerSearch=(function(_Component){_inherits(PlayerSearch,_Component);
+
+function PlayerSearch(props){_classCallCheck(this,PlayerSearch);
+_get(Object.getPrototypeOf(PlayerSearch.prototype),'constructor',this).call(this,props);
+this.state = {
+text:''};}_createClass(PlayerSearch,[{key:'onBackPress',value:
+
+
+
+function onBackPress(){var 
+navigator=this.props.navigator;
+navigator.pop();}},{key:'render',value:
+
+
+function render(){var _this=this;var 
+text=this.state.text;
+
+return (
+_reactNative2.default.createElement(_reactNative.View,{style:styles.container},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.navigation},
+_reactNative2.default.createElement(_reactNative.TouchableHighlight,{onPress:this.onBackPress.bind(this),underlayColor:'transparent',style:styles.backNav},
+_reactNative2.default.createElement(_reactNativeIcons.Icon,{name:'ion|ios-arrow-left',size:28,color:'#fff',style:styles.backNav})),
+
+_reactNative2.default.createElement(_reactNative.TextInput,{
+style:styles.textInput,
+onChangeText:function(text){return _this.setState({text:text});},
+keyboardType:'default',
+value:text}))));}}]);return PlayerSearch;})(_reactNative.Component);exports.default = PlayerSearch;
+
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+backgroundColor:'#465484'},
+
+
+navigation:{
+flexDirection:'row',
+height:45},
+
+backNav:{
+height:30,
+width:30},
+
+textInput:{
+height:40,
+backgroundColor:'#fff',
+borderColor:'gray',
+borderWidth:1,
+width:200}});module.exports = exports.default;
+});
 ;require("allyoop/index.ios.js");
-__SSTOKENSTRING = "@generated SignedSource<<25fbebbf5789ddb13e63694f1845c551>>";
+__SSTOKENSTRING = "@generated SignedSource<<e3ff0998a0b4b43fc244f67caa33f7e7>>";
