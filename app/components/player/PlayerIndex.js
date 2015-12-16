@@ -4,13 +4,30 @@ import React, {
   Component,
   StyleSheet,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  ScrollView
 } from 'react-native'
 import {Icon} from 'react-native-icons'
 
 import PlayerSearch from './PlayerSearch'
 
 export default class PlayerIndex extends Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+    }
+  }
+
+  componentDidMount () {
+    const {actions} = this.props
+    actions.getMyPlayers()
+  }
+
+  componentWillReceiveProps (props) {
+    const {myPlayers, currentPlayer} = props
+    console.log(myPlayers, currentPlayer)
+  }
 
   onPressAdd () {
     const {navigator} = this.props
@@ -56,7 +73,8 @@ export default class PlayerIndex extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#465484'
+    backgroundColor: '#465484',
+    flex: 1
   },
   // Navigation
   navigation: {
@@ -70,5 +88,9 @@ const styles = StyleSheet.create({
   gallaryIcon: {
     height: 30,
     width: 30
+  },
+  // List
+  mainView: {
+    flex: 1
   }
 })

@@ -23,13 +23,13 @@ const userDefaults = {
     return new Promise((resolve, reject) => {
       RNUserDefaults.getString(key, (data) => {
         if (data.length > 0) return resolve(JSON.parse(data))
-        resolve(false)
+        reject('Not found')
       })
     })
   },
 
   remove: (key) => {
-
+    
   },
 
   removeAll: () => {

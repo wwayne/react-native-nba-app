@@ -10,7 +10,9 @@ import React, {
 } from 'react-native'
 import {Icon} from 'react-native-icons'
 
+import userDefaults from '../../lib/userDefaults'
 import PlayerPanel from './PlayerPanel'
+import {APP} from '../../constant'
 
 export default class PlayerSearch extends Component {
 
@@ -25,6 +27,10 @@ export default class PlayerSearch extends Component {
     }
     this.inputDelay = null
     this.playerList = require('../../../data/players.json')
+    userDefaults.get(APP.MYPLAYERS)
+      .then(data => {
+        this.myPlayers = data ? data : []
+      })
   }
 
   onBackPress () {
@@ -61,7 +67,8 @@ export default class PlayerSearch extends Component {
   }
 
   renderRow (player, _, index) {
-    return (<PlayerPanel player={player} index={index} {...this.props}/>)
+    let isSelected = (this.myPlayers).indexOf(player.playerId) !== -1
+    return (<PlayerPanel player={player} isSelected={isSelected} index={index} {...this.props}/>)
   }
 
   render () {
@@ -92,7 +99,9 @@ export default class PlayerSearch extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#465484'
+    backgroundColor: '#465484',
+    flex: 1,
+    flexDirection: 'column'
   },
   // Navigation
   navigation: {
@@ -113,7 +122,6 @@ const styles = StyleSheet.create({
   // List
   listView: {
     backgroundColor: '#465484',
-    height: 400,
     flex: 1
   },
 })

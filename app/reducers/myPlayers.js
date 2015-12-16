@@ -1,25 +1,16 @@
-/**
- * Record each team's standing
- */
-
 'use strict'
 
 import createReducer from '../utils/create-reducer'
 
-import {GAME} from '../constant'
+import {PLAYER} from '../constant'
 
 const initialState = {
   loaded: false,
-  data: {
-    // teamId: {
-    //   abbr: {String}
-    //   state: {Object}
-    // }
-  }
+  data: []
 }
 
 const actionHandler = {
-  [GAME.STANDING]: (state, action) => {
+  [PLAYER.LIST]: (state, action) => {
     return {
       loaded: true,
       data: action.data
