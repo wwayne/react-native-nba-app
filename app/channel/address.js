@@ -25,6 +25,22 @@ const address = {
   leagueStanding: (year) => {
     return `http://data.nba.com/data/json/cms/${year}/league/standings.json`
   }
+  /**
+   * Player basic info
+   */
+  playerInfo: (id) => {
+    const d = new Date()
+    const season = d.getFullYear().toString() + d.getFullYear().toString().substring(2, 4)
+    return `http://stats.nba.com/stats/commonallplayers?IsOnlyCurrentSeason=0&LeagueID=${id}&Season=${season}`
+  },
+  /**
+   * Palyer game log
+   */
+  playerLog: (id) => {
+    const d = new Date()
+    const season = d.getFullYear().toString() + d.getFullYear().toString().substring(2, 4)
+    return `http://stats.nba.com/stats/playergamelog?LeagueID=00&PerMode=PerGame&PlayerID=${id}&Season=${season}&SeasonType=Regular+Season`
+  }
 }
 
 export default address

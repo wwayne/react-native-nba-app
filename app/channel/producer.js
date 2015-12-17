@@ -123,6 +123,60 @@ const producer = {
 
     return result
   }
+
+  /**
+   * @return {id:, firstName, lastName,pts, ast, reb, team, jersey, height, weight, birthday, position, affiliation}
+   */
+  playerInfo: (res) => {
+    const basicInfo = res.resultSets[0].rowSet[0]
+    const gameInfo = res.resultSets[1].rowSet[0]
+    return {
+      id: basicInfo[0],
+      firstName: basicInfo[1],
+      lastName: basicInfo[2],
+      pts: gameInfo[3],
+      ast: gameInfo[4],
+      reb: gameInfo[5],
+      team: basicInfo[18],
+      jersey: basicInfo[13],
+      height: basicInfo[10],
+      weight: basicInfo[11],
+      birthday: basicInfo[6].split('T')[0],
+      position: basicInfo[14],
+      affiliation: basicInfo[9]
+    }
+  }
+
+  /**
+   * @return [{gameId, gameDate, matchup, result, min, pts, fg,
+    fgRate, threeP, threePRate, ft, ftRate, reb, ast, stl, blk, tov, foul, plusMinus}]
+   */
+  playerLog: (res) => {
+    const logs = res.resultSets[0].rowSet
+    return logs.map(item => {
+      return {
+        gameId: item[0],
+        gameDate: item[3],
+        matchup: item[4],
+        result: item[5],
+        min: item[6],
+        pts: item[24],
+        fg: item[7] + '-'+ item[8],
+        fgRate: item[9],
+        threeP: item[10] + '-' + item[11],
+        threePRate: item[12],
+        ft: item[13] + '-' + item[14],
+        ftRate: item[15],
+        reb: item[18],
+        ast: item[19],
+        stl: item[20],
+        blk: item[21],
+        tov: item[22],
+        foul: item[23],
+        plusMinus: item[25]
+      }
+    })
+  }
 }
 
 export default producer

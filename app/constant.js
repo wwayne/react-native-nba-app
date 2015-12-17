@@ -12,5 +12,6 @@ export const GAME = {
 }
 
 export const PLAYER = {
-  'LIST': 'LIST'
+  'LIST': 'LIST',
+  'DETAIL': 'DETAIL'
 }

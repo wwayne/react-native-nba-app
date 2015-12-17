@@ -38,4 +38,18 @@ export default class Channel {
       .then(res => res.json())
       .then(data => producer.leagueStanding(data))
   }
+
+  getPlayerInfo (id) {
+    const url = address.playerInfo(id)
+    return window.fetch(url)
+      .then(res => res.json())
+      .then(data => producer.playerInfo(data))
+  }
+
+  getPlayerLog (id) {
+    const url = address.playerLog(id)
+    return window.fetch(url)
+      .then(res => res.json())
+      .then(data => producer.playerLog(data))
+  }
 }
