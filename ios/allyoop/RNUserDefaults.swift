@@ -22,7 +22,7 @@ class RNUserDefaults: NSObject {
     if let value = self.defaults.stringForKey(key) {
       cb([value])
     } else {
-      cb([""])
+      cb([false])
     }
   }
   

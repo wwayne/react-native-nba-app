@@ -122,7 +122,7 @@ const producer = {
     })
 
     return result
-  }
+  },
 
   /**
    * @return {id:, firstName, lastName,pts, ast, reb, team, jersey, height, weight, birthday, position, affiliation}
@@ -145,7 +145,7 @@ const producer = {
       position: basicInfo[14],
       affiliation: basicInfo[9]
     }
-  }
+  },
 
   /**
    * @return [{gameId, gameDate, matchup, result, min, pts, fg,

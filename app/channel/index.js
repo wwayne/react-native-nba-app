@@ -4,9 +4,7 @@ import address from './address'
 import producer from './producer'
 
 export default class Channel {
-  /**
-   * @Init
-   */
+
   constructor (options) {
     this.options = options
   }

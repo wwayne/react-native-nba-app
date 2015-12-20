@@ -11,8 +11,44 @@ export const getMyPlayers = () => {
   return dispatch => {
     userDefaults.get(APP.MYPLAYERS)
       .then(data => {
+        const myData = data ? data : []
+        const channel = new Channel()
+        Promise.all(myData.map(id => {
+          return channel.getPlayerInfo(id)
+            .then(player => {
+              player.isLogLoaded = false
+              return player
+            })
+        }))
+        .then(players => {
+          return dispatch({
+            type: PLAYER.LIST,
+            data: players
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
+  }
+}
+
+export const getPlayerLog = (id) => {
+  return (dispatch, getStore) => {
+    const player = getStore().myPlayers.find(player => {
+      return player.id === id
+    })
+    if (player.isLogLoaded) {
+      return dispatch({
+        type: PLAYER.LOG,
+        data: player.log
+      })
+    }
+    const channel = new Channel()
+    channel.getPlayerLog(id)
+      .then(data => {
         return dispatch({
-          type: PLAYER.LIST,
+          type: PLAYER.LOG,
           data
         })
       })
@@ -25,7 +61,7 @@ export const addPlayer = (id) => {
     channel.getDetail(id)
       .then(data => {
         return dispatch({
-          type. PLAYER.DETAIL,
+          type: PLAYER.DETAIL,
           data
         })
       })

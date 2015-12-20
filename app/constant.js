@@ -2,7 +2,8 @@
 
 export const APP = {
   'CURRENTTAB': 'CURRENTTAB',
-  'MYPLAYERS': 'MYPLAYERS'
+  'MYPLAYERS': 'MYPLAYERS',
+  'CURRENTPLAYER': 'CURRENTPLAYER'
 }
 
 export const GAME = {
@@ -13,5 +14,6 @@ export const GAME = {
 
 export const PLAYER = {
   'LIST': 'LIST',
-  'DETAIL': 'DETAIL'
+  'DETAIL': 'DETAIL',
+  'LOG': 'LOG'
 }

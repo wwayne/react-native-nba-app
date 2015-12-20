@@ -5,14 +5,17 @@ import createReducer from '../utils/create-reducer'
 import {PLAYER} from '../constant'
 
 const initialState = {
-  loaded: false,
-  data: []
+  data: [
+    // {
+    //   isLogLoaded
+    //   log
+    // }
+  ]
 }
 
 const actionHandler = {
   [PLAYER.LIST]: (state, action) => {
     return {
-      loaded: true,
       data: action.data
     }
   }
