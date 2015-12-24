@@ -1,13 +1,14 @@
 'use strict'
 
 import {getGameGeneral, getGameDetail, getLeagueStanding} from './game'
-import {getMyPlayers} from './player'
+import {getMyPlayers, getPlayerLog} from './player'
 
 const actions = {
   getGameGeneral,
   getGameDetail,
   getLeagueStanding,
-  getMyPlayers
+  getMyPlayers,
+  getPlayerLog
 }
 
 export default actions

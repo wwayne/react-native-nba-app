@@ -36,8 +36,7 @@ class Player extends Component {
 
 export default connect(state => {
   return {
-    myPlayers: state.myPlayers,
-    currentPlayer: state.currentPlayer
+    myPlayers: state.myPlayers
   }
 }, dispatch => {
   return {

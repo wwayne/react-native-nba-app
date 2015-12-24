@@ -38,7 +38,7 @@ const address = {
    */
   playerLog: (id) => {
     const d = new Date()
-    const season = d.getFullYear().toString() + (d.getFullYear()+1).toString().substring(2, 4)
+    const season = d.getFullYear().toString() + '-' + (d.getFullYear()+1).toString().substring(2, 4)
     return `http://stats.nba.com/stats/playergamelog?LeagueID=00&PerMode=PerGame&PlayerID=${id}&Season=${season}&SeasonType=Regular+Season`
   }
 }

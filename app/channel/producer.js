@@ -153,6 +153,7 @@ const producer = {
    */
   playerLog: (res) => {
     const logs = res.resultSets[0].rowSet
+
     return logs.map(item => {
       return {
         gameId: item[0],

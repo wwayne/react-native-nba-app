@@ -35,7 +35,7 @@ export const getMyPlayers = () => {
 
 export const getPlayerLog = (id) => {
   return (dispatch, getStore) => {
-    const player = getStore().myPlayers.find(player => {
+    const player = getStore().myPlayers.data.find(player => {
       return player.id === id
     })
     if (player.isLogLoaded) {
@@ -49,8 +49,12 @@ export const getPlayerLog = (id) => {
       .then(data => {
         return dispatch({
           type: PLAYER.LOG,
-          data
+          data,
+          id
         })
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
 }

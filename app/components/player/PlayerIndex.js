@@ -4,19 +4,26 @@ import React, {
   Component,
   StyleSheet,
   View,
+  Text,
   TouchableHighlight,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from 'react-native'
 import {Icon} from 'react-native-icons'
 
 import PlayerSearch from './PlayerSearch'
+import Collection from '../../lib/collection'
+import PlayerTemplate from './PlayerTemplate'
 
 export default class PlayerIndex extends Component {
 
   constructor (props) {
     super(props)
     this.state = {
+      myPlayers: [],
+      currentOrder: 0
     }
+    this.screenWidth = Dimensions.get('window').width
   }
 
   componentDidMount () {
@@ -25,8 +32,10 @@ export default class PlayerIndex extends Component {
   }
 
   componentWillReceiveProps (props) {
-    const {myPlayers, currentPlayer} = props
-    console.log(myPlayers, currentPlayer)
+    const {myPlayers} = props
+    this.setState({
+      myPlayers
+    })
   }
 
   onPressAdd () {
@@ -37,11 +46,27 @@ export default class PlayerIndex extends Component {
     })
   }
 
-  onPressGallary () {
+  scrollEnd (x, y) {
+    const {screenWidth} = this
+    
+    this.setState({
+      currentOrder: Math.floor(x / screenWidth)
+    })
+  }
 
+  renderPlayer () {
+    const {myPlayers, currentOrder} = this.state
+
+    return myPlayers.data.map((player, index) => {
+      return (
+        <PlayerTemplate key={index} player={player} order={index} currentOrder={currentOrder} {...this.props}/>
+      )
+    })
   }
 
   render () {
+    const {myPlayers} = this.state
+
     return (
       <View style={styles.container}>
         <View style={styles.navigation}>
@@ -55,17 +80,12 @@ export default class PlayerIndex extends Component {
               color='#fff'
               style={styles.addIcon} />
           </TouchableHighlight>
-          <TouchableHighlight 
-            onPress={this.onPressGallary.bind(this)} 
-            underlayColor='transparent' 
-            style={styles.gallaryIcon}>
-            <Icon
-              name='ion|ios-browsers-outline'
-              size={20}
-              color='#fff'
-              style={styles.gallaryIcon} />
-          </TouchableHighlight>
         </View>
+        {myPlayers.data &&
+        <Collection style={styles.mainView} scrollEnd={this.scrollEnd.bind(this)}>
+          {this.renderPlayer()}
+        </Collection>
+        }
       </View>
     )
   }
@@ -79,18 +99,16 @@ const styles = StyleSheet.create({
   // Navigation
   navigation: {
     flexDirection: 'row',
-    height: 45
+    height: 45,
+    backgroundColor: 'rgba(0, 0, 0, 0)'
   },
   addIcon: {
     height: 30,
     width: 30
   },
-  gallaryIcon: {
-    height: 30,
-    width: 30
-  },
   // List
   mainView: {
-    flex: 1
+    height: 10,
+    backgroundColor: '#fff'
   }
 })

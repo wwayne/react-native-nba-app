@@ -29,7 +29,11 @@ const userDefaults = {
   },
 
   remove: (key) => {
-    
+    return new Promise((resolve, reject) => {
+      RNUserDefatults.removeObject(key, (data) => {
+        resolve(data)
+      })
+    })
   },
 
   removeAll: () => {

@@ -18,6 +18,18 @@ const actionHandler = {
     return {
       data: action.data
     }
+  },
+
+  [PLAYER.LOG]: (state, action) => {
+    let newState = Object.assign({}, state)
+    const index = newState.data.find((player, index) => {
+      if (player.id === action.id) {
+        newState.data[index].log = action.data
+        newState.data[index].isLogLoaded = true
+        return true
+      } 
+    })
+    return newState
   }
 }
 
