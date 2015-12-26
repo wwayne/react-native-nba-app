@@ -4,17 +4,17 @@ const teamMap = {
   atl: {
     city: 'Atlanta',
     team: 'Hawks',
-    color: '#424958'
+    color: '#E03A3E'
   },
   bkn: {
     city: 'Brooklyn',
     team: 'Nets',
-    color: '#3c3b3b'
+    color: '#000'
   },
   bos: {
     city: 'Boston',
     team: 'Celtics',
-    color: '#2e7b3b'
+    color: '#008348'
   },
   cha: {
     city: 'Charlotte',
@@ -24,132 +24,132 @@ const teamMap = {
   chi: {
     city: 'Chicago',
     team: 'Bulls',
-    color: '#b5404b'
+    color: '#CE1141'
   },
   cle: {
     city: 'Cleveland',
     team: 'Cavaliers',
-    color: '#faac3d'
+    color: '#860038'
   },
   dal: {
     city: 'Dallas',
     team: 'Mavericks',
-    color: '#00669a'
+    color: '#007DC5'
   },
   den: {
     city: 'Denver',
     team: 'Nuggets',
-    color: '#488bbd'
+    color: '#FFB20F'
   },
   det: {
     city: 'Detroit',
     team: 'Pistons',
-    color: '#2c6ba0'
+    color: '#006BB6'
   },
   gsw: {
     city: 'Golden State',
     team: 'Warriors',
-    color: '#ffc137'
+    color: '#FDB927'
   },
   hou: {
     city: 'Houston',
     team: 'Rockets',
-    color: '#b5404b'
+    color: '#CE1141'
   },
   ind: {
     city: 'Indiana',
     team: 'Pacers',
-    color: '#faac3d'
+    color: '#FFC633'
   },
   lac: {
     city: 'Los Angeles',
     team: 'Clippers',
-    color: '#b5404b'
+    color: '#ED174C'
   },
   lal: {
     city: 'Los Angeles',
     team: 'Lakers',
-    color: '#785d90'
+    color: '#552582'
   },
   mem: {
     city: 'Memphis',
     team: 'Grizzlies',
-    color: '#6685a3'
+    color: '#6189B9'
   },
   mia: {
     city: 'Miami',
     team: 'Heat',
-    color: '#874445'
+    color: '#98002E'
   },
   mil: {
     city: 'Milwaukee',
     team: 'Bucks',
-    color: '#375640'
+    color: '#00471B'
   },
   min: {
     city: 'Minnesota',
     team: 'Timberwolves',
-    color: '@2b5b7e'
+    color: '#005083'
   },
   nop: {
     city: 'New Orleans',
     team: 'Pelicans',
-    color: '#424958'
+    color: '#002B5C'
   },
   nyk: {
     city: 'New York',
     team: 'Knicks',
-    color: '#f4672f'
+    color: '#F58426'
   },
   okc: {
     city: 'Oklahoma City',
     team: 'Thunder',
-    color: '#397cb0'
+    color: '#F05133'
   },
   orl: {
     city: 'Orlando',
     team: 'Magic',
-    color: '#00669a'
+    color: '#007DC5'
   },
   phi: {
     city: 'Philadelphia',
     team: '76ers',
-    color: '#2c6ba0'
+    color: '#006BB6'
   },
   phx: {
     city: 'Phoenix',
     team: 'Suns',
-    color: '#bf5f34'
+    color: '#E56020'
   },
   por: {
     city: 'Portland',
     team: 'Trail Blazers',
-    color: '#3c3b3b'
+    color: '#000'
   },
   sac: {
     city: 'Sacramento',
     team: 'Kings',
-    color: '#66578b'
+    color: '#724C9F'
   },
   sas: {
     city: 'San Antonio',
     team: 'Spurs',
-    color: '#3c3b3b'
+    color: '#B6BFBF'
   },
   tor: {
     city: 'Toronto',
     team: 'Raptors',
-    color: '#b5404b'
+    color: '#CE1141'
   },
   uta: {
     city: 'Utah',
     team: 'Jazz',
-    color: '#424958'
+    color: '#00471B'
   },
   was: {
     city: 'Washington',
     team: 'Wizards',
-    color: 'bb4249'
+    color: '#F5002F'
   }
 }
 

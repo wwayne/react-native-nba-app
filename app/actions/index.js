@@ -2,8 +2,10 @@
 
 import {getGameGeneral, getGameDetail, getLeagueStanding} from './game'
 import {getMyPlayers, getPlayerLog} from './player'
+import {changeTab} from './application'
 
 const actions = {
+  changeTab,
   getGameGeneral,
   getGameDetail,
   getLeagueStanding,

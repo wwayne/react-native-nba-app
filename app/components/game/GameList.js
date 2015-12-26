@@ -7,19 +7,25 @@ import React, {
   View,
   Text,
   PropTypes,
-  AsyncStorage
+  TouchableHighlight
 } from 'react-native'
 
+import { Icon} from 'react-native-icons'
+import moment from 'moment-timezone'
 import GamePanel from './GamePanel'
-import {APP} from '../../constant'
+import Tabbar from '../share/Tabbar'
 
 export default class GameList extends Component {
   constructor (props) {
     super(props)
+    /* Get the date of today , format: [year, month, date] */
+    const dateString = moment.tz(Date.now(), 'America/Los_Angeles').format()
+    const dateArray = dateString.replace('T', '-').split('-')
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2
-      })
+      }),
+      date: [dateArray[0], dateArray[1], dateArray[2]]
     }
   }
 
@@ -28,102 +34,62 @@ export default class GameList extends Component {
   */
   componentDidMount () {
     const {actions} = this.props
-    actions.getGameGeneral()
-    this.resume
+    const {date} = this.state
+    actions.getGameGeneral(date[0], date[1], date[2])
   }
 
   componentWillReceiveProps (props) {
     const {live, over, unstart, actions} = props
-    const {dataSource, intervalRequest} = this.state
+    const {dataSource} = this.state
 
-    this.checkTab()
-      .then(isGame => {
-        if (isGame) {
-          const rows = live.data.concat(unstart.data).concat(over.data)
-          if (live.data.length > 0) {
-            setTimeout(() => {
-              actions.getGameGeneral()
-            }, 5000)
-          } else if (unstart.data.length > 0) {
-            setTimeout(() => {
-              actions.getGameGeneral()
-            }, 120000)
-          }
-          this.setState({
-            dataSource: dataSource.cloneWithRows(rows)
-          })
-        } else {
-          this.resume()
-        }
-      })
-  }
-
-  /* Control interval in this page */
-  resume () {
-    const {actions} = this.props
-
-    setTimeout(() => {
-      this.checkTab()
-        .then(isGame => {
-          if (isGame) {
-            return actions.getGameGeneral()
-          } else {
-            this.resume()
-          }
-        })
-    }, 10000)
-  }
-
-  checkTab () {
-    return AsyncStorage.getItem(APP.CURRENTTAB)
-      .then(currentTab => {
-        if (currentTab === 'game') return true
-        return false
+    const rows = live.data.concat(unstart.data).concat(over.data)
+    if (live.data.length > 0) {
+      setTimeout(() => {
+        actions.getGameGeneral()
+      }, 5000)
+    } else if (unstart.data.length > 0) {
+      setTimeout(() => {
+        actions.getGameGeneral()
+      }, 120000)
+    }
+    this.setState({
+      dataSource: dataSource.cloneWithRows(rows)
     })
+  }
+
+  componentWillUnmount () {
   }
 
   renderRow (game, _, index) {
     return (<GamePanel game={game} index={index} {...this.props}/>)
   }
 
+  /* Swith between yesterday and today */
+  changeDate () {
+
+  }
+
   render () {
-    const {dataSource} = this.state
+    const {dataSource, date} = this.state
     const {live, over, unstart} = this.props
 
     const gameDate = live.gameDate
-    const liveCount = live.data.length
-    const overCount = over.data.length
-    const unstartCount = unstart.data.length
+    const gameCount = live.data.length + live.data.length + unstart.data.length
 
     return (
       <View style={styles.container}>
-        <View style={styles.gameListWrapper}>
-          <Text style={styles.gameListInfoDeco}>This is why we play</Text>
-          <View style={styles.gameListInfo}>
-            <Text style={styles.infoDate}>{gameDate}</Text>
-            <Text style={styles.infoCount}>{liveCount + overCount + unstartCount + ' Games'}</Text>
-          </View>
-          <View style={styles.gameCurrentInfo}>
-            <View style={styles.currentBlock}>
-              <View style={styles.currentPanel}>
-                <Text style={[styles.currentMatch, styles.currentLive]}>{liveCount}</Text>
-                <Text style={[styles.currentType, styles.currentLive]}>LIVE</Text>
-              </View>
-            </View>
-            <View style={styles.currentBlock}>
-              <View style={styles.currentPanel}>
-                <Text style={[styles.currentMatch, styles.currentUnStart]}>{unstartCount}</Text>
-                <Text style={[styles.currentType, styles.currentUnStart]}>UNSTART</Text>
-              </View>
-            </View>
-            <View style={styles.currentBlock}>
-              <View style={styles.currentPanel}>
-                <Text style={[styles.currentMatch, styles.currentOver]}>{overCount}</Text>
-                <Text style={[styles.currentType, styles.currentOver]}>FINISH</Text>
-              </View>
-            </View>
-          </View>
+        <View style={styles.header}>
+          <TouchableHighlight onPress={this.changeDate.bind(this)} underlayColor='transparent'>
+            <Icon name='ion|pizza'
+              size={18}
+              color='#fff'
+              style={styles.calendarIcon}
+            />
+          </TouchableHighlight>
+          <Text style={styles.gameDate}>{date[0] + '-' + date[1] + '-' + date[2]}</Text>
+          <Text style={styles.gameCount}>{gameCount + ' Games'}</Text>
         </View>
+        <Tabbar tab={'game'} {...this.props}/>
         <ListView
           dataSource={dataSource}
           renderRow={this.renderRow.bind(this)}
@@ -145,79 +111,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  // Info View
-  gameListWrapper: {
-    backgroundColor: '#465484',
-    height: 85,
-    flex: 1
-  },
-  gameListInfoDeco: {
-    backgroundColor: '#303D6D',
-    color: '#5A6BA7',
-    fontSize: 12,
-    height: 18,
-    lineHeight: 16,
-    textAlign: 'center'
-  },
-  // General Info
-  gameListInfo: {
-    flexDirection: 'row',
-    flex: 1,
-    paddingTop: 10,
-    paddingLeft: 12
-  },
-  infoDate: {
-    color: '#fff',
-    fontSize: 16
-  },
-  infoCount: {
-    color: '#fff',
-    fontSize: 9,
-    paddingLeft: 8,
+  // Header
+  header: {
+    backgroundColor: '#4D98E4',
+    height: 100,
+    flexDirection: 'column',
     position: 'relative',
-    top: 6
+    paddingLeft: 15
   },
-  // Current Info
-  gameCurrentInfo: {
-    flex: 2,
-    flexDirection: 'row',
-    paddingTop: 10
+  calendarIcon: {
+    alignSelf: 'flex-end',
+    height: 15,
+    marginRight: 15,
+    marginTop: 12,
+    width: 25
   },
-  currentBlock: {
-    alignItems: 'center',
-    flex: 1,
-    height: 21
+  gameDate: {
+    color: '#fff',
+    fontWeight: '200',
+    fontSize: 25,
   },
-  currentPanel: {
-    alignItems: 'center',
-    backgroundColor: '#293356',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: 100
-  },
-  currentMatch: {
-    fontWeight: 'bold',
-    fontSize: 15
-  },
-  currentType: {
-    fontSize: 9,
-    paddingLeft: 3,
-    position: 'relative',
-    top: 2
-  },
-  currentLive: {
-    color: '#F9977C'
-  },
-  currentUnStart: {
-    color: '#F5E45E'
-  },
-  currentOver: {
-    color: '#7AB8F8'
+  gameCount: {
+    color: '#fff',
+    fontWeight: '200',
+    fontSize: 14
   },
   // List View
   listView: {
-    backgroundColor: '#303D6D',
+    backgroundColor: '#fff',
     flex: 6,
     flexDirection: 'column',
     paddingTop: 12

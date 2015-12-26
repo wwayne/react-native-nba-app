@@ -5,22 +5,20 @@ import React, {
   StyleSheet,
   View,
   Text,
-  TouchableHighlight,
   ScrollView,
   Dimensions
 } from 'react-native'
-import {Icon} from 'react-native-icons'
 
-import PlayerSearch from './PlayerSearch'
 import Collection from '../../lib/collection'
 import PlayerTemplate from './PlayerTemplate'
+import teamInfo from '../../utils/team-map'
 
 export default class PlayerIndex extends Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      myPlayers: [],
+      myPlayers: {data: []},
       currentOrder: 0
     }
     this.screenWidth = Dimensions.get('window').width
@@ -35,14 +33,6 @@ export default class PlayerIndex extends Component {
     const {myPlayers} = props
     this.setState({
       myPlayers
-    })
-  }
-
-  onPressAdd () {
-    const {navigator} = this.props
-    navigator.push({
-      name: 'PlayerSearch',
-      component: PlayerSearch
     })
   }
 
@@ -69,18 +59,6 @@ export default class PlayerIndex extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.navigation}>
-          <TouchableHighlight 
-            onPress={this.onPressAdd.bind(this)} 
-            underlayColor='transparent' 
-            style={styles.addIcon}>
-            <Icon
-              name='ion|plus-round'
-              size={20}
-              color='#fff'
-              style={styles.addIcon} />
-          </TouchableHighlight>
-        </View>
         {myPlayers.data &&
         <Collection style={styles.mainView} scrollEnd={this.scrollEnd.bind(this)}>
           {this.renderPlayer()}
@@ -93,22 +71,12 @@ export default class PlayerIndex extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#465484',
-    flex: 1
-  },
-  // Navigation
-  navigation: {
-    flexDirection: 'row',
-    height: 45,
-    backgroundColor: 'rgba(0, 0, 0, 0)'
-  },
-  addIcon: {
-    height: 30,
-    width: 30
+    backgroundColor: '#fff',
+    flex: 1,
   },
   // List
   mainView: {
-    height: 10,
+    flex: 1,
     backgroundColor: '#fff'
   }
 })

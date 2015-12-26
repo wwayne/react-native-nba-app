@@ -54,7 +54,7 @@ export default class GamePanel extends Component {
 
     return (
       <TouchableHighlight onPress={this.onPressRow.bind(this)} underlayColor='transparent'>
-        <View style={[styles.container, styles[`background${cssType}`]]} >
+        <View style={[styles.container, {backgroundColor: teamMap[homeAbb].color}]} >
 
           <View style={styles.team}>
             <Image style={styles.teamLogo} source={{uri: homeAbb}}/>
@@ -91,10 +91,10 @@ GamePanel.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#4893DF',
     flex: 1,
     flexDirection: 'row',
-    height: 110,
+    height: 95,
+    marginHorizontal: 12,
     marginBottom: 15
   },
   // Team
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
     flex: 1.7
   },
   teamLogo: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     marginTop: 10
   },
   teamCity: {
@@ -118,15 +118,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     position: 'relative',
     top: 0
-  },
-  backgroundLive: {
-    backgroundColor: '#D65350'
-  },
-  backgroundUnstart: {
-    backgroundColor: '#EEB735'
-  },
-  backgroundOver: {
-    backgroundColor: '#4D98E4'
   },
   // Info
   gameInfo: {
@@ -143,7 +134,7 @@ const styles = StyleSheet.create({
   processUnstart: {
     fontSize: 22,
     position: 'relative',
-    top: 13
+    top: 10
   },
   infoScorePanel: {
     flex: 1,

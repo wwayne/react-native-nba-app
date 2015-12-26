@@ -1,19 +1,9 @@
 'use strict'
 
-export const APP = {
-  'CURRENTTAB': 'CURRENTTAB',
-  'MYPLAYERS': 'MYPLAYERS',
-  'CURRENTPLAYER': 'CURRENTPLAYER'
-}
+import Enum from 'es6-enum'
 
-export const GAME = {
-  INFO: 'INFO',
-  DETAIL: 'DETAIL',
-  STANDING: 'STANDING'
-}
+export const APP = Enum('TAB')
 
-export const PLAYER = {
-  'LIST': 'LIST',
-  'DETAIL': 'DETAIL',
-  'LOG': 'LOG'
-}
+export const GAME = Enum('INFO', 'DETAIL', 'STADING')
+
+export const PLAYER = Enum('LIST', 'DETAIL', 'LOG')

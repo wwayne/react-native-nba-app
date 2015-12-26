@@ -6,14 +6,14 @@ import live from './live'
 import over from './over'
 import unstart from './unstart'
 import standing from './standing'
-import myPlayers from './myPlayers'
+import application from './application'
 
 const reducers = combineReducers({
   unstart,
   live,
   over,
   standing,
-  myPlayers
+  application
 })
 
 export default reducers

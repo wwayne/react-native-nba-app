@@ -2,62 +2,70 @@
 
 import React, { 
   Component,
-  AsyncStorage
+  View,
+  StyleSheet
 } from 'react-native'
-import { TabBarIOS } from 'react-native-icons'
+import {connect} from 'react-redux/native'
+import {bindActionCreators} from 'redux'
+
+import allActions from '../actions'
+import {APP} from '../constant'
 
 import Game from './Game'
 import Player from './Player'
-import {APP} from '../constant'
 
 export default class App extends Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      selectedTab: 'game'
+      tab: null
     }
   }
 
-  componentDidMount () {
-    const {selectedTab} = this.state
-    /**
-     * Switch tab won't trigger component life cycle
-     * Game page shouldn't keep request if user has switched to other tab
-     */
-    AsyncStorage.setItem(APP.CURRENTTAB, selectedTab  )
-  }
-
-  onPress (tab) {
-    AsyncStorage.setItem(APP.CURRENTTAB, tab)
+  componentWillReceiveProps (props) {
+    const {application} = props
     this.setState({
-      selectedTab: tab
+      tab: application.tab
     })
   }
 
   render () {
-    const {selectedTab} = this.state
+    const {tab} = this.state
+    const {game, player, actions} = this.props
 
     return (
-      <TabBarIOS barTintColor='#303D6D' tintColor='#fff'>
-
-        <TabBarIOS.Item
-         title='GAME'
-         iconName={'ion|social-dribbble-outline'}
-         selected={selectedTab === 'game'}
-         onPress={this.onPress.bind(this, 'game')}>
-         <Game />
-        </TabBarIOS.Item>
-
-        <TabBarIOS.Item
-         title='PLAYER'
-         iconName={'ion|ios-star-outline'}
-         selected={selectedTab === 'player'}
-         onPress={this.onPress.bind(this, 'player')}>
-         <Player />
-        </TabBarIOS.Item>
-
-      </TabBarIOS>
+      <View style={styles.container}>
+        {tab === 'game' && 
+          <Game {...game} actions={actions} />
+        }
+        {tab === 'players' &&
+          <Player {...player} actions={actions} />
+        }
+      </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+})
+
+export default connect(state => {
+  return {
+    application: state.application,
+    game: {
+      live: state.live,
+      over: state.over,
+      unstart: state.unstart,
+      standing: state.standing
+    },
+    player: {}
+  }
+}, dispatch => {
+  return {
+    actions: bindActionCreators(allActions, dispatch)
+  }
+})(App)

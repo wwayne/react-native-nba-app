@@ -1,18 +1,15 @@
 'use strict'
 
-import {connect} from 'react-redux/native'
-import {bindActionCreators} from 'redux'
 import React, {
   PropTypes,
   Component,
   Navigator
 } from 'react-native'
 
-import actions from '../actions'
 import GameList from '../components/game/GameList'
 import NavigatorBar from '../components/share/NavigatorBar'
 
-class Game extends Component {
+export default class Game extends Component {
 
   componentDidMount () {
     const {actions} = this.props
@@ -41,18 +38,8 @@ class Game extends Component {
 }
 
 Game.propTypes = {
+  game: PropTypes.object,
   actions: PropTypes.object
 }
 
-export default connect(state => {
-  return {
-    live: state.live,
-    over: state.over,
-    unstart: state.unstart,
-    standing: state.standing
-  }
-}, dispatch => {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  }
-})(Game)
+

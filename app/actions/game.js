@@ -10,11 +10,10 @@ const dateArray = dateString.replace('T', '-').split('-')
 /**
  * Get info of game general
  */
-export function getGameGeneral () {
+export function getGameGeneral (year, month, date) {
   return (dispatch, getStore) => {
     const channel = new Channel()
-
-    channel.getGameGeneral(dateArray[0], dateArray[1], dateArray[2])
+    channel.getGameGeneral(year, month, date)
       .then(data => {
         return dispatch({
           type: GAME.INFO,

@@ -1,17 +1,14 @@
 'use strict'
 
-import {connect} from 'react-redux/native'
-import {bindActionCreators} from 'redux'
 import React, {
   Component,
   Navigator
 } from 'react-native'
 
-import actions from '../actions'
 import PlayerIndex from '../components/player/PlayerIndex'
 import NavigatorBar from '../components/share/NavigatorBar'
 
-class Player extends Component {
+export default class Player extends Component {
 
   renderScene (route, navigator) {
     if (route.component) {
@@ -33,13 +30,3 @@ class Player extends Component {
     )
   }
 }
-
-export default connect(state => {
-  return {
-    myPlayers: state.myPlayers
-  }
-}, dispatch => {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  }
-})(Player)

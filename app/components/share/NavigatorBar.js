@@ -12,8 +12,7 @@ export default class NavigatorBar extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      presentedIndex: 0,
-      routeStack: []
+      presentedIndex: 0
     }
   }
 
@@ -28,11 +27,6 @@ export default class NavigatorBar extends Component {
     this.setState({
       presentedIndex: props.navState.routeStack.length - 1
     })
-  }
-
-  onPressBack () {
-    const {navigator} = this.props
-    navigator.pop()
   }
 
   render () {
