@@ -91,14 +91,14 @@ export default class GameList extends Component {
     const {actions} = this.props
 
     if (isToday) {
-      const date = this.getToday()
+      const date = this.getYesterday()
       actions.getGameGeneral(date[0], date[1], date[2])
       this.setState({
         date,
         isToday: false
       })
     } else {
-      const date = this.getYesterday()
+      const date = this.getToday()
       actions.getGameGeneral(date[0], date[1], date[2])
       this.setState({
         date,
