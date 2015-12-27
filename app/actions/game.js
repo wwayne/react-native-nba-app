@@ -1,11 +1,7 @@
 'use strict'
 
-import moment from 'moment-timezone'
-
 import Channel from '../channel'
 import { GAME } from '../constant'
-const dateString = moment.tz(Date.now(), 'America/Los_Angeles').format()
-const dateArray = dateString.replace('T', '-').split('-')
 
 /**
  * Get info of game general
@@ -29,7 +25,7 @@ export function getGameGeneral (year, month, date) {
  * @note id = game_id & tye = game_type
  * @return game {Object}
  */
-export function getGameDetail (id, type) {
+export function getGameDetail (id, type, year, month, date) {
   return (dispatch, getStore) => {
     /* If the game is finish and have detail data, no need to request again */
     if (type === 'over') {
@@ -43,7 +39,7 @@ export function getGameDetail (id, type) {
     }
 
     const channel = new Channel()
-    return channel.getGameDetail(dateArray[0], dateArray[1], dateArray[2], id)
+    return channel.getGameDetail(year, month, date, id)
       .then(data => {
         return dispatch({
           type: GAME.DETAIL,
@@ -66,9 +62,9 @@ export function getLeagueStanding () {
         data: getStore().standing.data
       })
     }
-
+    const year = new Date().getFullYear()
     const channel = new Channel()
-    return channel.getLeagueStanding(dateArray[0])
+    return channel.getLeagueStanding(year)
       .then(data => {
         return dispatch({
           type: GAME.STANDING,

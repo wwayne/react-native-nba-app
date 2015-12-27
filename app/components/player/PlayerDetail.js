@@ -26,6 +26,7 @@ export default class PlayerDetail extends Component {
   componentDidMount () {
     const {actions} = this.props
     const {player} = this.props.route
+
     actions.getPlayerDetail(player.id)
     actions.getPlayerLog(player.id)
   }
@@ -45,8 +46,9 @@ export default class PlayerDetail extends Component {
   }
 
   render () {
-    const {player} = this.state
-    
+    const {route, playerLoaded} = this.props
+    const player = playerLoaded[route.player.id] || this.state.player
+
     const team = player && player.team.toLowerCase()
     const nameForImage = player && player.firstName.toLowerCase() + '_' + player.lastName.toLowerCase()
 
@@ -171,5 +173,6 @@ PlayerDetail.propTypes = {
   order: PropTypes.number,
   actions: PropTypes.object,
   navigator: PropTypes.object,
-  route: PropTypes.object
+  route: PropTypes.object,
+  playerLoaded: PropTypes.object
 }

@@ -37,13 +37,14 @@ export default class GameDetail extends Component {
   componentDidMount () {
     const {actions, route} = this.props
     const game = route.game
+    const date = route.date
 
     /* Only for ui performance */
     let interval = false
     let indicator = true
     if (!game.detail.loaded) {
       setTimeout(() => {
-        actions.getGameDetail(game.id, game.type)
+        actions.getGameDetail(game.id, game.type, date[0], date[1], date[2])
         interval = this.keepRequest(game)
         this.setState({
           interval,
@@ -70,12 +71,14 @@ export default class GameDetail extends Component {
 
   keepRequest (game) {
     /* Keeping update every 10s if in live condition */
-    const {actions} = this.props
+    const {actions, route} = this.props
+    const date = route.date
     let interval = false
+
     if (game.type === 'live') {
       clearInterval(this.state.interval)
       interval = setInterval(() => {
-        actions.getGameDetail(game.id, game.type)
+        actions.getGameDetail(game.id, game.type, date[0], date[1], date[2])
       }, 10000)
     }
     return interval

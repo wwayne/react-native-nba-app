@@ -18,14 +18,12 @@ import Tabbar from '../share/Tabbar'
 export default class GameList extends Component {
   constructor (props) {
     super(props)
-    /* Get the date of today , format: [year, month, date] */
-    const dateString = moment.tz(Date.now(), 'America/Los_Angeles').format()
-    const dateArray = dateString.replace('T', '-').split('-')
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2
       }),
-      date: [dateArray[0], dateArray[1], dateArray[2]]
+      date: this.getToday(),
+      isToday: true
     }
     this.mount = true
   }
@@ -66,14 +64,47 @@ export default class GameList extends Component {
   }
 
   renderRow (game, _, index) {
+    const {date} = this.state
     if (this.mount) {
-      return (<GamePanel game={game} index={index} {...this.props}/>)
+      return (<GamePanel game={game} date={date} index={index} {...this.props}/>)
     }
+  }
+
+  /* Get date format */
+  getToday () {
+    const dateString = moment.tz(Date.now(), 'America/Los_Angeles').format()
+    const dateArray = dateString.replace('T', '-').split('-')
+    return dateArray.splice(0, 3)
+  }
+
+  getYesterday () {
+    let d = new Date()
+    d.setDate(d.getDate() - 1)
+    const dateString = moment.tz(d, 'America/Los_Angeles').format()
+    const dateArray = dateString.replace('T', '-').split('-')
+    return dateArray.splice(0, 3)
   }
 
   /* Swith between yesterday and today */
   changeDate () {
+    const {isToday} = this.state
+    const {actions} = this.props
 
+    if (isToday) {
+      const date = this.getToday()
+      actions.getGameGeneral(date[0], date[1], date[2])
+      this.setState({
+        date,
+        isToday: false
+      })
+    } else {
+      const date = this.getYesterday()
+      actions.getGameGeneral(date[0], date[1], date[2])
+      this.setState({
+        date,
+        isToday: true
+      })
+    }
   }
 
   render () {

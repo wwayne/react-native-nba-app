@@ -15,13 +15,15 @@ import React, {
 import GameDetail from './GameDetail'
 
 export default class GamePanel extends Component {
+
   onPressRow () {
-    const {navigator, game} = this.props
+    const {navigator, game, date} = this.props
     if (game.type !== 'unstart') {
       navigator.push(Object.assign({}, {
         name: 'GameDetail',
         component: GameDetail,
-        game
+        game,
+        date
       }))
     }
   }
@@ -86,7 +88,8 @@ export default class GamePanel extends Component {
 
 GamePanel.propTypes = {
   navigator: PropTypes.object,
-  game: PropTypes.object
+  game: PropTypes.object,
+  date: PropTypes.array
 }
 
 const styles = StyleSheet.create({
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
   // Team
   team: {
     alignItems: 'center',
-    flex: 1.7
+    flex: 1.5
   },
   teamLogo: {
     width: 50,
@@ -144,7 +147,7 @@ const styles = StyleSheet.create({
   infoScore: {
     color: '#fff',
     fontWeight: '100',
-    fontSize: 32,
+    fontSize: 31,
     textAlign: 'center',
     width: 50
   },
