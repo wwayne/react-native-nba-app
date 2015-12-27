@@ -147,13 +147,13 @@ export default class GameDetail extends Component {
     return (
       <View style={{flex: 1}}>
         {/* Navigation */}
-        <View style={[ styles.nav, styles[`background${cssType}`] ]}>
+        <View style={[ styles.nav, {backgroundColor: teamMap[homeAbb].color} ]}>
           <TouchableHighlight onPress={this.onBackPress.bind(this)} underlayColor='transparent' style={{width: 80}}>
             <Icon name='ion|ios-arrow-left' size={28} color='#fff' style={styles.backNav} />
           </TouchableHighlight>
         </View>
         {/* Sum info */}
-        <View style={[styles.sumContainer, styles[`background${cssType}`]]} >
+        <View style={[styles.sumContainer, {backgroundColor: teamMap[homeAbb].color}]} >
           <View style={styles.team}>
             <Image style={styles.teamLogo} source={{uri: homeAbb}}/>
             <Text style={styles.teamCity}>{teamMap[homeAbb].city}</Text>
@@ -263,12 +263,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     position: 'relative',
     top: 0
-  },
-  backgroundLive: {
-    backgroundColor: '#D65350'
-  },
-  backgroundOver: {
-    backgroundColor: '#4D98E4'
   },
   standing: {
     color: '#fff',

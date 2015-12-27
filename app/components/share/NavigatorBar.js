@@ -5,7 +5,8 @@
 
 import React, {
   Component,
-  View
+  View,
+  PropTypes
 } from 'react-native'
 
 export default class NavigatorBar extends Component {
@@ -35,3 +36,8 @@ export default class NavigatorBar extends Component {
     )
   }
 }
+
+NavigatorBar.propTypes = {
+  navState: PropTypes.object
+}
+

@@ -1,15 +1,15 @@
 'use strict'
 
-import React, { 
+import React, {
   Component,
   View,
-  StyleSheet
+  StyleSheet,
+  PropTypes
 } from 'react-native'
 import {connect} from 'react-redux/native'
 import {bindActionCreators} from 'redux'
 
 import allActions from '../actions'
-import {APP} from '../constant'
 
 import Game from './Game'
 import Player from './Player'
@@ -36,7 +36,7 @@ export default class App extends Component {
 
     return (
       <View style={styles.container}>
-        {tab === 'game' && 
+        {tab === 'game' &&
           <Game {...game} actions={actions} />
         }
         {tab === 'players' &&
@@ -53,6 +53,12 @@ const styles = StyleSheet.create({
   }
 })
 
+App.propTypes = {
+  game: PropTypes.object,
+  player: PropTypes.object,
+  actions: PropTypes.object
+}
+
 export default connect(state => {
   return {
     application: state.application,
@@ -62,7 +68,9 @@ export default connect(state => {
       unstart: state.unstart,
       standing: state.standing
     },
-    player: {}
+    player: {
+      playerList: state.playerList
+    }
   }
 }, dispatch => {
   return {

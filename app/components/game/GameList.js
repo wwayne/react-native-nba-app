@@ -10,7 +10,7 @@ import React, {
   TouchableHighlight
 } from 'react-native'
 
-import { Icon} from 'react-native-icons'
+import {Icon} from 'react-native-icons'
 import moment from 'moment-timezone'
 import GamePanel from './GamePanel'
 import Tabbar from '../share/Tabbar'
@@ -27,6 +27,7 @@ export default class GameList extends Component {
       }),
       date: [dateArray[0], dateArray[1], dateArray[2]]
     }
+    this.mount = true
   }
 
  /**
@@ -52,16 +53,22 @@ export default class GameList extends Component {
         actions.getGameGeneral()
       }, 120000)
     }
-    this.setState({
-      dataSource: dataSource.cloneWithRows(rows)
-    })
+
+    if (this.mount) {
+      this.setState({
+        dataSource: dataSource.cloneWithRows(rows)
+      })
+    }
   }
 
   componentWillUnmount () {
+    this.mount = false
   }
 
   renderRow (game, _, index) {
-    return (<GamePanel game={game} index={index} {...this.props}/>)
+    if (this.mount) {
+      return (<GamePanel game={game} index={index} {...this.props}/>)
+    }
   }
 
   /* Swith between yesterday and today */
@@ -72,9 +79,7 @@ export default class GameList extends Component {
   render () {
     const {dataSource, date} = this.state
     const {live, over, unstart} = this.props
-
-    const gameDate = live.gameDate
-    const gameCount = live.data.length + live.data.length + unstart.data.length
+    const gameCount = live.data.length + over.data.length + unstart.data.length
 
     return (
       <View style={styles.container}>
@@ -129,7 +134,7 @@ const styles = StyleSheet.create({
   gameDate: {
     color: '#fff',
     fontWeight: '200',
-    fontSize: 25,
+    fontSize: 25
   },
   gameCount: {
     color: '#fff',

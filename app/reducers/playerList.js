@@ -2,17 +2,19 @@
 
 import createReducer from '../utils/create-reducer'
 
-import {APP} from '../constant'
+import {PLAYER} from '../constant'
 
 const initialState = {
-  tab: 'players'
+  isLoaded: false,
+  data: []
 }
 
 const actionHandler = {
-  [APP.TAB]: (state, action) => {
-    return Object.assign({}, state, {
-      tab: action.data
-    })
+  [PLAYER.LIST]: (state, action) => {
+    return {
+      isLoaded: true,
+      data: action.data
+    }
   }
 }
 

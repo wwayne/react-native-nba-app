@@ -1,5 +1,8 @@
 'use strict'
 
+const d = new Date()
+const season = d.getFullYear().toString() + '-' + (d.getFullYear() + 1).toString().substring(2, 4)
+
 const address = {
   /**
    * All game of the date
@@ -25,20 +28,16 @@ const address = {
   leagueStanding: (year) => {
     return `http://data.nba.com/data/json/cms/${year}/league/standings.json`
   },
-  /**
-   * Player basic info
-   */
+
+  playerList: () => {
+    return `http://stats.nba.com/stats/commonallplayers?IsOnlyCurrentSeason=0&LeagueID=00&Season=${season}`
+  },
+
   playerInfo: (id) => {
-    const d = new Date()
-    const season = d.getFullYear().toString() + (d.getFullYear()+1).toString().substring(2, 4)
     return `http://stats.nba.com/stats/commonplayerinfo?LeagueID=00&PlayerID=${id}&SeasonType=Regular+Season`
   },
-  /**
-   * Palyer game log
-   */
+
   playerLog: (id) => {
-    const d = new Date()
-    const season = d.getFullYear().toString() + '-' + (d.getFullYear()+1).toString().substring(2, 4)
     return `http://stats.nba.com/stats/playergamelog?LeagueID=00&PerMode=PerGame&PlayerID=${id}&Season=${season}&SeasonType=Regular+Season`
   }
 }

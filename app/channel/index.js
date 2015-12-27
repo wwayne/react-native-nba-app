@@ -37,6 +37,13 @@ export default class Channel {
       .then(data => producer.leagueStanding(data))
   }
 
+  getPlayerList () {
+    const url = address.playerList()
+    return window.fetch(url)
+      .then(res => res.json())
+      .then(data => producer.playerList(data))
+  }
+
   getPlayerInfo (id) {
     const url = address.playerInfo(id)
     return window.fetch(url)

@@ -125,6 +125,29 @@ const producer = {
   },
 
   /**
+   * @return [{firstName, lastName, name, id, teamId, teamCity, teamName}]
+   */
+  playerList: (res) => {
+    const data = res.resultSets[0].rowSet
+    const currentYear = new Date().getFullYear() + ''
+    let nameArray
+    return data.filter(item => {
+      return item[4] === currentYear
+    }).map(item => {
+      nameArray = item[1].split(', ')
+      return {
+        id: item[0],
+        firstName: nameArray[1],
+        lastName: nameArray[0],
+        name: nameArray[1] + ' ' + nameArray[0],
+        teamId: item[6],
+        teamCity: item[7],
+        teamName: item[8]
+      }
+    })
+  },
+
+  /**
    * @return {id:, firstName, lastName,pts, ast, reb, team, jersey, height, weight, birthday, position, affiliation}
    */
   playerInfo: (res) => {
@@ -162,7 +185,7 @@ const producer = {
         result: item[5],
         min: item[6],
         pts: item[24],
-        fg: item[7] + '-'+ item[8],
+        fg: item[7] + '-' + item[8],
         fgRate: item[9],
         threeP: item[10] + '-' + item[11],
         threePRate: item[12],

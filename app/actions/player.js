@@ -1,75 +1,29 @@
 'use strict'
 
-import userDefaults from '../lib/userDefaults'
-import { APP, PLAYER } from '../constant'
+import {PLAYER} from '../constant'
 import Channel from '../channel'
 
-/**
- * Get player list that store in user defaults
- */
-export const getMyPlayers = () => {
-  return dispatch => {
-    userDefaults.get(APP.MYPLAYERS)
+export const getPlayerList = () => {
+  return (dispatch, getStore) => {
+    if (getStore().playerList.isLoaded) {
+      return dispatch({
+        type: PLAYER.LIST,
+        data: getStore().playerList.data
+      })
+    }
+    const channel = new Channel()
+    channel.getPlayerList()
       .then(data => {
-        const myData = data ? data : []
-        const channel = new Channel()
-        Promise.all(myData.map(id => {
-          return channel.getPlayerInfo(id)
-            .then(player => {
-              player.isLogLoaded = false
-              return player
-            })
-        }))
-        .then(players => {
-          return dispatch({
-            type: PLAYER.LIST,
-            data: players
-          })
-        })
-        .catch(err => {
-          console.log(err)
+        return dispatch({
+          type: PLAYER.LIST,
+          data: data
         })
       })
+      .catch(err => console.error(err))
   }
 }
 
 export const getPlayerLog = (id) => {
-  return (dispatch, getStore) => {
-    const player = getStore().myPlayers.data.find(player => {
-      return player.id === id
-    })
-    if (player.isLogLoaded) {
-      return dispatch({
-        type: PLAYER.LOG,
-        data: player.log
-      })
-    }
-    const channel = new Channel()
-    channel.getPlayerLog(id)
-      .then(data => {
-        return dispatch({
-          type: PLAYER.LOG,
-          data,
-          id
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-}
-
-export const addPlayer = (id) => {
-  return dispatch => {
-    const channel = new Channel()
-    channel.getDetail(id)
-      .then(data => {
-        return dispatch({
-          type: PLAYER.DETAIL,
-          data
-        })
-      })
-  }
 }
 
 export const removePlayer = () => {

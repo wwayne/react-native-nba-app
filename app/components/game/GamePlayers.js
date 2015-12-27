@@ -36,7 +36,8 @@ class PlayerRow extends Component {
 }
 
 PlayerRow.propTypes = {
-  player: PropTypes.object
+  player: PropTypes.object,
+  last: PropTypes.bool
 }
 
 export default class GamePlayers extends Component {

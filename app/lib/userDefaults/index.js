@@ -7,7 +7,7 @@
 
 import { RNUserDefaults } from 'NativeModules'
 
-//TODO: Create a package for all situation
+// TODO: Create a package for all situation
 
 const userDefaults = {
   set: (key, value) => {
@@ -30,7 +30,7 @@ const userDefaults = {
 
   remove: (key) => {
     return new Promise((resolve, reject) => {
-      RNUserDefatults.removeObject(key, (data) => {
+      RNUserDefaults.removeObject(key, (data) => {
         resolve(data)
       })
     })

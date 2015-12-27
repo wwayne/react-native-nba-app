@@ -8,13 +8,14 @@ import React, {
   Image,
   ScrollView,
   TouchableHighlight,
+  PropTypes
 } from 'react-native'
 import {Icon} from 'react-native-icons'
 
 import teamInfo from '../../utils/team-map'
 import PlayerSearch from './PlayerSearch'
 
-export default class PlayerTemplate extends Component {
+export default class PlayerDetail extends Component {
 
   constructor (props) {
     super(props)
@@ -71,9 +72,9 @@ export default class PlayerTemplate extends Component {
     return (
       <View style={styles.container}>
         <View style={[styles.navigation, {backgroundColor: teamInfo[team].color}]}>
-          <TouchableHighlight 
-            onPress={this.onPressAdd.bind(this)} 
-            underlayColor='transparent' 
+          <TouchableHighlight
+            onPress={this.onPressAdd.bind(this)}
+            underlayColor='transparent'
             style={styles.addIcon}>
             <Icon
               name='ion|plus-round'
@@ -113,7 +114,7 @@ export default class PlayerTemplate extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   // Navigation
   navigation: {
@@ -142,12 +143,12 @@ const styles = StyleSheet.create({
   portrait: {
     height: 60,
     width: 60,
-    borderRadius: 30,
+    borderRadius: 30
   },
   name: {
     alignSelf: 'center',
     color: '#fff',
-    fontSize: 15,
+    fontSize: 15
   },
   jersey: {
     alignSelf: 'center',
@@ -176,3 +177,10 @@ const styles = StyleSheet.create({
     fontSize: 12
   }
 })
+
+PlayerDetail.propTypes = {
+  player: PropTypes.object,
+  order: PropTypes.number,
+  actions: PropTypes.object,
+  navigator: PropTypes.object
+}

@@ -16,28 +16,27 @@ export default class Collection extends Component {
     this.screenWidth = Dimensions.get('window').width
     this.screenHeight = Dimensions.get('window').height - 40
   }
-  
+
   onMomentumScrollEnd (e) {
-    const {screenWidth} = this
     this.props.scrollEnd && this.props.scrollEnd(e.nativeEvent.contentOffset.x, e.nativeEvent.contentOffset.y)
   }
 
-  render() {
+  render () {
     const {screenWidth} = this
 
     return (
       <ScrollView
-        horizontal={true}
-        pagingEnabled={true}
+        horizontal
+        pagingEnabled
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        directionalLockEnabled={true}
+        directionalLockEnabled
         alwaysBounceVertical={false}
         style={styles.container}
         onMomentumScrollEnd={this.onMomentumScrollEnd.bind(this)}>
       {this.props.children.map((child, index) => {
-        return (<View 
+        return (<View
           key={'collection' + index}
           style={{width: screenWidth}}>
           {child}
@@ -54,6 +53,7 @@ const styles = StyleSheet.create({
 })
 
 Collection.propTypes = {
-  scrollEnd: PropTypes.func
+  scrollEnd: PropTypes.func,
+  children: PropTypes.array
 }
 

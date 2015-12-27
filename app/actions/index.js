@@ -1,7 +1,7 @@
 'use strict'
 
 import {getGameGeneral, getGameDetail, getLeagueStanding} from './game'
-import {getMyPlayers, getPlayerLog} from './player'
+import {getPlayerList, getPlayerLog} from './player'
 import {changeTab} from './application'
 
 const actions = {
@@ -9,7 +9,7 @@ const actions = {
   getGameGeneral,
   getGameDetail,
   getLeagueStanding,
-  getMyPlayers,
+  getPlayerList,
   getPlayerLog
 }
 

@@ -5,7 +5,8 @@ import React, {
   StyleSheet,
   View,
   Text,
-  TouchableHighlight
+  TouchableHighlight,
+  PropTypes
 } from 'react-native'
 
 export default class Tabbar extends Component {
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
     fontSize: 12,
-    color: '#fff',
+    color: '#fff'
   },
   // Active
   active: {
@@ -102,7 +103,15 @@ const styles = StyleSheet.create({
   game: {
     backgroundColor: '#3471AE'
   },
-  players: {},
+  players: {
+    backgroundColor: '#BD4C29'
+  },
   teams: {},
   roster: {}
 })
+
+Tabbar.propTypes = {
+  actions: PropTypes.object,
+  tab: PropTypes.string
+}
+

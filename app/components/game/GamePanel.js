@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   infoProcess: {
     color: '#fff',
     fontSize: 10,
-    marginTop: 28,
+    marginTop: 22,
     marginBottom: 3
   },
   processUnstart: {

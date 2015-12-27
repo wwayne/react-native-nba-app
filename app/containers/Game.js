@@ -41,5 +41,3 @@ Game.propTypes = {
   game: PropTypes.object,
   actions: PropTypes.object
 }
-
-
