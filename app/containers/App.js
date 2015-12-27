@@ -69,7 +69,8 @@ export default connect(state => {
       standing: state.standing
     },
     player: {
-      playerList: state.playerList
+      playerList: state.playerList,
+      playerLoaded: state.playerLoaded
     }
   }
 }, dispatch => {

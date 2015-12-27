@@ -125,7 +125,7 @@ const producer = {
   },
 
   /**
-   * @return [{firstName, lastName, name, id, teamId, teamCity, teamName}]
+   * @return [{firstName, lastName, name, id, teamId, teamCity, teamName, teamAbbr}]
    */
   playerList: (res) => {
     const data = res.resultSets[0].rowSet
@@ -142,7 +142,8 @@ const producer = {
         name: nameArray[1] + ' ' + nameArray[0],
         teamId: item[6],
         teamCity: item[7],
-        teamName: item[8]
+        teamName: item[8],
+        teamAbbr: item[9]
       }
     })
   },

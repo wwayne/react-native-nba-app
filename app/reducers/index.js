@@ -8,6 +8,7 @@ import unstart from './unstart'
 import standing from './standing'
 import application from './application'
 import playerList from './playerList'
+import playerLoaded from './playerLoaded'
 
 const reducers = combineReducers({
   unstart,
@@ -15,7 +16,8 @@ const reducers = combineReducers({
   over,
   standing,
   application,
-  playerList
+  playerList,
+  playerLoaded
 })
 
 export default reducers

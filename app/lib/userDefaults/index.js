@@ -22,8 +22,15 @@ const userDefaults = {
   get: (key) => {
     return new Promise((resolve, reject) => {
       RNUserDefaults.getString(key, (data) => {
-        if (data.length > 0) return resolve(JSON.parse(data))
-        reject('Not found')
+        if (data) {
+          return resolve({
+            found: true,
+            data: JSON.parse(data)
+          })
+        }
+        resolve({
+          found: false
+        })
       })
     })
   },

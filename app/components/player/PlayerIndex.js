@@ -7,11 +7,13 @@ import React, {
   Text,
   ListView,
   TextInput,
-  PropTypes
+  PropTypes,
+  TouchableHighlight
 } from 'react-native'
 
 import {Icon} from 'react-native-icons'
 import Tabbar from '../share/Tabbar'
+import PlayerDetail from './PlayerDetail'
 
 export default class PlayerIndex extends Component {
 
@@ -24,6 +26,7 @@ export default class PlayerIndex extends Component {
       })
     }
     this.playerList = null
+    this.searchRecent = []
     this.inputDelay = null
     this.mount = true
   }
@@ -31,11 +34,13 @@ export default class PlayerIndex extends Component {
   componentDidMount () {
     const {actions} = this.props
     actions.getPlayerList()
+    actions.getSearchRecord()
   }
 
   componentWillReceiveProps (props) {
     const {playerList} = props
     this.playerList = playerList.data
+    this.searchRecent = playerList.recent
   }
 
   componentWillUnmount () {
@@ -68,22 +73,39 @@ export default class PlayerIndex extends Component {
     }
   }
 
+  selectPlayer (player) {
+    const {actions, navigator} = this.props
+    actions.setSearchRecord(player)
+    navigator.push({
+      name: 'PlayerDetail',
+      component: PlayerDetail,
+      player
+    })
+  }
+
   renderRow (player, _, index) {
     return (
-      <View style={styles.panel}>
-        <View style={styles.panelLeft}>
-          <Text style={styles.panelName}>{player.name}</Text>
-          <Text style={styles.panelTeam}>{player.teamCity + ' ' + player.teamName}</Text>
+      <TouchableHighlight onPress={this.selectPlayer.bind(this, player)} underlayColor='transparent'>
+        <View style={styles.panel}>
+          <View style={styles.panelLeft}>
+            <Text style={styles.panelName}>{player.name}</Text>
+            <Text style={styles.panelTeam}>{player.teamCity + ' ' + player.teamName}</Text>
+          </View>
+          <View style={styles.panelRight}>
+            <Icon name='ion|ios-arrow-right' size={16} color='#6B7C96' style={styles.enterIcon} />
+          </View>
         </View>
-        <View style={styles.panelRight}>
-          <Icon name='ion|ios-arrow-right' size={16} color='#6B7C96' style={styles.enterIcon} />
-        </View>
-      </View>
+      </TouchableHighlight>
     )
   }
 
   render () {
     const {text, dataSource} = this.state
+
+    let myDataSource = dataSource
+    if (!text.length) {
+      myDataSource = dataSource.cloneWithRows(this.searchRecent)
+    }
 
     return (
       <View style={styles.container}>
@@ -105,7 +127,7 @@ export default class PlayerIndex extends Component {
         </View>
         <Tabbar tab={'players'} {...this.props}/>
         <ListView
-          dataSource={dataSource}
+          dataSource={myDataSource}
           renderRow={this.renderRow.bind(this)}
           style={styles.list}
         />
@@ -194,5 +216,6 @@ const styles = StyleSheet.create({
 })
 
 PlayerIndex.propTypes = {
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  navigator: PropTypes.object
 }

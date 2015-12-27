@@ -6,6 +6,7 @@ import {PLAYER} from '../constant'
 
 const initialState = {
   isLoaded: false,
+  recent: [],
   data: []
 }
 
@@ -14,6 +15,12 @@ const actionHandler = {
     return {
       isLoaded: true,
       data: action.data
+    }
+  },
+
+  [PLAYER.RECENT]: (state, action) => {
+    return {
+      recent: action.data
     }
   }
 }
