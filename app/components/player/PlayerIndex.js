@@ -156,18 +156,21 @@ const styles = StyleSheet.create({
   },
   textInput: {
     backgroundColor: '#BD4C29',
-    borderWidth: 0,
+    borderRadius: 5,
     color: '#fff',
     fontSize: 14,
     height: 40,
-    paddingLeft: 5,
+    paddingHorizontal: 5,
     width: 260
   },
   searchIconView: {
     backgroundColor: '#BD4C29',
-    width: 40,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
     height: 40,
-    position: 'relative'
+    left: -5,
+    position: 'relative',
+    width: 40
   },
   searchIcon: {
     width: 16,
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
   panel: {
     borderColor: '#979797',
     borderBottomWidth: 1,
-    height: 55,
+    height: 65,
     flexDirection: 'row'
   },
   panelLeft: {
@@ -202,7 +205,7 @@ const styles = StyleSheet.create({
     fontSize: 13
   },
   panelRight: {
-    height: 55,
+    height: 65,
     position: 'relative',
     width: 30
   },
@@ -212,7 +215,7 @@ const styles = StyleSheet.create({
     marginLeft: -15,
     marginTop: -15,
     position: 'absolute',
-    top: 27.5,
+    top: 32.5,
     width: 30
   }
 })

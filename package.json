@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bluebird": "^3.0.5",
+    "d3": "^3.5.12",
     "es6-enum": "^1.0.0",
     "moment-timezone": "^0.4.1",
     "react-native": "^0.17.0",

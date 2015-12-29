@@ -6,8 +6,10 @@ import { APP } from '../constant'
  * Switch tab
  */
 export function changeTab (tab) {
-  return Promise.resolve({
-    type: APP.TAB,
-    data: tab
-  })
+  return (dispatch) => {
+    return Promise.resolve(dispatch({
+      type: APP.TAB,
+      data: tab
+    }))
+  }
 }

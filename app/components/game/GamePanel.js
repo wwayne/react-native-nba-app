@@ -94,6 +94,7 @@ GamePanel.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
+    borderRadius: 5,
     flex: 1,
     flexDirection: 'row',
     height: 95,
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
   // Team
   team: {
     alignItems: 'center',
+    borderRadius: 5,
     flex: 1.5
   },
   teamLogo: {
