@@ -28,7 +28,9 @@ export default class PlayerDetail extends Component {
     const {player} = this.props.route
 
     actions.getPlayerDetail(player.id)
-    actions.getPlayerLog(player.id)
+      .then(() => {
+        actions.getPlayerLog(player.id)
+      })
   }
 
   componentWillReceiveProps (props) {

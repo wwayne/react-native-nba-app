@@ -5,7 +5,6 @@ export default function logger (store) {
     const result = next(action)
     // console.log('state after dispatch', store.getState())
     // console.groupEnd()
-
     return result
   }
 }

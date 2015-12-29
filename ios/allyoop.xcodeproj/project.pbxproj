@@ -25,7 +25,7 @@
 		B003DD751C09EDA3000D1852 /* FAKIcon.h in Resources */ = {isa = PBXBuildFile; fileRef = B003DD731C09EDA3000D1852 /* FAKIcon.h */; };
 		B003DD761C09EDA3000D1852 /* FAKIcon.m in Resources */ = {isa = PBXBuildFile; fileRef = B003DD741C09EDA3000D1852 /* FAKIcon.m */; };
 		B003DD781C09EE7B000D1852 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B003DD771C09EE7B000D1852 /* Images.xcassets */; };
-		B035B2891C2FCC7600D8168B /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B035B2881C2FCC7600D8168B /* main.jsbundle */; };
+		B02722771C30B669006181DF /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B02722761C30B669006181DF /* main.jsbundle */; };
 		B04702381C1A53C20046F24C /* RNUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04702371C1A53C20046F24C /* RNUserDefaults.swift */; };
 		B047023B1C1A541B0046F24C /* RNUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B047023A1C1A541B0046F24C /* RNUserDefaults.m */; };
 		B0BCA2A91C0BD28E0034908C /* FAKIonIcons.h in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */; };
@@ -118,13 +118,6 @@
 			remoteGlobalIDString = 2F5A3EB81ACDBF8000439386;
 			remoteInfo = ReactNativeIcons;
 		};
-		B05CEB981C1C1A5A0022B5FD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B05CEB941C1C1A5A0022B5FD /* RNUserDefaults.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B05CEB821C1C18D00022B5FD;
-			remoteInfo = RNUserDefaults;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -151,11 +144,10 @@
 		B003DD731C09EDA3000D1852 /* FAKIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIcon.h; sourceTree = "<group>"; };
 		B003DD741C09EDA3000D1852 /* FAKIcon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIcon.m; sourceTree = "<group>"; };
 		B003DD771C09EE7B000D1852 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B035B2881C2FCC7600D8168B /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../main.jsbundle; sourceTree = "<group>"; };
+		B02722761C30B669006181DF /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../main.jsbundle; sourceTree = "<group>"; };
 		B04702371C1A53C20046F24C /* RNUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNUserDefaults.swift; path = allyoop/RNUserDefaults.swift; sourceTree = "<group>"; };
 		B047023A1C1A541B0046F24C /* RNUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNUserDefaults.m; path = allyoop/RNUserDefaults.m; sourceTree = "<group>"; };
 		B05CEB5E1C1BA6A20022B5FD /* RNUserDefaults-bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RNUserDefaults-bridge.h"; path = "allyoop/RNUserDefaults-bridge.h"; sourceTree = "<group>"; };
-		B05CEB941C1C1A5A0022B5FD /* RNUserDefaults.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNUserDefaults.xcodeproj; path = "../node_modules/react-native-user-defaults/RNUserDefaults/RNUserDefaults.xcodeproj"; sourceTree = "<group>"; };
 		B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIonIcons.h; sourceTree = "<group>"; };
 		B0BCA2A71C0BD28E0034908C /* FAKIonIcons.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIonIcons.m; sourceTree = "<group>"; };
 		B0BCA2A81C0BD28E0034908C /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
@@ -298,7 +290,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				B05CEB941C1C1A5A0022B5FD /* RNUserDefaults.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -324,7 +315,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				B035B2881C2FCC7600D8168B /* main.jsbundle */,
+				B02722761C30B669006181DF /* main.jsbundle */,
 				B003DD791C09F0C8000D1852 /* icon */,
 				13B07FAE1A68108700A75B9A /* allyoop */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -363,14 +354,6 @@
 				B003DD741C09EDA3000D1852 /* FAKIcon.m */,
 			);
 			name = icon;
-			sourceTree = "<group>";
-		};
-		B05CEB951C1C1A5A0022B5FD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B05CEB991C1C1A5A0022B5FD /* libRNUserDefaults.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -483,10 +466,6 @@
 					ProductGroup = B003DD651C09EB2C000D1852 /* Products */;
 					ProjectRef = B003DD641C09EB2C000D1852 /* ReactNativeIcons.xcodeproj */;
 				},
-				{
-					ProductGroup = B05CEB951C1C1A5A0022B5FD /* Products */;
-					ProjectRef = B05CEB941C1C1A5A0022B5FD /* RNUserDefaults.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -574,13 +553,6 @@
 			remoteRef = B003DD681C09EB2D000D1852 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B05CEB991C1C1A5A0022B5FD /* libRNUserDefaults.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNUserDefaults.a;
-			remoteRef = B05CEB981C1C1A5A0022B5FD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -602,7 +574,7 @@
 				B003DD751C09EDA3000D1852 /* FAKIcon.h in Resources */,
 				B003DD761C09EDA3000D1852 /* FAKIcon.m in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				B035B2891C2FCC7600D8168B /* main.jsbundle in Resources */,
+				B02722771C30B669006181DF /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,6 +687,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

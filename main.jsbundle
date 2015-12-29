@@ -55458,14 +55458,10 @@ getPlayerLog:_player.getPlayerLog};exports.default =
 
 actions;module.exports = exports.default;
 });
-__d('allyoop/app/actions/game.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});exports.getGameGeneral = getGameGeneral;exports.getGameDetail = getGameDetail;exports.getLeagueStanding = getLeagueStanding;function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}var _momentTimezone=require(
-
-'moment-timezone/index.js');var _momentTimezone2=_interopRequireDefault(_momentTimezone);var _channel=require(
+__d('allyoop/app/actions/game.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});exports.getGameGeneral = getGameGeneral;exports.getGameDetail = getGameDetail;exports.getLeagueStanding = getLeagueStanding;function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}var _channel=require(
 
 'allyoop/app/channel/index.js');var _channel2=_interopRequireDefault(_channel);var _constant=require(
 'allyoop/app/constant.js');'use strict';
-var dateString=_momentTimezone2.default.tz(Date.now(),'America/Los_Angeles').format();
-var dateArray=dateString.replace('T','-').split('-');
 
 
 
@@ -55489,7 +55485,7 @@ data:data});});};}
 
 
 
-function getGameDetail(id,type){
+function getGameDetail(id,type,year,month,date){
 return function(dispatch,getStore){
 
 if(type === 'over'){
@@ -55503,7 +55499,7 @@ data:game.detail.data});}}
 
 
 var channel=new _channel2.default();
-return channel.getGameDetail(dateArray[0],dateArray[1],dateArray[2],id).
+return channel.getGameDetail(year,month,date,id).
 then(function(data){
 return dispatch({
 type:_constant.GAME.DETAIL,
@@ -55526,13 +55522,1079 @@ type:_constant.GAME.STANDING,
 data:getStore().standing.data});}
 
 
-
+var year=new Date().getFullYear();
 var channel=new _channel2.default();
-return channel.getLeagueStanding(dateArray[0]).
+return channel.getLeagueStanding(year).
 then(function(data){
 return dispatch({
 type:_constant.GAME.STANDING,
 data:data});});};}
+});
+__d('allyoop/app/channel/index.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}var _address=require(
+
+'allyoop/app/channel/address.js');var _address2=_interopRequireDefault(_address);var _producer=require(
+'allyoop/app/channel/producer.js');var _producer2=_interopRequireDefault(_producer);'use strict';var 
+
+Channel=(function(){
+
+function Channel(options){_classCallCheck(this,Channel);
+this.options = options;}_createClass(Channel,[{key:'getGameGeneral',value:
+
+
+function getGameGeneral(year,month,date){var _this=this;
+var gen_url=_address2.default.gameGeneral('' + year + month + date);
+return window.fetch(gen_url).
+then(function(res){return res.json();}).
+then(function(data){
+var allGames=_producer2.default.gameGeneral(data);
+if(allGames.live.length + allGames.unstart.length + allGames.over.length === 0){
+return _this.getGameGeneral(year,month,parseInt(date,10) + 1);}
+
+allGames.gameDate = year + '-' + month + '-' + date;
+return allGames;});}},{key:'getGameDetail',value:
+
+
+
+function getGameDetail(year,month,date,gameId){
+var det_url=_address2.default.gameDetail('' + year + month + date,gameId);
+return window.fetch(det_url).
+then(function(res){return res.json();}).
+then(function(data){return _producer2.default.gameDetail(data);});}},{key:'getLeagueStanding',value:
+
+
+function getLeagueStanding(year){
+var stand_url=_address2.default.leagueStanding(year);
+return window.fetch(stand_url).
+then(function(res){return res.json();}).
+then(function(data){return _producer2.default.leagueStanding(data);});}},{key:'getPlayerList',value:
+
+
+function getPlayerList(){
+var url=_address2.default.playerList();
+return window.fetch(url).
+then(function(res){return res.json();}).
+then(function(data){return _producer2.default.playerList(data);});}},{key:'getPlayerInfo',value:
+
+
+function getPlayerInfo(id){
+var url=_address2.default.playerInfo(id);
+return window.fetch(url).
+then(function(res){return res.json();}).
+then(function(data){return _producer2.default.playerInfo(data);});}},{key:'getPlayerLog',value:
+
+
+function getPlayerLog(id){
+var url=_address2.default.playerLog(id);
+return window.fetch(url).
+then(function(res){return res.json();}).
+then(function(data){return _producer2.default.playerLog(data);});}}]);return Channel;})();exports.default = Channel;module.exports = exports.default;
+});
+__d('allyoop/app/channel/address.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,'__esModule',{value:true});
+
+var d=new Date();
+var season=d.getFullYear().toString() + '-' + (d.getFullYear() + 1).toString().substring(2,4);
+
+var address={
+
+
+
+
+
+gameGeneral:function(gameDate){
+return 'http://data.nba.com/data/5s/json/cms/noseason/scoreboard/' + gameDate + '/games.json';},
+
+
+
+
+
+
+gameDetail:function(gameDate,gameId){
+return 'http://data.nba.com/data/10s/json/cms/noseason/game/' + gameDate + '/' + gameId + '/boxscore.json';},
+
+
+
+
+
+
+leagueStanding:function(year){
+return 'http://data.nba.com/data/json/cms/' + year + '/league/standings.json';},
+
+
+playerList:function(){
+return 'http://stats.nba.com/stats/commonallplayers?IsOnlyCurrentSeason=0&LeagueID=00&Season=' + season;},
+
+
+playerInfo:function(id){
+return 'http://stats.nba.com/stats/commonplayerinfo?LeagueID=00&PlayerID=' + id + '&SeasonType=Regular+Season';},
+
+
+playerLog:function(id){
+return 'http://stats.nba.com/stats/playergamelog?LeagueID=00&PerMode=PerGame&PlayerID=' + id + '&Season=' + season + '&SeasonType=Regular+Season';}};exports.default = 
+
+
+
+address;module.exports = exports.default;
+});
+__d('allyoop/app/channel/producer.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,'__esModule',{value:true});
+
+var producer={
+
+
+
+gameGeneral:function(res){
+var result={
+unstart:[],
+live:[],
+over:[]};
+
+var item=undefined;
+
+res['sports_content']['games']['game'].forEach(function(game,index){
+item = {
+id:game.id,
+home:{},
+visitor:{},
+detail:{
+loaded:false,
+data:{}}};
+
+
+
+var sides=['home','visitor'];
+sides.forEach(function(key){
+item[key]['id'] = game[key]['id'];
+item[key]['team'] = game[key]['team_key'];
+item[key]['score'] = game[key]['score'];});
+
+
+var process=game['period_time'];
+switch(parseInt(process.game_status,10)){
+case 1:
+
+item.type = 'unstart';
+item.date = process.period_status;
+result.unstart.push(item);
+break;
+case 2:
+
+item.type = 'live';
+item.process = {
+time:process.game_clock || 'End',
+quarter:'Q' + process.period_value};
+
+result.live.push(item);
+break;
+case 3:
+
+item.type = 'over';
+result.over.push(item);
+break;
+default:
+return;}});
+
+
+
+return result;},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+gameDetail:function(res){
+var data=res.sports_content.game;
+var result={
+home:{},
+visitor:{}};
+
+
+Object.keys(result).forEach(function(side){
+result[side].team = data[side].team_key;
+result[side].score = data[side].score;
+result[side].player = data[side].players.player;});
+
+
+return result;},
+
+
+
+
+
+leagueStanding:function(res){
+
+var data=res.sports_content.standings.team;
+var result={};
+
+data.forEach(function(team){
+result[team.id] = result[team.id] || {};
+result[team.id].abbr = team.abbreviation;
+result[team.id].state = team.team_stats;});
+
+
+return result;},
+
+
+
+
+
+playerList:function(res){
+var data=res.resultSets[0].rowSet;
+var currentYear=new Date().getFullYear() + '';
+var nameArray=undefined;
+return data.filter(function(item){
+return item[4] === currentYear;}).
+map(function(item){
+nameArray = item[1].split(', ');
+return {
+id:item[0],
+firstName:nameArray[1],
+lastName:nameArray[0],
+name:nameArray[1] + ' ' + nameArray[0],
+teamId:item[6],
+teamCity:item[7],
+teamName:item[8],
+teamAbbr:item[9]};});},
+
+
+
+
+
+
+
+playerInfo:function(res){
+var basicInfo=res.resultSets[0].rowSet[0];
+var gameInfo=res.resultSets[1].rowSet[0];
+return {
+id:basicInfo[0],
+firstName:basicInfo[1],
+lastName:basicInfo[2],
+pts:gameInfo[3],
+ast:gameInfo[4],
+reb:gameInfo[5],
+team:basicInfo[18],
+jersey:basicInfo[13],
+height:basicInfo[10],
+weight:basicInfo[11],
+birthday:basicInfo[6].split('T')[0],
+position:basicInfo[14],
+affiliation:basicInfo[9]};},
+
+
+
+
+
+
+
+playerLog:function(res){
+var logs=res.resultSets[0].rowSet;
+
+return logs.map(function(item){
+return {
+gameId:item[0],
+gameDate:item[3],
+matchup:item[4],
+result:item[5],
+min:item[6],
+pts:item[24],
+fg:item[7] + '-' + item[8],
+fgRate:item[9],
+threeP:item[10] + '-' + item[11],
+threePRate:item[12],
+ft:item[13] + '-' + item[14],
+ftRate:item[15],
+reb:item[18],
+ast:item[19],
+stl:item[20],
+blk:item[21],
+tov:item[22],
+foul:item[23],
+plusMinus:item[25]};});}};exports.default = 
+
+
+
+
+
+producer;module.exports = exports.default;
+});
+__d('allyoop/app/actions/player.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}var _constant=require(
+
+'allyoop/app/constant.js');var _channel=require(
+'allyoop/app/channel/index.js');var _channel2=_interopRequireDefault(_channel);var _libUserDefaults=require(
+'allyoop/app/lib/userDefaults/index.js');var _libUserDefaults2=_interopRequireDefault(_libUserDefaults);'use strict';
+
+var getPlayerList=function(){
+return function(dispatch,getStore){
+if(getStore().playerList.isLoaded){
+return dispatch({
+type:_constant.PLAYER.LIST,
+data:getStore().playerList.data});}
+
+
+var channel=new _channel2.default();
+channel.getPlayerList().
+then(function(data){
+return dispatch({
+type:_constant.PLAYER.LIST,
+data:data});}).
+
+
+catch(function(err){return console.error(err);});};};exports.getPlayerList = getPlayerList;
+
+
+
+var setSearchRecord=function(player){
+return function(dispatch){
+_libUserDefaults2.default.get(_constant.PLAYER.RECENT).
+then(function(recent){
+var originData=[];
+if(recent.found){
+originData = Object.assign([],recent.data);}
+
+
+
+if(originData.find(function(data,index){
+return data.id === player.id && index === 0;}))
+return;
+
+if(originData.length === 10)originData.pop();
+originData.unshift(player);
+return _libUserDefaults2.default.set(_constant.PLAYER.RECENT,originData).
+then(function(){
+return dispatch({
+type:_constant.PLAYER.RECENT,
+data:originData});});});};};exports.setSearchRecord = setSearchRecord;
+
+
+
+
+
+
+var getSearchRecord=function(id){
+return function(dispatch){
+_libUserDefaults2.default.get(_constant.PLAYER.RECENT).
+then(function(recent){
+var originData=[];
+if(recent.found){
+originData = Object.assign([],recent.data);}
+
+return dispatch({
+type:_constant.PLAYER.RECENT,
+data:originData});});};};exports.getSearchRecord = getSearchRecord;
+
+
+
+
+
+var getPlayerDetail=function(id){
+return function(dispatch,getStore){
+if(getStore().playerLoaded[id]){
+return dispatch({
+type:_constant.PLAYER.DETAIL,
+data:getStore().playerLoaded[id],
+id:id});}
+
+
+var channel=new _channel2.default();
+channel.getPlayerInfo(id).
+then(function(data){
+return dispatch({
+type:_constant.PLAYER.DETAIL,
+data:data,
+id:id});}).
+
+
+catch(function(err){return console.error(err);});};};exports.getPlayerDetail = getPlayerDetail;
+
+
+
+var getPlayerLog=function(id){
+return function(dispatch,getStore){
+if(getStore().playerLoaded[id] && getStore().playerLoaded[id].log){
+return dispatch({
+type:_constant.PLAYER.LOG,
+data:getStore().playerLoaded[id].log,
+id:id});}
+
+
+var channel=new _channel2.default();
+channel.getPlayerLog(id).
+then(function(data){
+return dispatch({
+type:_constant.PLAYER.LOG,
+data:data,
+id:id});}).
+
+
+catch(function(err){return console.error(err);});};};exports.getPlayerLog = getPlayerLog;
+});
+__d('allyoop/app/lib/userDefaults/index.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _NativeModules=require(
+
+
+
+
+
+
+'NativeModules');'use strict';
+
+
+
+var userDefaults={
+set:function(key,value){
+return new Promise(function(resolve,reject){
+var jsonValue=JSON.stringify(value);
+_NativeModules.RNUserDefaults.setObject(key,jsonValue,function(data){
+resolve(data);});});},
+
+
+
+
+get:function(key){
+return new Promise(function(resolve,reject){
+_NativeModules.RNUserDefaults.getString(key,function(data){
+if(data){
+return resolve({
+found:true,
+data:JSON.parse(data)});}
+
+
+resolve({
+found:false});});});},
+
+
+
+
+
+remove:function(key){
+return new Promise(function(resolve,reject){
+_NativeModules.RNUserDefaults.removeObject(key,function(data){
+resolve(data);});});},
+
+
+
+
+removeAll:function(){}};exports.default = 
+
+
+
+
+userDefaults;module.exports = exports.default;
+});
+__d('allyoop/app/actions/application.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});exports.changeTab = changeTab;var _constant=require(
+
+'allyoop/app/constant.js');'use strict';
+
+
+
+
+function changeTab(tab){
+return {
+type:_constant.APP.TAB,
+data:tab};}
+});
+__d('allyoop/app/containers/Game.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
+
+
+
+
+
+'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _componentsGameGameList=require(
+
+'allyoop/app/components/game/GameList.js');var _componentsGameGameList2=_interopRequireDefault(_componentsGameGameList);var _componentsShareNavigatorBar=require(
+'allyoop/app/components/share/NavigatorBar.js');var _componentsShareNavigatorBar2=_interopRequireDefault(_componentsShareNavigatorBar);'use strict';var 
+
+Game=(function(_Component){_inherits(Game,_Component);function Game(){_classCallCheck(this,Game);_get(Object.getPrototypeOf(Game.prototype),'constructor',this).apply(this,arguments);}_createClass(Game,[{key:'componentDidMount',value:
+
+function componentDidMount(){var 
+actions=this.props.actions;
+actions.getLeagueStanding();}},{key:'renderScene',value:
+
+
+function renderScene(route,navigator){
+if(route.component){
+var _Component2=route.component;
+return _reactNative2.default.createElement(_Component2,_extends({navigator:navigator,route:route},this.props));}}},{key:'render',value:
+
+
+
+function render(){
+return (
+_reactNative2.default.createElement(_reactNative.Navigator,{
+initialRoute:{
+name:'GameList',
+component:_componentsGameGameList2.default},
+
+navigationBar:_reactNative2.default.createElement(_componentsShareNavigatorBar2.default,null),
+renderScene:this.renderScene.bind(this)}));}}]);return Game;})(_reactNative.Component);exports.default = Game;
+
+
+
+
+
+Game.propTypes = {
+game:_reactNative.PropTypes.object,
+actions:_reactNative.PropTypes.object};module.exports = exports.default;
+});
+__d('allyoop/app/components/game/GameList.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
+
+
+
+
+
+
+
+
+
+'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _reactNativeIcons=require(
+
+'react-native-icons/index.ios.js');var _momentTimezone=require(
+'moment-timezone/index.js');var _momentTimezone2=_interopRequireDefault(_momentTimezone);var _GamePanel=require(
+'allyoop/app/components/game/GamePanel.js');var _GamePanel2=_interopRequireDefault(_GamePanel);var _shareTabbar=require(
+'allyoop/app/components/share/Tabbar.js');var _shareTabbar2=_interopRequireDefault(_shareTabbar);'use strict';var 
+
+GameList=(function(_Component){_inherits(GameList,_Component);
+function GameList(props){_classCallCheck(this,GameList);
+_get(Object.getPrototypeOf(GameList.prototype),'constructor',this).call(this,props);
+this.state = {
+dataSource:new _reactNative.ListView.DataSource({
+rowHasChanged:function(row1,row2){return row1 !== row2;}}),
+
+date:this.getToday(),
+isToday:true};
+
+this.mount = true;}_createClass(GameList,[{key:'componentDidMount',value:
+
+
+
+
+
+function componentDidMount(){var 
+actions=this.props.actions;var 
+date=this.state.date;
+actions.getGameGeneral(date[0],date[1],date[2]);}},{key:'componentWillReceiveProps',value:
+
+
+function componentWillReceiveProps(props){var 
+live=props.live;var over=props.over;var unstart=props.unstart;var actions=props.actions;var 
+dataSource=this.state.dataSource;
+
+var rows=live.data.concat(unstart.data).concat(over.data);
+if(live.data.length > 0){
+setTimeout(function(){
+actions.getGameGeneral();},
+5000);}else 
+if(unstart.data.length > 0){
+setTimeout(function(){
+actions.getGameGeneral();},
+120000);}
+
+
+if(this.mount){
+this.setState({
+dataSource:dataSource.cloneWithRows(rows)});}}},{key:'componentWillUnmount',value:
+
+
+
+
+function componentWillUnmount(){
+this.mount = false;}},{key:'renderRow',value:
+
+
+function renderRow(game,_,index){var 
+date=this.state.date;
+if(this.mount){
+return _reactNative2.default.createElement(_GamePanel2.default,_extends({game:game,date:date,index:index},this.props));}}},{key:'getToday',value:
+
+
+
+
+function getToday(){
+var dateString=_momentTimezone2.default.tz(Date.now(),'America/Los_Angeles').format();
+var dateArray=dateString.replace('T','-').split('-');
+return dateArray.splice(0,3);}},{key:'getYesterday',value:
+
+
+function getYesterday(){
+var d=new Date();
+d.setDate(d.getDate() - 1);
+var dateString=_momentTimezone2.default.tz(d,'America/Los_Angeles').format();
+var dateArray=dateString.replace('T','-').split('-');
+return dateArray.splice(0,3);}},{key:'changeDate',value:
+
+
+
+function changeDate(){var 
+isToday=this.state.isToday;var 
+actions=this.props.actions;
+
+if(isToday){
+var date=this.getYesterday();
+actions.getGameGeneral(date[0],date[1],date[2]);
+this.setState({
+date:date,
+isToday:false});}else 
+
+{
+var date=this.getToday();
+actions.getGameGeneral(date[0],date[1],date[2]);
+this.setState({
+date:date,
+isToday:true});}}},{key:'render',value:
+
+
+
+
+function render(){var _state=
+this.state;var dataSource=_state.dataSource;var date=_state.date;var _props=
+this.props;var live=_props.live;var over=_props.over;var unstart=_props.unstart;
+var gameCount=live.data.length + over.data.length + unstart.data.length;
+
+return (
+_reactNative2.default.createElement(_reactNative.View,{style:styles.container},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.header},
+_reactNative2.default.createElement(_reactNative.TouchableHighlight,{onPress:this.changeDate.bind(this),underlayColor:'transparent'},
+_reactNative2.default.createElement(_reactNativeIcons.Icon,{name:'ion|pizza',
+size:18,
+color:'#fff',
+style:styles.calendarIcon})),
+
+
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.gameDate},date[0] + '-' + date[1] + '-' + date[2]),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.gameCount},gameCount + ' Games')),
+
+_reactNative2.default.createElement(_shareTabbar2.default,_extends({tab:'game'},this.props)),
+_reactNative2.default.createElement(_reactNative.ListView,{
+dataSource:dataSource,
+renderRow:this.renderRow.bind(this),
+style:styles.listView})));}}]);return GameList;})(_reactNative.Component);exports.default = GameList;
+
+
+
+
+
+
+GameList.propTypes = {
+actions:_reactNative.PropTypes.object,
+live:_reactNative.PropTypes.object,
+unstart:_reactNative.PropTypes.object,
+over:_reactNative.PropTypes.object};
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flex:1},
+
+
+header:{
+backgroundColor:'#4D98E4',
+height:100,
+flexDirection:'column',
+position:'relative',
+paddingLeft:15},
+
+calendarIcon:{
+alignSelf:'flex-end',
+height:15,
+marginRight:15,
+marginTop:12,
+width:25},
+
+gameDate:{
+color:'#fff',
+fontWeight:'200',
+fontSize:25},
+
+gameCount:{
+color:'#fff',
+fontWeight:'200',
+fontSize:14},
+
+
+listView:{
+backgroundColor:'#fff',
+flex:6,
+flexDirection:'column',
+paddingTop:12}});module.exports = exports.default;
+});
+__d('react-native-icons/index.ios.js',function(global, require, module, exports) {  module.exports = {
+Icon:require('SMXIconImage'),
+TabBarIOS:require('SMXTabBarIOS'),
+Spinner:require('SMXLoadingImage')};
+});
+__d('SMXIconImage',function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+
+
+
+
+
+
+var React=require('react-native/Libraries/react-native/react-native.js');var 
+StyleSheet=React.StyleSheet;var View=React.View;var requireNativeComponent=React.requireNativeComponent;var processColor=React.processColor;
+var shimAssert=require('react-native-icons/shim-assert.js');
+
+var ICON_REF='icon';
+
+var SMXIconImage=React.createClass({displayName:'SMXIconImage',
+propTypes:{
+name:React.PropTypes.string,
+size:React.PropTypes.number,
+color:React.PropTypes.string,
+
+
+
+
+
+accessible:React.PropTypes.bool,
+
+
+
+accessibilityLabel:React.PropTypes.string,
+
+
+
+
+
+testID:React.PropTypes.string,
+icon:React.PropTypes.object},
+
+
+setNativeProps:function(props){
+this.refs[ICON_REF].setNativeProps(props);},
+
+
+render:function(){
+var style=[styles.base,this.props.style];
+shimAssert.basic(style,'style must be initialized');
+
+var name=this.props.name;
+shimAssert.basic(name,'name must be initialized');
+
+var size=this.props.size;
+shimAssert.basic(size,'size must be initialized');
+
+var color=this.props.color;
+
+var nativeProps=Object.assign({},this.props);
+
+if(!color && style.color){
+color = style.color;}
+
+
+nativeProps.style = style;
+nativeProps.icon = {
+name:name,
+size:size,
+color:processColor(color)};
+
+
+return React.createElement(SMXIconImageView,_extends({},nativeProps,{ref:ICON_REF}));}});
+
+
+
+var styles=StyleSheet.create({
+base:{
+overflow:'hidden'}});
+
+
+
+var SMXIconImageView=requireNativeComponent('FAKIconImage',SMXIconImage);
+
+module.exports = SMXIconImage;
+});
+__d('react-native-icons/shim-assert.js',function(global, require, module, exports) {  'use strict';
+
+
+module.exports = {
+
+basic:function(object,text){
+
+if(!object){
+throw Error(text);}}};
+});
+__d('SMXTabBarIOS',function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+
+
+
+
+
+
+var React=require('react-native/Libraries/react-native/react-native.js');var 
+StyleSheet=React.StyleSheet;var requireNativeComponent=React.requireNativeComponent;var PropTypes=React.PropTypes;var processColor=React.processColor;
+var SMXTabBarIconItemIOS=require('SMXTabBarItemIOS');
+
+var SMXTabBarIOS=React.createClass({displayName:'SMXTabBarIOS',
+propTypes:{
+tintColor:PropTypes.string,
+barTintColor:PropTypes.string,
+translucent:PropTypes.bool},
+
+
+statics:{
+Item:SMXTabBarIconItemIOS},
+
+
+render:function(){
+var nativeProps={
+tintColor:this.props.tintColor,
+barTintColor:this.props.barTintColor,
+translucent:this.props.translucent};
+
+
+return (
+React.createElement(SMXIconTabBar,_extends({style:[styles.tabGroup,this.props.style]},nativeProps),
+this.props.children));}});
+
+
+
+
+
+var styles=StyleSheet.create({
+tabGroup:{
+flex:1}});
+
+
+
+var SMXIconTabBar=requireNativeComponent('SMXTabBar',SMXTabBarIOS);
+
+module.exports = SMXTabBarIOS;
+});
+__d('SMXTabBarItemIOS',function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+
+
+
+
+
+
+var React=require('react-native/Libraries/react-native/react-native.js');var 
+Image=React.Image;var StyleSheet=React.StyleSheet;var View=React.View;var requireNativeComponent=React.requireNativeComponent;var PropTypes=React.PropTypes;var Dimensions=React.Dimensions;
+
+var onlyChild=React.Children.only;var 
+
+
+StaticContainer=(function(_React$Component){_inherits(StaticContainer,_React$Component);function StaticContainer(){_classCallCheck(this,StaticContainer);_get(Object.getPrototypeOf(StaticContainer.prototype),'constructor',this).apply(this,arguments);}_createClass(StaticContainer,[{key:'shouldComponentUpdate',value:
+
+function shouldComponentUpdate(nextProps){
+return !!nextProps.shouldUpdate;}},{key:'render',value:
+
+
+function render(){
+var child=this.props.children;
+return child === null || child === false?null:onlyChild(child);}}]);return StaticContainer;})(React.Component);
+
+
+
+
+var SmixxTabBarItemIOS=React.createClass({displayName:'SmixxTabBarItemIOS',
+propTypes:{
+onPress:PropTypes.func.isRequired,
+selected:PropTypes.bool.isRequired,
+badgeValue:PropTypes.string,
+title:PropTypes.string,
+icon:PropTypes.object,
+selectedIcon:PropTypes.object},
+
+
+getInitialState:function(){
+return {
+hasBeenSelected:false};},
+
+
+
+componentWillMount:function(){
+if(this.props.selected){
+this.setState({hasBeenSelected:true});}},
+
+
+
+componentWillReceiveProps:function(nextProps){
+if(this.state.hasBeenSelected || nextProps.selected){
+this.setState({hasBeenSelected:true});}},
+
+
+
+render:function(){
+var tabContents=null;
+
+
+if(this.state.hasBeenSelected){
+tabContents = 
+React.createElement(StaticContainer,{shouldUpdate:this.props.selected},
+this.props.children);}else 
+
+
+{
+tabContents = React.createElement(View,null);}
+
+
+var iconName=this.props.iconName;
+var iconSize=this.props.iconSize || 28;
+
+
+var selectedIconName=this.props.selectedIconName || this.props.iconName;
+var selectedIconSize=this.props.selectedIconSize || this.props.iconSize;
+
+var icon={name:iconName,size:iconSize};
+var selectedIcon={name:selectedIconName,size:selectedIconSize};
+
+return (
+React.createElement(SmixxTabBarItem,{
+icon:icon,
+selectedIcon:selectedIcon,
+onPress:this.props.onPress,
+selected:this.props.selected,
+badgeValue:this.props.badgeValue,
+title:this.props.title,
+style:[styles.tab,this.props.style]},
+tabContents));}});
+
+
+
+
+
+var styles=StyleSheet.create({
+tab:{
+position:'absolute',
+top:0,
+right:0,
+bottom:0,
+left:0}});
+
+
+
+var SmixxTabBarItem=requireNativeComponent('SMXTabBarItem',SmixxTabBarItemIOS);
+module.exports = SmixxTabBarItemIOS;
+});
+__d('SMXLoadingImage',function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+
+
+
+
+
+
+var React=require('react-native/Libraries/react-native/react-native.js');var 
+StyleSheet=React.StyleSheet;var View=React.View;var requireNativeComponent=React.requireNativeComponent;var Animated=React.Animated;var Easing=React.Easing;var processColor=React.processColor;
+
+var shimAssert=require('react-native-icons/shim-assert.js');
+
+var SMXLoadingImage=React.createClass({displayName:'SMXLoadingImage',
+propTypes:{
+name:React.PropTypes.string,
+size:React.PropTypes.number,
+color:React.PropTypes.string,
+
+
+
+
+
+accessible:React.PropTypes.bool,
+
+
+
+accessibilityLabel:React.PropTypes.string,
+
+
+
+
+
+testID:React.PropTypes.string,
+icon:React.PropTypes.object},
+
+
+getInitialState:function(){
+return {
+angle:new Animated.Value(0)};},
+
+
+
+setNativeProps:function(props){},
+
+
+
+_animate:function(){
+this.state.angle.setValue(0);
+Animated.timing(this.state.angle,{
+toValue:360,
+duration:1200,
+easing:Easing.linear}).
+start(this._animate);},
+
+
+componentDidMount:function(){
+this._animate();},
+
+
+render:function(){
+var transformStyle={
+transform:[
+{
+rotate:this.state.angle.interpolate({
+inputRange:[0,360],
+outputRange:['0deg','360deg']})}]};
+
+
+
+
+
+var style=[styles.base,this.props.style];
+
+shimAssert.basic(style,'style must be initialized');
+
+var name=this.props.name;
+shimAssert.basic(name,'name must be initialized');
+
+var size=this.props.size;
+shimAssert.basic(size,'size must be initialized');
+
+var color=this.props.color;
+
+var nativeProps=Object.assign({},this.props);
+nativeProps.icon = {
+name:name,
+size:size,
+color:processColor(color)};
+
+
+return React.createElement(Animated.View,{style:[styles.base,style,transformStyle]},
+React.createElement(SMXLoadingImageView,_extends({style:{backgroundColor:'transparent'}},nativeProps)));}});
+
+
+
+
+
+var styles=StyleSheet.create({
+base:{
+overflow:'hidden'}});
+
+
+var SMXLoadingImageView=requireNativeComponent('FAKIconImage',SMXLoadingImage);
+
+module.exports = SMXLoadingImage;
 });
 __d('moment-timezone/index.js',function(global, require, module, exports) {  var moment=module.exports = require("moment-timezone/moment-timezone.js");
 moment.tz.load(require('moment-timezone/data/packed/latest.json'));
@@ -59748,1041 +60810,6 @@ __d('moment-timezone/data/packed/latest.json',function(global, require, module, 
 	]
 };
 });
-__d('allyoop/app/channel/index.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}var _address=require(
-
-'allyoop/app/channel/address.js');var _address2=_interopRequireDefault(_address);var _producer=require(
-'allyoop/app/channel/producer.js');var _producer2=_interopRequireDefault(_producer);'use strict';var 
-
-Channel=(function(){
-
-function Channel(options){_classCallCheck(this,Channel);
-this.options = options;}_createClass(Channel,[{key:'getGameGeneral',value:
-
-
-function getGameGeneral(year,month,date){var _this=this;
-var gen_url=_address2.default.gameGeneral('' + year + month + date);
-return window.fetch(gen_url).
-then(function(res){return res.json();}).
-then(function(data){
-var allGames=_producer2.default.gameGeneral(data);
-if(allGames.live.length + allGames.unstart.length + allGames.over.length === 0){
-return _this.getGameGeneral(year,month,parseInt(date,10) + 1);}
-
-allGames.gameDate = year + '-' + month + '-' + date;
-return allGames;});}},{key:'getGameDetail',value:
-
-
-
-function getGameDetail(year,month,date,gameId){
-var det_url=_address2.default.gameDetail('' + year + month + date,gameId);
-return window.fetch(det_url).
-then(function(res){return res.json();}).
-then(function(data){return _producer2.default.gameDetail(data);});}},{key:'getLeagueStanding',value:
-
-
-function getLeagueStanding(year){
-var stand_url=_address2.default.leagueStanding(year);
-return window.fetch(stand_url).
-then(function(res){return res.json();}).
-then(function(data){return _producer2.default.leagueStanding(data);});}},{key:'getPlayerList',value:
-
-
-function getPlayerList(){
-var url=_address2.default.playerList();
-return window.fetch(url).
-then(function(res){return res.json();}).
-then(function(data){return _producer2.default.playerList(data);});}},{key:'getPlayerInfo',value:
-
-
-function getPlayerInfo(id){
-var url=_address2.default.playerInfo(id);
-return window.fetch(url).
-then(function(res){return res.json();}).
-then(function(data){return _producer2.default.playerInfo(data);});}},{key:'getPlayerLog',value:
-
-
-function getPlayerLog(id){
-var url=_address2.default.playerLog(id);
-return window.fetch(url).
-then(function(res){return res.json();}).
-then(function(data){return _producer2.default.playerLog(data);});}}]);return Channel;})();exports.default = Channel;module.exports = exports.default;
-});
-__d('allyoop/app/channel/address.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,'__esModule',{value:true});
-
-var d=new Date();
-var season=d.getFullYear().toString() + '-' + (d.getFullYear() + 1).toString().substring(2,4);
-
-var address={
-
-
-
-
-
-gameGeneral:function(gameDate){
-return 'http://data.nba.com/data/5s/json/cms/noseason/scoreboard/' + gameDate + '/games.json';},
-
-
-
-
-
-
-gameDetail:function(gameDate,gameId){
-return 'http://data.nba.com/data/10s/json/cms/noseason/game/' + gameDate + '/' + gameId + '/boxscore.json';},
-
-
-
-
-
-
-leagueStanding:function(year){
-return 'http://data.nba.com/data/json/cms/' + year + '/league/standings.json';},
-
-
-playerList:function(){
-return 'http://stats.nba.com/stats/commonallplayers?IsOnlyCurrentSeason=0&LeagueID=00&Season=' + season;},
-
-
-playerInfo:function(id){
-return 'http://stats.nba.com/stats/commonplayerinfo?LeagueID=00&PlayerID=' + id + '&SeasonType=Regular+Season';},
-
-
-playerLog:function(id){
-return 'http://stats.nba.com/stats/playergamelog?LeagueID=00&PerMode=PerGame&PlayerID=' + id + '&Season=' + season + '&SeasonType=Regular+Season';}};exports.default = 
-
-
-
-address;module.exports = exports.default;
-});
-__d('allyoop/app/channel/producer.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,'__esModule',{value:true});
-
-var producer={
-
-
-
-gameGeneral:function(res){
-var result={
-unstart:[],
-live:[],
-over:[]};
-
-var item=undefined;
-
-res['sports_content']['games']['game'].forEach(function(game,index){
-item = {
-id:game.id,
-home:{},
-visitor:{},
-detail:{
-loaded:false,
-data:{}}};
-
-
-
-var sides=['home','visitor'];
-sides.forEach(function(key){
-item[key]['id'] = game[key]['id'];
-item[key]['team'] = game[key]['team_key'];
-item[key]['score'] = game[key]['score'];});
-
-
-var process=game['period_time'];
-switch(parseInt(process.game_status,10)){
-case 1:
-
-item.type = 'unstart';
-item.date = process.period_status;
-result.unstart.push(item);
-break;
-case 2:
-
-item.type = 'live';
-item.process = {
-time:process.game_clock || 'End',
-quarter:'Q' + process.period_value};
-
-result.live.push(item);
-break;
-case 3:
-
-item.type = 'over';
-result.over.push(item);
-break;
-default:
-return;}});
-
-
-
-return result;},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-gameDetail:function(res){
-var data=res.sports_content.game;
-var result={
-home:{},
-visitor:{}};
-
-
-Object.keys(result).forEach(function(side){
-result[side].team = data[side].team_key;
-result[side].score = data[side].score;
-result[side].player = data[side].players.player;});
-
-
-return result;},
-
-
-
-
-
-leagueStanding:function(res){
-
-var data=res.sports_content.standings.team;
-var result={};
-
-data.forEach(function(team){
-result[team.id] = result[team.id] || {};
-result[team.id].abbr = team.abbreviation;
-result[team.id].state = team.team_stats;});
-
-
-return result;},
-
-
-
-
-
-playerList:function(res){
-var data=res.resultSets[0].rowSet;
-var currentYear=new Date().getFullYear() + '';
-var nameArray=undefined;
-return data.filter(function(item){
-return item[4] === currentYear;}).
-map(function(item){
-nameArray = item[1].split(', ');
-return {
-id:item[0],
-firstName:nameArray[1],
-lastName:nameArray[0],
-name:nameArray[1] + ' ' + nameArray[0],
-teamId:item[6],
-teamCity:item[7],
-teamName:item[8],
-teamAbbr:item[9]};});},
-
-
-
-
-
-
-
-playerInfo:function(res){
-var basicInfo=res.resultSets[0].rowSet[0];
-var gameInfo=res.resultSets[1].rowSet[0];
-return {
-id:basicInfo[0],
-firstName:basicInfo[1],
-lastName:basicInfo[2],
-pts:gameInfo[3],
-ast:gameInfo[4],
-reb:gameInfo[5],
-team:basicInfo[18],
-jersey:basicInfo[13],
-height:basicInfo[10],
-weight:basicInfo[11],
-birthday:basicInfo[6].split('T')[0],
-position:basicInfo[14],
-affiliation:basicInfo[9]};},
-
-
-
-
-
-
-
-playerLog:function(res){
-var logs=res.resultSets[0].rowSet;
-
-return logs.map(function(item){
-return {
-gameId:item[0],
-gameDate:item[3],
-matchup:item[4],
-result:item[5],
-min:item[6],
-pts:item[24],
-fg:item[7] + '-' + item[8],
-fgRate:item[9],
-threeP:item[10] + '-' + item[11],
-threePRate:item[12],
-ft:item[13] + '-' + item[14],
-ftRate:item[15],
-reb:item[18],
-ast:item[19],
-stl:item[20],
-blk:item[21],
-tov:item[22],
-foul:item[23],
-plusMinus:item[25]};});}};exports.default = 
-
-
-
-
-
-producer;module.exports = exports.default;
-});
-__d('allyoop/app/actions/player.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}var _constant=require(
-
-'allyoop/app/constant.js');var _channel=require(
-'allyoop/app/channel/index.js');var _channel2=_interopRequireDefault(_channel);var _libUserDefaults=require(
-'allyoop/app/lib/userDefaults/index.js');var _libUserDefaults2=_interopRequireDefault(_libUserDefaults);'use strict';
-
-var getPlayerList=function(){
-return function(dispatch,getStore){
-if(getStore().playerList.isLoaded){
-return dispatch({
-type:_constant.PLAYER.LIST,
-data:getStore().playerList.data});}
-
-
-var channel=new _channel2.default();
-channel.getPlayerList().
-then(function(data){
-return dispatch({
-type:_constant.PLAYER.LIST,
-data:data});}).
-
-
-catch(function(err){return console.error(err);});};};exports.getPlayerList = getPlayerList;
-
-
-
-var setSearchRecord=function(player){
-return function(dispatch){
-_libUserDefaults2.default.get(_constant.PLAYER.RECENT).
-then(function(recent){
-var originData=[];
-if(recent.found){
-originData = Object.assign([],recent.data);}
-
-
-
-if(originData.find(function(data,index){
-return data.id === player.id && index === 0;}))
-return;
-
-if(originData.length === 10)originData.pop();
-originData.unshift(player);
-return _libUserDefaults2.default.set(_constant.PLAYER.RECENT,originData).
-then(function(){
-return dispatch({
-type:_constant.PLAYER.RECENT,
-data:originData});});});};};exports.setSearchRecord = setSearchRecord;
-
-
-
-
-
-
-var getSearchRecord=function(id){
-return function(dispatch){
-_libUserDefaults2.default.get(_constant.PLAYER.RECENT).
-then(function(recent){
-var originData=[];
-if(recent.found){
-originData = Object.assign([],recent.data);}
-
-return dispatch({
-type:_constant.PLAYER.RECENT,
-data:originData});});};};exports.getSearchRecord = getSearchRecord;
-
-
-
-
-
-var getPlayerDetail=function(id){
-return function(dispatch,getStore){
-if(getStore().playerLoaded[id]){
-return dispatch({
-type:_constant.PLAYER.DETAIL,
-data:getStore().playerLoaded[id],
-id:id});}
-
-
-var channel=new _channel2.default();
-channel.getPlayerInfo(id).
-then(function(data){
-return dispatch({
-type:_constant.PLAYER.DETAIL,
-data:data,
-id:id});}).
-
-
-catch(function(err){return console.error(err);});};};exports.getPlayerDetail = getPlayerDetail;
-
-
-
-var getPlayerLog=function(id){
-return function(dispatch,getStore){
-if(getStore().playerLoaded[id] && getStore().playerLoaded[id].log){
-return dispatch({
-type:_constant.PLAYER.LOG,
-data:getStore().playerLoaded[id].log,
-id:id});}
-
-
-var channel=new _channel2.default();
-channel.getPlayerLog(id).
-then(function(data){
-return dispatch({
-type:_constant.PLAYER.LOG,
-data:data,
-id:id});}).
-
-
-catch(function(err){return console.error(err);});};};exports.getPlayerLog = getPlayerLog;
-});
-__d('allyoop/app/lib/userDefaults/index.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _NativeModules=require(
-
-
-
-
-
-
-'NativeModules');'use strict';
-
-
-
-var userDefaults={
-set:function(key,value){
-return new Promise(function(resolve,reject){
-var jsonValue=JSON.stringify(value);
-_NativeModules.RNUserDefaults.setObject(key,jsonValue,function(data){
-resolve(data);});});},
-
-
-
-
-get:function(key){
-return new Promise(function(resolve,reject){
-_NativeModules.RNUserDefaults.getString(key,function(data){
-if(data){
-return resolve({
-found:true,
-data:JSON.parse(data)});}
-
-
-resolve({
-found:false});});});},
-
-
-
-
-
-remove:function(key){
-return new Promise(function(resolve,reject){
-_NativeModules.RNUserDefaults.removeObject(key,function(data){
-resolve(data);});});},
-
-
-
-
-removeAll:function(){}};exports.default = 
-
-
-
-
-userDefaults;module.exports = exports.default;
-});
-__d('allyoop/app/actions/application.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});exports.changeTab = changeTab;var _constant=require(
-
-'allyoop/app/constant.js');'use strict';
-
-
-
-
-function changeTab(tab){
-return {
-type:_constant.APP.TAB,
-data:tab};}
-});
-__d('allyoop/app/containers/Game.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
-
-
-
-
-
-'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _componentsGameGameList=require(
-
-'allyoop/app/components/game/GameList.js');var _componentsGameGameList2=_interopRequireDefault(_componentsGameGameList);var _componentsShareNavigatorBar=require(
-'allyoop/app/components/share/NavigatorBar.js');var _componentsShareNavigatorBar2=_interopRequireDefault(_componentsShareNavigatorBar);'use strict';var 
-
-Game=(function(_Component){_inherits(Game,_Component);function Game(){_classCallCheck(this,Game);_get(Object.getPrototypeOf(Game.prototype),'constructor',this).apply(this,arguments);}_createClass(Game,[{key:'componentDidMount',value:
-
-function componentDidMount(){var 
-actions=this.props.actions;
-actions.getLeagueStanding();}},{key:'renderScene',value:
-
-
-function renderScene(route,navigator){
-if(route.component){
-var _Component2=route.component;
-return _reactNative2.default.createElement(_Component2,_extends({navigator:navigator,route:route},this.props));}}},{key:'render',value:
-
-
-
-function render(){
-return (
-_reactNative2.default.createElement(_reactNative.Navigator,{
-initialRoute:{
-name:'GameList',
-component:_componentsGameGameList2.default},
-
-navigationBar:_reactNative2.default.createElement(_componentsShareNavigatorBar2.default,null),
-renderScene:this.renderScene.bind(this)}));}}]);return Game;})(_reactNative.Component);exports.default = Game;
-
-
-
-
-
-Game.propTypes = {
-game:_reactNative.PropTypes.object,
-actions:_reactNative.PropTypes.object};module.exports = exports.default;
-});
-__d('allyoop/app/components/game/GameList.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
-
-
-
-
-
-
-
-
-
-'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _reactNativeIcons=require(
-
-'react-native-icons/index.ios.js');var _momentTimezone=require(
-'moment-timezone/index.js');var _momentTimezone2=_interopRequireDefault(_momentTimezone);var _GamePanel=require(
-'allyoop/app/components/game/GamePanel.js');var _GamePanel2=_interopRequireDefault(_GamePanel);var _shareTabbar=require(
-'allyoop/app/components/share/Tabbar.js');var _shareTabbar2=_interopRequireDefault(_shareTabbar);'use strict';var 
-
-GameList=(function(_Component){_inherits(GameList,_Component);
-function GameList(props){_classCallCheck(this,GameList);
-_get(Object.getPrototypeOf(GameList.prototype),'constructor',this).call(this,props);
-
-var dateString=_momentTimezone2.default.tz(Date.now(),'America/Los_Angeles').format();
-var dateArray=dateString.replace('T','-').split('-');
-this.state = {
-dataSource:new _reactNative.ListView.DataSource({
-rowHasChanged:function(row1,row2){return row1 !== row2;}}),
-
-date:[dateArray[0],dateArray[1],dateArray[2]]};
-
-this.mount = true;}_createClass(GameList,[{key:'componentDidMount',value:
-
-
-
-
-
-function componentDidMount(){var 
-actions=this.props.actions;var 
-date=this.state.date;
-actions.getGameGeneral(date[0],date[1],date[2]);}},{key:'componentWillReceiveProps',value:
-
-
-function componentWillReceiveProps(props){var 
-live=props.live;var over=props.over;var unstart=props.unstart;var actions=props.actions;var 
-dataSource=this.state.dataSource;
-
-var rows=live.data.concat(unstart.data).concat(over.data);
-if(live.data.length > 0){
-setTimeout(function(){
-actions.getGameGeneral();},
-5000);}else 
-if(unstart.data.length > 0){
-setTimeout(function(){
-actions.getGameGeneral();},
-120000);}
-
-
-if(this.mount){
-this.setState({
-dataSource:dataSource.cloneWithRows(rows)});}}},{key:'componentWillUnmount',value:
-
-
-
-
-function componentWillUnmount(){
-this.mount = false;}},{key:'renderRow',value:
-
-
-function renderRow(game,_,index){
-if(this.mount){
-return _reactNative2.default.createElement(_GamePanel2.default,_extends({game:game,index:index},this.props));}}},{key:'changeDate',value:
-
-
-
-
-function changeDate(){}},{key:'render',value:
-
-
-
-function render(){var _state=
-this.state;var dataSource=_state.dataSource;var date=_state.date;var _props=
-this.props;var live=_props.live;var over=_props.over;var unstart=_props.unstart;
-var gameCount=live.data.length + over.data.length + unstart.data.length;
-
-return (
-_reactNative2.default.createElement(_reactNative.View,{style:styles.container},
-_reactNative2.default.createElement(_reactNative.View,{style:styles.header},
-_reactNative2.default.createElement(_reactNative.TouchableHighlight,{onPress:this.changeDate.bind(this),underlayColor:'transparent'},
-_reactNative2.default.createElement(_reactNativeIcons.Icon,{name:'ion|pizza',
-size:18,
-color:'#fff',
-style:styles.calendarIcon})),
-
-
-_reactNative2.default.createElement(_reactNative.Text,{style:styles.gameDate},date[0] + '-' + date[1] + '-' + date[2]),
-_reactNative2.default.createElement(_reactNative.Text,{style:styles.gameCount},gameCount + ' Games')),
-
-_reactNative2.default.createElement(_shareTabbar2.default,_extends({tab:'game'},this.props)),
-_reactNative2.default.createElement(_reactNative.ListView,{
-dataSource:dataSource,
-renderRow:this.renderRow.bind(this),
-style:styles.listView})));}}]);return GameList;})(_reactNative.Component);exports.default = GameList;
-
-
-
-
-
-
-GameList.propTypes = {
-actions:_reactNative.PropTypes.object,
-live:_reactNative.PropTypes.object,
-unstart:_reactNative.PropTypes.object,
-over:_reactNative.PropTypes.object};
-
-
-var styles=_reactNative.StyleSheet.create({
-container:{
-flex:1},
-
-
-header:{
-backgroundColor:'#4D98E4',
-height:100,
-flexDirection:'column',
-position:'relative',
-paddingLeft:15},
-
-calendarIcon:{
-alignSelf:'flex-end',
-height:15,
-marginRight:15,
-marginTop:12,
-width:25},
-
-gameDate:{
-color:'#fff',
-fontWeight:'200',
-fontSize:25},
-
-gameCount:{
-color:'#fff',
-fontWeight:'200',
-fontSize:14},
-
-
-listView:{
-backgroundColor:'#fff',
-flex:6,
-flexDirection:'column',
-paddingTop:12}});module.exports = exports.default;
-});
-__d('react-native-icons/index.ios.js',function(global, require, module, exports) {  module.exports = {
-Icon:require('SMXIconImage'),
-TabBarIOS:require('SMXTabBarIOS'),
-Spinner:require('SMXLoadingImage')};
-});
-__d('SMXIconImage',function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
-
-
-
-
-
-
-var React=require('react-native/Libraries/react-native/react-native.js');var 
-StyleSheet=React.StyleSheet;var View=React.View;var requireNativeComponent=React.requireNativeComponent;var processColor=React.processColor;
-var shimAssert=require('react-native-icons/shim-assert.js');
-
-var ICON_REF='icon';
-
-var SMXIconImage=React.createClass({displayName:'SMXIconImage',
-propTypes:{
-name:React.PropTypes.string,
-size:React.PropTypes.number,
-color:React.PropTypes.string,
-
-
-
-
-
-accessible:React.PropTypes.bool,
-
-
-
-accessibilityLabel:React.PropTypes.string,
-
-
-
-
-
-testID:React.PropTypes.string,
-icon:React.PropTypes.object},
-
-
-setNativeProps:function(props){
-this.refs[ICON_REF].setNativeProps(props);},
-
-
-render:function(){
-var style=[styles.base,this.props.style];
-shimAssert.basic(style,'style must be initialized');
-
-var name=this.props.name;
-shimAssert.basic(name,'name must be initialized');
-
-var size=this.props.size;
-shimAssert.basic(size,'size must be initialized');
-
-var color=this.props.color;
-
-var nativeProps=Object.assign({},this.props);
-
-if(!color && style.color){
-color = style.color;}
-
-
-nativeProps.style = style;
-nativeProps.icon = {
-name:name,
-size:size,
-color:processColor(color)};
-
-
-return React.createElement(SMXIconImageView,_extends({},nativeProps,{ref:ICON_REF}));}});
-
-
-
-var styles=StyleSheet.create({
-base:{
-overflow:'hidden'}});
-
-
-
-var SMXIconImageView=requireNativeComponent('FAKIconImage',SMXIconImage);
-
-module.exports = SMXIconImage;
-});
-__d('react-native-icons/shim-assert.js',function(global, require, module, exports) {  'use strict';
-
-
-module.exports = {
-
-basic:function(object,text){
-
-if(!object){
-throw Error(text);}}};
-});
-__d('SMXTabBarIOS',function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
-
-
-
-
-
-
-var React=require('react-native/Libraries/react-native/react-native.js');var 
-StyleSheet=React.StyleSheet;var requireNativeComponent=React.requireNativeComponent;var PropTypes=React.PropTypes;var processColor=React.processColor;
-var SMXTabBarIconItemIOS=require('SMXTabBarItemIOS');
-
-var SMXTabBarIOS=React.createClass({displayName:'SMXTabBarIOS',
-propTypes:{
-tintColor:PropTypes.string,
-barTintColor:PropTypes.string,
-translucent:PropTypes.bool},
-
-
-statics:{
-Item:SMXTabBarIconItemIOS},
-
-
-render:function(){
-var nativeProps={
-tintColor:this.props.tintColor,
-barTintColor:this.props.barTintColor,
-translucent:this.props.translucent};
-
-
-return (
-React.createElement(SMXIconTabBar,_extends({style:[styles.tabGroup,this.props.style]},nativeProps),
-this.props.children));}});
-
-
-
-
-
-var styles=StyleSheet.create({
-tabGroup:{
-flex:1}});
-
-
-
-var SMXIconTabBar=requireNativeComponent('SMXTabBar',SMXTabBarIOS);
-
-module.exports = SMXTabBarIOS;
-});
-__d('SMXTabBarItemIOS',function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
-
-
-
-
-
-
-var React=require('react-native/Libraries/react-native/react-native.js');var 
-Image=React.Image;var StyleSheet=React.StyleSheet;var View=React.View;var requireNativeComponent=React.requireNativeComponent;var PropTypes=React.PropTypes;var Dimensions=React.Dimensions;
-
-var onlyChild=React.Children.only;var 
-
-
-StaticContainer=(function(_React$Component){_inherits(StaticContainer,_React$Component);function StaticContainer(){_classCallCheck(this,StaticContainer);_get(Object.getPrototypeOf(StaticContainer.prototype),'constructor',this).apply(this,arguments);}_createClass(StaticContainer,[{key:'shouldComponentUpdate',value:
-
-function shouldComponentUpdate(nextProps){
-return !!nextProps.shouldUpdate;}},{key:'render',value:
-
-
-function render(){
-var child=this.props.children;
-return child === null || child === false?null:onlyChild(child);}}]);return StaticContainer;})(React.Component);
-
-
-
-
-var SmixxTabBarItemIOS=React.createClass({displayName:'SmixxTabBarItemIOS',
-propTypes:{
-onPress:PropTypes.func.isRequired,
-selected:PropTypes.bool.isRequired,
-badgeValue:PropTypes.string,
-title:PropTypes.string,
-icon:PropTypes.object,
-selectedIcon:PropTypes.object},
-
-
-getInitialState:function(){
-return {
-hasBeenSelected:false};},
-
-
-
-componentWillMount:function(){
-if(this.props.selected){
-this.setState({hasBeenSelected:true});}},
-
-
-
-componentWillReceiveProps:function(nextProps){
-if(this.state.hasBeenSelected || nextProps.selected){
-this.setState({hasBeenSelected:true});}},
-
-
-
-render:function(){
-var tabContents=null;
-
-
-if(this.state.hasBeenSelected){
-tabContents = 
-React.createElement(StaticContainer,{shouldUpdate:this.props.selected},
-this.props.children);}else 
-
-
-{
-tabContents = React.createElement(View,null);}
-
-
-var iconName=this.props.iconName;
-var iconSize=this.props.iconSize || 28;
-
-
-var selectedIconName=this.props.selectedIconName || this.props.iconName;
-var selectedIconSize=this.props.selectedIconSize || this.props.iconSize;
-
-var icon={name:iconName,size:iconSize};
-var selectedIcon={name:selectedIconName,size:selectedIconSize};
-
-return (
-React.createElement(SmixxTabBarItem,{
-icon:icon,
-selectedIcon:selectedIcon,
-onPress:this.props.onPress,
-selected:this.props.selected,
-badgeValue:this.props.badgeValue,
-title:this.props.title,
-style:[styles.tab,this.props.style]},
-tabContents));}});
-
-
-
-
-
-var styles=StyleSheet.create({
-tab:{
-position:'absolute',
-top:0,
-right:0,
-bottom:0,
-left:0}});
-
-
-
-var SmixxTabBarItem=requireNativeComponent('SMXTabBarItem',SmixxTabBarItemIOS);
-module.exports = SmixxTabBarItemIOS;
-});
-__d('SMXLoadingImage',function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
-
-
-
-
-
-
-var React=require('react-native/Libraries/react-native/react-native.js');var 
-StyleSheet=React.StyleSheet;var View=React.View;var requireNativeComponent=React.requireNativeComponent;var Animated=React.Animated;var Easing=React.Easing;var processColor=React.processColor;
-
-var shimAssert=require('react-native-icons/shim-assert.js');
-
-var SMXLoadingImage=React.createClass({displayName:'SMXLoadingImage',
-propTypes:{
-name:React.PropTypes.string,
-size:React.PropTypes.number,
-color:React.PropTypes.string,
-
-
-
-
-
-accessible:React.PropTypes.bool,
-
-
-
-accessibilityLabel:React.PropTypes.string,
-
-
-
-
-
-testID:React.PropTypes.string,
-icon:React.PropTypes.object},
-
-
-getInitialState:function(){
-return {
-angle:new Animated.Value(0)};},
-
-
-
-setNativeProps:function(props){},
-
-
-
-_animate:function(){
-this.state.angle.setValue(0);
-Animated.timing(this.state.angle,{
-toValue:360,
-duration:1200,
-easing:Easing.linear}).
-start(this._animate);},
-
-
-componentDidMount:function(){
-this._animate();},
-
-
-render:function(){
-var transformStyle={
-transform:[
-{
-rotate:this.state.angle.interpolate({
-inputRange:[0,360],
-outputRange:['0deg','360deg']})}]};
-
-
-
-
-
-var style=[styles.base,this.props.style];
-
-shimAssert.basic(style,'style must be initialized');
-
-var name=this.props.name;
-shimAssert.basic(name,'name must be initialized');
-
-var size=this.props.size;
-shimAssert.basic(size,'size must be initialized');
-
-var color=this.props.color;
-
-var nativeProps=Object.assign({},this.props);
-nativeProps.icon = {
-name:name,
-size:size,
-color:processColor(color)};
-
-
-return React.createElement(Animated.View,{style:[styles.base,style,transformStyle]},
-React.createElement(SMXLoadingImageView,_extends({style:{backgroundColor:'transparent'}},nativeProps)));}});
-
-
-
-
-
-var styles=StyleSheet.create({
-base:{
-overflow:'hidden'}});
-
-
-var SMXLoadingImageView=requireNativeComponent('FAKIconImage',SMXLoadingImage);
-
-module.exports = SMXLoadingImage;
-});
 __d('allyoop/app/components/game/GamePanel.js',function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _utilsTeamMap=require(
 
 'allyoop/app/utils/team-map.js');var _utilsTeamMap2=_interopRequireDefault(_utilsTeamMap);var _reactNative=require(
@@ -60800,13 +60827,15 @@ __d('allyoop/app/components/game/GamePanel.js',function(global, require, module,
 'allyoop/app/components/game/GameDetail.js');var _GameDetail2=_interopRequireDefault(_GameDetail);'use strict';var 
 
 GamePanel=(function(_Component){_inherits(GamePanel,_Component);function GamePanel(){_classCallCheck(this,GamePanel);_get(Object.getPrototypeOf(GamePanel.prototype),'constructor',this).apply(this,arguments);}_createClass(GamePanel,[{key:'onPressRow',value:
+
 function onPressRow(){var _props=
-this.props;var navigator=_props.navigator;var game=_props.game;
+this.props;var navigator=_props.navigator;var game=_props.game;var date=_props.date;
 if(game.type !== 'unstart'){
 navigator.push(Object.assign({},{
 name:'GameDetail',
 component:_GameDetail2.default,
-game:game}));}}},{key:'render',value:
+game:game,
+date:date}));}}},{key:'render',value:
 
 
 
@@ -60871,7 +60900,8 @@ _reactNative2.default.createElement(_reactNative.Text,{style:styles.teamName},_u
 
 GamePanel.propTypes = {
 navigator:_reactNative.PropTypes.object,
-game:_reactNative.PropTypes.object};
+game:_reactNative.PropTypes.object,
+date:_reactNative.PropTypes.array};
 
 
 var styles=_reactNative.StyleSheet.create({
@@ -60885,7 +60915,7 @@ marginBottom:15},
 
 team:{
 alignItems:'center',
-flex:1.7},
+flex:1.5},
 
 teamLogo:{
 width:50,
@@ -61137,13 +61167,14 @@ indicator:true};}_createClass(GameDetail,[{key:'componentDidMount',value:
 function componentDidMount(){var _this=this;var _props=
 this.props;var actions=_props.actions;var route=_props.route;
 var game=route.game;
+var date=route.date;
 
 
 var interval=false;
 var indicator=true;
 if(!game.detail.loaded){
 setTimeout(function(){
-actions.getGameDetail(game.id,game.type);
+actions.getGameDetail(game.id,game.type,date[0],date[1],date[2]);
 interval = _this.keepRequest(game);
 _this.setState({
 interval:interval,
@@ -61168,14 +61199,16 @@ indicator:false});}},{key:'keepRequest',value:
 
 
 
-function keepRequest(game){var 
+function keepRequest(game){var _props2=
 
-actions=this.props.actions;
+this.props;var actions=_props2.actions;var route=_props2.route;
+var date=route.date;
 var interval=false;
+
 if(game.type === 'live'){
 clearInterval(this.state.interval);
 interval = setInterval(function(){
-actions.getGameDetail(game.id,game.type);},
+actions.getGameDetail(game.id,game.type,date[0],date[1],date[2]);},
 10000);}
 
 return interval;}},{key:'componentWillUnmount',value:
@@ -62099,6 +62132,7 @@ player:null};}_createClass(PlayerDetail,[{key:'componentDidMount',value:
 function componentDidMount(){var 
 actions=this.props.actions;var 
 player=this.props.route.player;
+
 actions.getPlayerDetail(player.id);
 actions.getPlayerLog(player.id);}},{key:'componentWillReceiveProps',value:
 
@@ -62117,8 +62151,9 @@ navigator=this.props.navigator;
 navigator.pop();}},{key:'render',value:
 
 
-function render(){var 
-player=this.state.player;
+function render(){var _props=
+this.props;var route=_props.route;var playerLoaded=_props.playerLoaded;
+var player=playerLoaded[route.player.id] || this.state.player;
 
 var team=player && player.team.toLowerCase();
 var nameForImage=player && player.firstName.toLowerCase() + '_' + player.lastName.toLowerCase();
@@ -62244,7 +62279,8 @@ player:_reactNative.PropTypes.object,
 order:_reactNative.PropTypes.number,
 actions:_reactNative.PropTypes.object,
 navigator:_reactNative.PropTypes.object,
-route:_reactNative.PropTypes.object};module.exports = exports.default;
+route:_reactNative.PropTypes.object,
+playerLoaded:_reactNative.PropTypes.object};module.exports = exports.default;
 });
 ;require("allyoop/index.ios.js");
-__SSTOKENSTRING = "@generated SignedSource<<66c986414a1cde1020b953e869e4f445>>";
+__SSTOKENSTRING = "@generated SignedSource<<a06471f52ac3b72819b34bbc8fc739da>>";

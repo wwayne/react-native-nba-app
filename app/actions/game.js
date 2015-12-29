@@ -9,7 +9,7 @@ import { GAME } from '../constant'
 export function getGameGeneral (year, month, date) {
   return (dispatch, getStore) => {
     const channel = new Channel()
-    channel.getGameGeneral(year, month, date)
+    return channel.getGameGeneral(year, month, date)
       .then(data => {
         return dispatch({
           type: GAME.INFO,
@@ -31,10 +31,10 @@ export function getGameDetail (id, type, year, month, date) {
     if (type === 'over') {
       const game = getStore().over.data.find((g) => { return g.id === id })
       if (game.detail && game.detail.loaded) {
-        return dispatch({
+        return Promise.resolve(dispatch({
           type: GAME.DETAIL,
           data: game.detail.data
-        })
+        }))
       }
     }
 
@@ -57,10 +57,10 @@ export function getGameDetail (id, type, year, month, date) {
 export function getLeagueStanding () {
   return (dispatch, getStore) => {
     if (getStore().standing.loaded) {
-      return dispatch({
+      return Promise.resolve(dispatch({
         type: GAME.STANDING,
         data: getStore().standing.data
-      })
+      }))
     }
     const year = new Date().getFullYear()
     const channel = new Channel()
