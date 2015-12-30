@@ -1,9 +1,9 @@
 {
   "name": "allyoop",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "find node_modules -type f -name .babelrc | grep -v /react-native/ | xargs rm",
+    "clean": "find node_modules -type f -name .babelrc | grep -v /react-native/ | xargs rm",
     "test": "standard --verbose | snazzy ./lib/**/*.js",
     "start": "node_modules/react-native/packager/packager.sh"
   },

@@ -25,6 +25,7 @@
 		B003DD751C09EDA3000D1852 /* FAKIcon.h in Resources */ = {isa = PBXBuildFile; fileRef = B003DD731C09EDA3000D1852 /* FAKIcon.h */; };
 		B003DD761C09EDA3000D1852 /* FAKIcon.m in Resources */ = {isa = PBXBuildFile; fileRef = B003DD741C09EDA3000D1852 /* FAKIcon.m */; };
 		B003DD781C09EE7B000D1852 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B003DD771C09EE7B000D1852 /* Images.xcassets */; };
+		B01F3BC61C34A33A001991CE /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B01F3BC51C34A33A001991CE /* main.jsbundle */; };
 		B04702381C1A53C20046F24C /* RNUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04702371C1A53C20046F24C /* RNUserDefaults.swift */; };
 		B047023B1C1A541B0046F24C /* RNUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B047023A1C1A541B0046F24C /* RNUserDefaults.m */; };
 		B0BCA2A91C0BD28E0034908C /* FAKIonIcons.h in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */; };
@@ -143,6 +144,7 @@
 		B003DD731C09EDA3000D1852 /* FAKIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIcon.h; sourceTree = "<group>"; };
 		B003DD741C09EDA3000D1852 /* FAKIcon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIcon.m; sourceTree = "<group>"; };
 		B003DD771C09EE7B000D1852 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B01F3BC51C34A33A001991CE /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../main.jsbundle; sourceTree = "<group>"; };
 		B04702371C1A53C20046F24C /* RNUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNUserDefaults.swift; path = allyoop/RNUserDefaults.swift; sourceTree = "<group>"; };
 		B047023A1C1A541B0046F24C /* RNUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNUserDefaults.m; path = allyoop/RNUserDefaults.m; sourceTree = "<group>"; };
 		B05CEB5E1C1BA6A20022B5FD /* RNUserDefaults-bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RNUserDefaults-bridge.h"; path = "allyoop/RNUserDefaults-bridge.h"; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B01F3BC51C34A33A001991CE /* main.jsbundle */,
 				B003DD791C09F0C8000D1852 /* icon */,
 				13B07FAE1A68108700A75B9A /* allyoop */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -571,6 +574,7 @@
 				B003DD751C09EDA3000D1852 /* FAKIcon.h in Resources */,
 				B003DD761C09EDA3000D1852 /* FAKIcon.m in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				B01F3BC61C34A33A001991CE /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
