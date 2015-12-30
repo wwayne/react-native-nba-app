@@ -8,11 +8,13 @@ import React, {
   Image,
   ScrollView,
   TouchableHighlight,
-  PropTypes
+  PropTypes,
+  Animated
 } from 'react-native'
-import {Icon} from 'react-native-icons'
 
+import {Icon} from 'react-native-icons'
 import teamInfo from '../../utils/team-map'
+import PlayerLog from './PlayerLog'
 
 export default class PlayerDetail extends Component {
 
@@ -27,10 +29,12 @@ export default class PlayerDetail extends Component {
     const {actions} = this.props
     const {player} = this.props.route
 
-    actions.getPlayerDetail(player.id)
-      .then(() => {
-        actions.getPlayerLog(player.id)
-      })
+    setTimeout(() => {
+      actions.getPlayerDetail(player.id)
+        .then(() => {
+          actions.getPlayerLog(player.id)
+        })
+    }, 500)
   }
 
   componentWillReceiveProps (props) {
@@ -94,6 +98,9 @@ export default class PlayerDetail extends Component {
                   <Text style={styles.basicDataMark}>Rebounds</Text>
                 </View>
               </View>
+              {player.log &&
+                <PlayerLog data={player.log} />
+              }
             </ScrollView>
           </View>
         }
@@ -123,12 +130,13 @@ const styles = StyleSheet.create({
   },
   // Header part
   header: {
-    height: 110
+    height: 130
   },
   portraitView: {
     alignSelf: 'center',
     backgroundColor: '#fff',
     borderRadius: 60,
+    marginTop: 10,
     height: 60,
     width: 60
   },

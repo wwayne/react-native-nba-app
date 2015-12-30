@@ -69,7 +69,7 @@ export default class Tabbar extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 35
+    height: 45
   },
   tab: {
     alignItems: 'center',
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   tabtext: {
     alignSelf: 'center',
     flex: 1,
-    fontSize: 12,
+    fontSize: 13,
     color: '#fff'
   },
   // Active

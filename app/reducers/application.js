@@ -5,7 +5,7 @@ import createReducer from '../utils/create-reducer'
 import {APP} from '../constant'
 
 const initialState = {
-  tab: 'players'
+  tab: 'game'
 }
 
 const actionHandler = {
