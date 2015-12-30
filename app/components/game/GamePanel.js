@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 95,
     marginHorizontal: 12,
-    marginBottom: 15
+    marginBottom: 10
   },
   // Team
   team: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   processUnstart: {
     fontSize: 22,
     position: 'relative',
-    top: 10
+    top: 13
   },
   infoScorePanel: {
     flex: 1,

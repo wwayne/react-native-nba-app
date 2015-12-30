@@ -152,7 +152,7 @@ export default class GameDetail extends Component {
         {/* Navigation */}
         <View style={[ styles.nav, {backgroundColor: teamMap[homeAbb].color} ]}>
           <TouchableHighlight onPress={this.onBackPress.bind(this)} underlayColor='transparent' style={{width: 80}}>
-            <Icon name='ion|ios-arrow-left' size={28} color='#fff' style={styles.backNav} />
+            <Icon name='ion|ios-arrow-left' size={26} color='#fff' style={styles.backNav} />
           </TouchableHighlight>
         </View>
         {/* Sum info */}

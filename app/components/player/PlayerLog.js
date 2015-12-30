@@ -7,7 +7,8 @@ import React, {
   Text,
   Animated,
   StyleSheet,
-  TouchableHighlight
+  TouchableHighlight,
+  Dimensions
 } from 'react-native'
 
 import {Icon} from 'react-native-icons'
@@ -36,6 +37,7 @@ export default class PlayerLog extends Component {
    * @return {pts: {Number}, ast, reb, stl, blk, tov, min}
    */
   getWidth (data) {
+    const deviceWidth = Dimensions.get('window').width
     const maxWidth = 350
     const indicators = ['pts', 'ast', 'reb', 'stl', 'blk', 'tov', 'min']
     const unit = {
@@ -52,7 +54,7 @@ export default class PlayerLog extends Component {
     indicators.forEach(item => {
       /* React-Native bug: if width=0 at first time, the borderRadius can't be implemented in the View */
       widthCap = data[item] * unit[`${item}Unit`] || 5
-      width[item] = widthCap <= 500 ? widthCap : 500
+      width[item] = widthCap <= (deviceWidth - 50) ? widthCap : (deviceWidth - 50)
     })
 
     return width
@@ -61,15 +63,11 @@ export default class PlayerLog extends Component {
   onPressLeft () {
     const {currentIndex} = this.state
     const {data} = this.props
-
     if (currentIndex < data.length - 1) this.handleAnimation(currentIndex + 1)
-    
   }
 
   onPressRight () {
     const {currentIndex} = this.state
-    const {data} = this.props
-
     if (currentIndex > 0) this.handleAnimation(currentIndex - 1)
   }
 
@@ -89,7 +87,7 @@ export default class PlayerLog extends Component {
     this.setState({
       currentIndex: index
     })
-}
+  }
 
   render () {
     const {pts, ast, reb, stl, blk, tov, min} = this.state
@@ -97,15 +95,18 @@ export default class PlayerLog extends Component {
     const data = this.props.data[currentIndex]
 
     const d = new Date(data.gameDate)
-    const date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-'+d.getDate()
+    const date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
 
+    /* set opacity=0 if no prev or no next, or the size will be changed unexpected */
+    const canPrev = currentIndex < this.props.data.length - 1 ? 1 : 0
+    const canNext = currentIndex > 0 ? 1 : 0
     return (
       <View style={styles.container}>
 
         <View style={styles.item}>
           <Text style={styles.label}>Points</Text>
           <View style={styles.data}>
-            {pts && 
+            {pts &&
               <Animated.View style={[styles.bar, styles.points, {width: pts}]} />
             }
             <Text style={styles.dataNumber}>{data.pts}</Text>
@@ -132,7 +133,7 @@ export default class PlayerLog extends Component {
         <View style={styles.item}>
           <Text style={styles.label}>Steals</Text>
           <View style={styles.data}>
-            {stl && 
+            {stl &&
               <Animated.View style={[styles.bar, styles.steals, {width: stl}]} />
             }
             <Text style={styles.dataNumber}>{data.stl}</Text>
@@ -167,12 +168,12 @@ export default class PlayerLog extends Component {
         </View>
 
         <View style={styles.controller}>
-          <TouchableHighlight onPress={this.onPressLeft.bind(this)} underlayColor='transparent' style={styles.button}>
-            <Icon name='ion|ios-arrow-left' size={20} color='#6B7C96' style={styles.chevronLeft} />
+          <TouchableHighlight onPress={this.onPressLeft.bind(this)} underlayColor='transparent' style={[styles.button, {opacity: canPrev}]}>
+            <Icon name='ion|ios-arrow-left' size={28} color='#6B7C96' style={styles.chevronLeft} />
           </TouchableHighlight>
           <Text style={styles.date}>{date}</Text>
-          <TouchableHighlight onPress={this.onPressRight.bind(this)} underlayColor='transparent' style={styles.button}>
-            <Icon name='ion|ios-arrow-right' size={20} color='#6B7C96' style={styles.chevronRight} />
+          <TouchableHighlight onPress={this.onPressRight.bind(this)} underlayColor='transparent' style={[styles.button, {opacity: canNext}]}>
+            <Icon name='ion|ios-arrow-right' size={28} color='#6B7C96' style={styles.chevronRight} />
           </TouchableHighlight>
         </View>
       </View>
@@ -183,12 +184,12 @@ export default class PlayerLog extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    marginTop: 6,
+    marginTop: 6
   },
   // Item
   item: {
     flexDirection: 'column',
-    marginBottom: 3,
+    marginBottom: 5,
     paddingHorizontal: 10
   },
   label: {
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 12,
     position: 'relative',
-    top: 2,
+    top: 2
   },
   data: {
     flex: 2,
@@ -239,25 +240,31 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 10
+    marginTop: 15
   },
   button: {
-    flex: 1
+    flex: 1,
+    position: 'relative',
+    top: -1
   },
   chevronLeft: {
     alignSelf: 'flex-end',
-    height: 20,
-    width: 20
+    height: 28,
+    marginRight: 10,
+    width: 28
   },
   chevronRight: {
     alignSelf: 'flex-start',
-    height: 20,
-    width: 20
+    height: 28,
+    marginLeft: 10,
+    width: 28
   },
   date: {
     color: '#6B7C96',
     flex: 1,
-    fontSize: 16,
+    fontSize: 22,
+    fontWeight: '300',
+    height: 28,
     textAlign: 'center'
   }
 

@@ -8,8 +8,7 @@ import React, {
   Image,
   ScrollView,
   TouchableHighlight,
-  PropTypes,
-  Animated
+  PropTypes
 } from 'react-native'
 
 import {Icon} from 'react-native-icons'
@@ -69,7 +68,7 @@ export default class PlayerDetail extends Component {
                 style={styles.addIcon}>
                 <Icon
                   name='ion|ios-arrow-left'
-                  size={18}
+                  size={26}
                   color='#fff'
                   style={styles.backIcon} />
               </TouchableHighlight>
@@ -120,8 +119,8 @@ const styles = StyleSheet.create({
   },
   backIcon: {
     height: 30,
-    marginLeft: 5,
-    marginTop: 5,
+    marginLeft: 6,
+    marginTop: 6,
     width: 30
   },
   // ScrollView
@@ -130,7 +129,7 @@ const styles = StyleSheet.create({
   },
   // Header part
   header: {
-    height: 130
+    height: 120
   },
   portraitView: {
     alignSelf: 'center',
@@ -148,12 +147,13 @@ const styles = StyleSheet.create({
   name: {
     alignSelf: 'center',
     color: '#fff',
-    fontSize: 15
+    fontSize: 16,
+    marginTop: 5
   },
   jersey: {
     alignSelf: 'center',
     color: '#fff',
-    fontSize: 18
+    fontSize: 14
   },
   // Basic data
   basicData: {
@@ -169,12 +169,14 @@ const styles = StyleSheet.create({
   },
   basicDataNumber: {
     color: '#909CAF',
-    fontSize: 15,
+    fontSize: 17,
     marginRight: 3
   },
   basicDataMark: {
     color: '#909CAF',
-    fontSize: 12
+    fontSize: 12,
+    position: 'relative',
+    bottom: 1
   }
 })
 
