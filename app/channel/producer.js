@@ -129,7 +129,16 @@ const producer = {
    */
   playerList: (res) => {
     const data = res.resultSets[0].rowSet
-    const currentYear = new Date().getFullYear() + ''
+    /* 2016.1-2016.9 is 2015 season */
+    const currentDate = new Date()
+    const currentMonth = currentDate.getMonth() + 1
+    let currentYear
+    if (currentMonth >= 10) {
+      currentYear = currentDate.getFullYear() + ''
+    } else {
+      currentYear = currentDate.getFullYear() - 1 + ''
+    }
+
     let nameArray
     return data.filter(item => {
       return item[4] === currentYear
@@ -173,7 +182,7 @@ const producer = {
 
   /**
    * @return [{gameId, gameDate, matchup, result, min, pts, fg,
-    fgRate, threeP, threePRate, ft, ftRate, reb, ast, stl, blk, tov, foul, plusMinus}]
+   * fgRate, threeP, threePRate, ft, ftRate, reb, ast, stl, blk, tov, foul, plusMinus}]
    */
   playerLog: (res) => {
     const logs = res.resultSets[0].rowSet

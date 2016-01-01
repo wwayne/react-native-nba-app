@@ -14,6 +14,7 @@ import React, {
 import {Icon} from 'react-native-icons'
 import teamInfo from '../../utils/team-map'
 import PlayerLog from './PlayerLog'
+import PlayerTrend from './PlayerTrend'
 
 export default class PlayerDetail extends Component {
 
@@ -98,7 +99,9 @@ export default class PlayerDetail extends Component {
                 </View>
               </View>
               {player.log &&
-                <PlayerLog data={player.log} />
+                <View>
+                  <PlayerLog data={player.log} />
+                </View>
               }
             </ScrollView>
           </View>
@@ -170,6 +173,7 @@ const styles = StyleSheet.create({
   basicDataNumber: {
     color: '#909CAF',
     fontSize: 17,
+    fontWeight: '500',
     marginRight: 3
   },
   basicDataMark: {
@@ -177,6 +181,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     position: 'relative',
     bottom: 1
+  },
+  // Divider
+  logDivider: {
+    backgroundColor: '#eee',
+    height: 3,
+    marginHorizontal: 10,
+    marginVertical: 15
   }
 })
 
