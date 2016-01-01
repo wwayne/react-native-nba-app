@@ -1,7 +1,13 @@
 'use strict'
 
 const d = new Date()
-const season = d.getFullYear().toString() + '-' + (d.getFullYear() + 1).toString().substring(2, 4)
+const currentMonth = d.getMonth() + 1
+let season
+if (currentMonth >= 10) {
+  season = d.getFullYear().toString() + '-' + (d.getFullYear() + 1).toString().substring(2, 4)
+} else {
+  season = (d.getFullYear().toString() - 1)  + '-' + d.getFullYear().toString().substring(2, 4)
+}
 
 const address = {
   /**
