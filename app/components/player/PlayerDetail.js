@@ -8,13 +8,17 @@ import React, {
   Image,
   ScrollView,
   TouchableHighlight,
-  PropTypes
+  PropTypes,
+  Dimensions
 } from 'react-native'
 
 import {Icon} from 'react-native-icons'
 import teamInfo from '../../utils/team-map'
 import PlayerLog from './PlayerLog'
 import PlayerTrend from './PlayerTrend'
+
+const navigationHeight = 30
+const headerHeight = 120
 
 export default class PlayerDetail extends Component {
 
@@ -58,6 +62,8 @@ export default class PlayerDetail extends Component {
     const team = player && player.team.toLowerCase()
     const nameForImage = player && player.firstName.toLowerCase() + '_' + player.lastName.toLowerCase()
 
+    /* ScrollView need a specifical height */
+    const scrollHeight = Dimensions.get('window').height - navigationHeight - headerHeight
     return (
       <View style={styles.container}>
         {player &&
@@ -83,7 +89,7 @@ export default class PlayerDetail extends Component {
               <Text style={styles.jersey}>{player.jersey}</Text>
             </View>
 
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={{height: scrollHeight}}>
               <View style={styles.basicData}>
                 <View style={styles.basicDataBlock}>
                   <Text style={styles.basicDataNumber}>{player.pts}</Text>
@@ -101,6 +107,8 @@ export default class PlayerDetail extends Component {
               {player.log &&
                 <View>
                   <PlayerLog data={player.log} />
+                  <View style={styles.logDivider} />
+                  <PlayerTrend data={player.log} color={teamInfo[team].color} />
                 </View>
               }
             </ScrollView>
@@ -118,7 +126,7 @@ const styles = StyleSheet.create({
   // Navigation
   navigation: {
     flexDirection: 'row',
-    height: 30
+    height: navigationHeight
   },
   backIcon: {
     height: 30,
@@ -126,19 +134,15 @@ const styles = StyleSheet.create({
     marginTop: 6,
     width: 30
   },
-  // ScrollView
-  scrollView: {
-    flex: 1
-  },
   // Header part
   header: {
-    height: 120
+    height: headerHeight
   },
   portraitView: {
     alignSelf: 'center',
     backgroundColor: '#fff',
     borderRadius: 60,
-    marginTop: 10,
+    marginTop: 5,
     height: 60,
     width: 60
   },
@@ -161,7 +165,7 @@ const styles = StyleSheet.create({
   // Basic data
   basicData: {
     flexDirection: 'row',
-    height: 25,
+    height: 28,
     justifyContent: 'center'
   },
   basicDataBlock: {
@@ -172,7 +176,7 @@ const styles = StyleSheet.create({
   },
   basicDataNumber: {
     color: '#909CAF',
-    fontSize: 17,
+    fontSize: 19,
     fontWeight: '500',
     marginRight: 3
   },

@@ -27,6 +27,7 @@
 		B003DD781C09EE7B000D1852 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B003DD771C09EE7B000D1852 /* Images.xcassets */; };
 		B04702381C1A53C20046F24C /* RNUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04702371C1A53C20046F24C /* RNUserDefaults.swift */; };
 		B047023B1C1A541B0046F24C /* RNUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B047023A1C1A541B0046F24C /* RNUserDefaults.m */; };
+		B05EC1081C37D7BE00695E9F /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B05EC1071C37D7BE00695E9F /* main.jsbundle */; };
 		B0BCA2A91C0BD28E0034908C /* FAKIonIcons.h in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */; };
 		B0BCA2AA1C0BD28E0034908C /* FAKIonIcons.m in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A71C0BD28E0034908C /* FAKIonIcons.m */; };
 		B0BCA2AB1C0BD28E0034908C /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A81C0BD28E0034908C /* ionicons.ttf */; };
@@ -146,6 +147,7 @@
 		B04702371C1A53C20046F24C /* RNUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNUserDefaults.swift; path = allyoop/RNUserDefaults.swift; sourceTree = "<group>"; };
 		B047023A1C1A541B0046F24C /* RNUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNUserDefaults.m; path = allyoop/RNUserDefaults.m; sourceTree = "<group>"; };
 		B05CEB5E1C1BA6A20022B5FD /* RNUserDefaults-bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RNUserDefaults-bridge.h"; path = "allyoop/RNUserDefaults-bridge.h"; sourceTree = "<group>"; };
+		B05EC1071C37D7BE00695E9F /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../main.jsbundle; sourceTree = "<group>"; };
 		B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIonIcons.h; sourceTree = "<group>"; };
 		B0BCA2A71C0BD28E0034908C /* FAKIonIcons.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIonIcons.m; sourceTree = "<group>"; };
 		B0BCA2A81C0BD28E0034908C /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				B003DD771C09EE7B000D1852 /* Images.xcassets */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				B05EC1071C37D7BE00695E9F /* main.jsbundle */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -571,6 +574,7 @@
 				B003DD751C09EDA3000D1852 /* FAKIcon.h in Resources */,
 				B003DD761C09EDA3000D1852 /* FAKIcon.m in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				B05EC1081C37D7BE00695E9F /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

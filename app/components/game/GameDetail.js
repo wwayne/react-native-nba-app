@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
   },
   infoSide: {
     alignSelf: 'center',
-    color: 'rgba(255, 255, 255, 0.3)',
+    color: 'rgba(255, 255, 255, 0.5)',
     fontSize: 10,
     flex: 1,
     marginTop: 6
