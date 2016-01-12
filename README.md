@@ -2,7 +2,7 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 [![Circle CI](https://circleci.com/gh/wwayne/react-native-nba-app/tree/master.svg?style=svg)](https://circleci.com/gh/wwayne/react-native-nba-app/tree/master)
 
-![group](https://cloud.githubusercontent.com/assets/5305874/12059257/dacf1ad0-af92-11e5-920c-ba4818d8dc1d.png)
+![group](https://cloud.githubusercontent.com/assets/5305874/12267988/c9942ad8-b985-11e5-8704-0b68b396c2f1.png)
 
 The project is still in highly development, and only tested in iPhone6
 
