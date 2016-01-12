@@ -4,12 +4,7 @@
 
 ![group](https://cloud.githubusercontent.com/assets/5305874/12267988/c9942ad8-b985-11e5-8704-0b68b396c2f1.png)
 
-The project is still in highly development, and only tested in iPhone6
-
-**Current function:**
-
-1. Check games of today(live) and yesterday
-2. Search and check player's performance
+**The project is under performance improvement and trying to compatible with Android**
 
 ## Demo (in iPhone6)
 ![demo](https://cloud.githubusercontent.com/assets/5305874/12059946/80c2e626-afa0-11e5-95d5-5fff1ad0558b.gif)
@@ -20,6 +15,9 @@ The project is still in highly development, and only tested in iPhone6
 2. `$ npm run clean` react-native unsupport for .babelrc since 0.16, so you have to remove all .babelrc in your project(includes packages)
 3. `$ npm start`
 4. Open your Xcode, select a simulator, click the play button or `cmd + R`
+
+## Design
+The design is made by Sketch, you can find the original design file in [Dropbox](https://www.dropbox.com/s/3hn1o5xgk7bzjpa/Allyoop.sketch?dl=0), it may help if someone wants to design new features.
 
 ## Run in device
 1. Check the [official doc](http://facebook.github.io/react-native/docs/running-on-device-ios.html#using-offline-bundle) first, the following steps are based on official doc
