@@ -60,7 +60,6 @@ export default class PlayerDetail extends Component {
     const player = playerLoaded[route.player.id] || this.state.player
 
     const team = player && player.team.toLowerCase()
-    const nameForImage = player && player.firstName.toLowerCase() + '_' + player.lastName.toLowerCase()
 
     /* ScrollView need a specifical height */
     const scrollHeight = Dimensions.get('window').height - navigationHeight - headerHeight
@@ -71,8 +70,7 @@ export default class PlayerDetail extends Component {
             <View style={[styles.navigation, {backgroundColor: teamInfo[team].color}]}>
               <TouchableHighlight
                 onPress={this.onPressBack.bind(this)}
-                underlayColor='transparent'
-                style={styles.addIcon}>
+                underlayColor='transparent'>
                 <Icon
                   name='ion|ios-arrow-left'
                   size={26}
@@ -83,7 +81,7 @@ export default class PlayerDetail extends Component {
 
             <View style={[styles.header, {backgroundColor: teamInfo[team].color}]}>
               <View style={styles.portraitView}>
-                <Image style={styles.portrait} source={{uri: `http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/${nameForImage}.png`}}/>
+                <Image style={styles.portrait} source={{uri: `http://stats.nba.com/media/players/230x185/${player.id}.png`}}/>
               </View>
               <Text style={styles.name}>{player.firstName + ' ' + player.lastName}</Text>
               <Text style={styles.jersey}>{player.jersey}</Text>

@@ -57,4 +57,39 @@ export default class Channel {
       .then(res => res.json())
       .then(data => producer.playerLog(data))
   }
+
+  getTeamRank (year, month, date) {
+    const url = address.teamRank(`${date}/${month}/${year}`)
+    return window.fetch(url)
+      .then(res => res.json())
+      .then(data => producer.teamRank(data))
+  }
+
+  getTeamInfo (id) {
+    const url = address.teamInfo(id)
+    return window.fetch(url)
+      .then(res => res.json())
+      .then(data => producer.teamInfo(data))
+  }
+
+  getTeamDetail (id) {
+    /* Get players data and basic info */
+    const url = address.teamDetail(id)
+    const urlBasic = address.teamDetailBasic(id)
+    return Promise.all([
+      window.fetch(url)
+      .then(res => res.json())
+      .then(data => producer.teamDetail(data)),
+      window.fetch(urlBasic)
+      .then(res => res.json())
+      .then(data => producer.teamDetailBasic(data))
+    ])
+      .then(result => {
+        const playerData = result[0]
+        const playerInfo = result[1]
+        return playerData.map(player => {
+          return Object.assign({}, player, playerInfo[player.id])
+        })
+      })
+  }
 }

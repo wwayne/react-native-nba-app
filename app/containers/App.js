@@ -13,6 +13,7 @@ import allActions from '../actions'
 
 import Game from './Game'
 import Player from './Player'
+import Team from './Team'
 
 export default class App extends Component {
 
@@ -32,7 +33,7 @@ export default class App extends Component {
 
   render () {
     const {tab} = this.state
-    const {game, player, actions} = this.props
+    const {game, player, team, actions} = this.props
 
     return (
       <View style={styles.container}>
@@ -41,6 +42,9 @@ export default class App extends Component {
         }
         {tab === 'players' &&
           <Player {...player} actions={actions} />
+        }
+        {tab === 'teams' &&
+          <Team {...team} actions={actions} />
         }
       </View>
     )
@@ -56,6 +60,7 @@ const styles = StyleSheet.create({
 App.propTypes = {
   game: PropTypes.object,
   player: PropTypes.object,
+  team: PropTypes.object,
   actions: PropTypes.object
 }
 
@@ -70,6 +75,10 @@ export default connect(state => {
     },
     player: {
       playerList: state.playerList,
+      playerLoaded: state.playerLoaded
+    },
+    team: {
+      team: state.team,
       playerLoaded: state.playerLoaded
     }
   }

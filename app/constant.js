@@ -7,3 +7,5 @@ export const APP = Enum('TAB')
 export const GAME = Enum('INFO', 'DETAIL', 'STANDING')
 
 export const PLAYER = Enum('LIST', 'DETAIL', 'LOG', 'RECENT')
+
+export const TEAM = Enum('RANK', 'INFO', 'DETAIL')

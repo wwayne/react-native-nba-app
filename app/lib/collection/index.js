@@ -27,11 +27,13 @@ export default class Collection extends Component {
     return (
       <ScrollView
         horizontal
+        scrollEnabled
         pagingEnabled
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         directionalLockEnabled
+        alwaysBounce={false}
         alwaysBounceVertical={false}
         style={styles.container}
         onMomentumScrollEnd={this.onMomentumScrollEnd.bind(this)}>
@@ -49,7 +51,9 @@ export default class Collection extends Component {
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    flexDirection: 'row'
+  }
 })
 
 Collection.propTypes = {

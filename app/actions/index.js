@@ -2,6 +2,7 @@
 
 import {getGameGeneral, getGameDetail, getLeagueStanding} from './game'
 import {getPlayerList, setSearchRecord, getSearchRecord, getPlayerDetail, getPlayerLog} from './player'
+import {getTeamRank, getTeamInfo, getTeamDetail} from './team'
 import {changeTab} from './application'
 
 const actions = {
@@ -13,7 +14,10 @@ const actions = {
   setSearchRecord,
   getSearchRecord,
   getPlayerDetail,
-  getPlayerLog
+  getPlayerLog,
+  getTeamRank,
+  getTeamInfo,
+  getTeamDetail
 }
 
 export default actions

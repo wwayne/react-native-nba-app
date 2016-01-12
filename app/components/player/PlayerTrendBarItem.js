@@ -66,7 +66,7 @@ export default class PlayerTrendBarItem extends Component {
 
     /* Prevent tooltip covered by the edge */
     let tooltipPosition = {
-      left: - (tooltipWidth / 2),
+      left: -(tooltipWidth / 2),
       marginLeft: barWidth / 2
     }
     let tooltipMark = {
@@ -82,7 +82,6 @@ export default class PlayerTrendBarItem extends Component {
       tooltipMark.marginLeft = 0
 
       delete tooltipMark.borderLeftWidth
-
     } else if (isHoverCoveredRight) {
       delete tooltipPosition.left
       delete tooltipPosition.marginLeft
@@ -106,11 +105,11 @@ export default class PlayerTrendBarItem extends Component {
         <View style={[styles.container, {marginTop: barItemTop}]}>
           <View style={[styles. barWrapper, wrapperStyle]}>
             <View style={[styles.bar, styles.empty, Object.assign({}, baseStyle, {height: (empty * unitHeight)})]} />
-            <View style={[styles.bar, Object.assign({}, baseStyle, {height: (entity * unitHeight)})]} /> 
+            <View style={[styles.bar, Object.assign({}, baseStyle, {height: (entity * unitHeight)})]} />
           </View>
           {isHover &&
             <View style={[styles.tooltip, tooltipPosition]}>
-              <Text style={styles.tooltipContent}>{value + ' in ' +date}</Text>
+              <Text style={styles.tooltipContent}>{value + ' in ' + date}</Text>
               <View style={[styles.tooltipMark, tooltipMark]} />
             </View>
           }
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative'
   },
-  // Bar 
+  // Bar
   barWrapper: {
     position: 'relative'
   },
@@ -169,5 +168,5 @@ PlayerTrendBarItem.propTypes = {
   unitHeight: PropTypes.number,
   date: PropTypes.string,
   barInterval: PropTypes.number,
-  barItemTop: PropTypes.number,
+  barItemTop: PropTypes.number
 }

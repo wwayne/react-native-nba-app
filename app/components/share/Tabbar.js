@@ -51,16 +51,6 @@ export default class Tabbar extends Component {
             }
           </View>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this.onPress.bind(this, 'roster')} underlayColor='transparent' style={styles.tab}>
-          <View style={styles.tabview}>
-            <View style={styles.tabviewInner}>
-              <Text style={styles.tabtext}>Roster</Text>
-            </View>
-            {tab === 'roster' &&
-              <View style={styles.active} />
-            }
-          </View>
-        </TouchableHighlight>
       </View>
     )
   }
@@ -106,7 +96,9 @@ const styles = StyleSheet.create({
   players: {
     backgroundColor: '#BD4C29'
   },
-  teams: {},
+  teams: {
+    backgroundColor: '#1C8929'
+  },
   roster: {}
 })
 

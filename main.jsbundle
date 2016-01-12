@@ -29676,8 +29676,8 @@ return this.scrollResponderIsAnimating();},
 
 
 
-scrollResponderHandleResponderReject:function(){
-warning(false,"ScrollView doesn't take rejection well - scrolls anyway");},
+scrollResponderHandleResponderReject:function(){},
+
 
 
 
@@ -58521,7 +58521,8 @@ throw error;}};
 
 module.exports=invariant;
 });
-__d('allyoop/app/reducers/index.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _redux=require('redux/lib/index.js');var _live=require('allyoop/app/reducers/live.js');var _live2=babelHelpers.interopRequireDefault(_live);var _over=require('allyoop/app/reducers/over.js');var _over2=babelHelpers.interopRequireDefault(_over);var _unstart=require('allyoop/app/reducers/unstart.js');var _unstart2=babelHelpers.interopRequireDefault(_unstart);var _standing=require('allyoop/app/reducers/standing.js');var _standing2=babelHelpers.interopRequireDefault(_standing);var _application=require('allyoop/app/reducers/application.js');var _application2=babelHelpers.interopRequireDefault(_application);var _playerList=require('allyoop/app/reducers/playerList.js');var _playerList2=babelHelpers.interopRequireDefault(_playerList);var _playerLoaded=require('allyoop/app/reducers/playerLoaded.js');var _playerLoaded2=babelHelpers.interopRequireDefault(_playerLoaded);
+__d('allyoop/app/reducers/index.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _redux=require('redux/lib/index.js');var _live=require('allyoop/app/reducers/live.js');var _live2=babelHelpers.interopRequireDefault(_live);var _over=require('allyoop/app/reducers/over.js');var _over2=babelHelpers.interopRequireDefault(_over);var _unstart=require('allyoop/app/reducers/unstart.js');var _unstart2=babelHelpers.interopRequireDefault(_unstart);var _standing=require('allyoop/app/reducers/standing.js');var _standing2=babelHelpers.interopRequireDefault(_standing);var _application=require('allyoop/app/reducers/application.js');var _application2=babelHelpers.interopRequireDefault(_application);var _playerList=require('allyoop/app/reducers/playerList.js');var _playerList2=babelHelpers.interopRequireDefault(_playerList);var _playerLoaded=require('allyoop/app/reducers/playerLoaded.js');var _playerLoaded2=babelHelpers.interopRequireDefault(_playerLoaded);var _team=require('allyoop/app/reducers/team.js');var _team2=babelHelpers.interopRequireDefault(_team);
+
 
 
 
@@ -58540,7 +58541,8 @@ over:_over2.default,
 standing:_standing2.default,
 application:_application2.default,
 playerList:_playerList2.default,
-playerLoaded:_playerLoaded2.default});exports.default=
+playerLoaded:_playerLoaded2.default,
+team:_team2.default});exports.default=
 
 
 reducers;
@@ -58614,7 +58616,7 @@ if(!reduceFn)return state;
 
 return babelHelpers.extends({},state,reduceFn(state,action));};}
 });
-__d('allyoop/app/constant.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});exports.PLAYER=exports.GAME=exports.APP=undefined;var _es6Enum=require('es6-enum/dist/index.js');var _es6Enum2=babelHelpers.interopRequireDefault(_es6Enum);
+__d('allyoop/app/constant.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});exports.TEAM=exports.PLAYER=exports.GAME=exports.APP=undefined;var _es6Enum=require('es6-enum/dist/index.js');var _es6Enum2=babelHelpers.interopRequireDefault(_es6Enum);
 
 
 
@@ -58623,6 +58625,8 @@ var APP=exports.APP=(0,_es6Enum2.default)('TAB');
 var GAME=exports.GAME=(0,_es6Enum2.default)('INFO','DETAIL','STANDING');
 
 var PLAYER=exports.PLAYER=(0,_es6Enum2.default)('LIST','DETAIL','LOG','RECENT');
+
+var TEAM=exports.TEAM=(0,_es6Enum2.default)('RANK','INFO','DETAIL');
 });
 __d('es6-enum/dist/index.js',function(global, require, module, exports) {  'use strict';
 
@@ -58835,7 +58839,7 @@ __d('allyoop/app/reducers/application.js',function(global, require, module, expo
 
 
 var initialState={
-tab:'players'};
+tab:'teams'};
 
 
 var actionHandler=babelHelpers.defineProperty({},
@@ -58908,8 +58912,57 @@ action.id,data);}),_actionHandler);exports.default=
 
 (0,_createReducer2.default)(initialState,actionHandler);
 });
+__d('allyoop/app/reducers/team.js',function(global, require, module, exports) {  'use strict';var _actionHandler;Object.defineProperty(exports,"__esModule",{value:true});var _createReducer=require('allyoop/app/utils/create-reducer.js');var _createReducer2=babelHelpers.interopRequireDefault(_createReducer);var _constant=require('allyoop/app/constant.js');
+
+
+
+
+
+
+
+
+var initialState={
+loaded:false,
+data:{
+eastern:[],
+
+
+western:[]},
+
+detail:{}};
+
+
+var actionHandler=(_actionHandler={},babelHelpers.defineProperty(_actionHandler,
+_constant.TEAM.RANK,function(state,action){
+return {
+loaded:true,
+data:action.data};}),babelHelpers.defineProperty(_actionHandler,
+
+
+
+_constant.TEAM.INFO,function(state,action){
+var detail=state.detail;
+detail[action.id]=action.data;
+return {
+detail:detail};}),babelHelpers.defineProperty(_actionHandler,
+
+
+
+_constant.TEAM.DETAIL,function(state,action){
+var detail=state.detail;
+detail[action.id]=detail[action.id]||{};
+detail[action.id].players=action.data;
+return {
+detail:detail};}),_actionHandler);exports.default=
+
+
+
+
+(0,_createReducer2.default)(initialState,actionHandler);
+});
 __d('allyoop/app/middleware/logger.js',function(global, require, module, exports) {  Object.defineProperty(exports,"__esModule",{value:true});exports.default=logger;function logger(store){
 return function(next){return function(action){
+
 
 
 var result=next(action);
@@ -58935,7 +58988,8 @@ return typeof action==='function'?action(dispatch,getState):next(action);};};}
 
 module.exports=exports['default'];
 });
-__d('allyoop/app/containers/App.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _native=require('react-redux/native.js');var _redux=require('redux/lib/index.js');var _actions=require('allyoop/app/actions/index.js');var _actions2=babelHelpers.interopRequireDefault(_actions);var _Game=require('allyoop/app/containers/Game.js');var _Game2=babelHelpers.interopRequireDefault(_Game);var _Player=require('allyoop/app/containers/Player.js');var _Player2=babelHelpers.interopRequireDefault(_Player);var 
+__d('allyoop/app/containers/App.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _native=require('react-redux/native.js');var _redux=require('redux/lib/index.js');var _actions=require('allyoop/app/actions/index.js');var _actions2=babelHelpers.interopRequireDefault(_actions);var _Game=require('allyoop/app/containers/Game.js');var _Game2=babelHelpers.interopRequireDefault(_Game);var _Player=require('allyoop/app/containers/Player.js');var _Player2=babelHelpers.interopRequireDefault(_Player);var _Team=require('allyoop/app/containers/Team.js');var _Team2=babelHelpers.interopRequireDefault(_Team);var 
+
 
 
 
@@ -58969,7 +59023,7 @@ tab:application.tab});}},{key:'render',value:function render()
 
 {var 
 tab=this.state.tab;var _props=
-this.props;var game=_props.game;var player=_props.player;var actions=_props.actions;
+this.props;var game=_props.game;var player=_props.player;var team=_props.team;var actions=_props.actions;
 
 return (
 _reactNative2.default.createElement(_reactNative.View,{style:styles.container},
@@ -58977,7 +59031,10 @@ tab==='game'&&
 _reactNative2.default.createElement(_Game2.default,babelHelpers.extends({},game,{actions:actions})),
 
 tab==='players'&&
-_reactNative2.default.createElement(_Player2.default,babelHelpers.extends({},player,{actions:actions}))));}}]);return App;})(_reactNative.Component);exports.default=App;
+_reactNative2.default.createElement(_Player2.default,babelHelpers.extends({},player,{actions:actions})),
+
+tab==='teams'&&
+_reactNative2.default.createElement(_Team2.default,babelHelpers.extends({},team,{actions:actions}))));}}]);return App;})(_reactNative.Component);exports.default=App;
 
 
 
@@ -58993,6 +59050,7 @@ flex:1}});
 App.propTypes={
 game:_reactNative.PropTypes.object,
 player:_reactNative.PropTypes.object,
+team:_reactNative.PropTypes.object,
 actions:_reactNative.PropTypes.object};exports.default=
 
 
@@ -59007,6 +59065,10 @@ standing:state.standing},
 
 player:{
 playerList:state.playerList,
+playerLoaded:state.playerLoaded},
+
+team:{
+team:state.team,
 playerLoaded:state.playerLoaded}};},
 
 
@@ -59016,7 +59078,8 @@ actions:(0,_redux.bindActionCreators)(_actions2.default,dispatch)};})(
 
 App);
 });
-__d('allyoop/app/actions/index.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _game=require('allyoop/app/actions/game.js');var _player=require('allyoop/app/actions/player.js');var _application=require('allyoop/app/actions/application.js');
+__d('allyoop/app/actions/index.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _game=require('allyoop/app/actions/game.js');var _player=require('allyoop/app/actions/player.js');var _team=require('allyoop/app/actions/team.js');var _application=require('allyoop/app/actions/application.js');
+
 
 
 
@@ -59031,7 +59094,10 @@ getPlayerList:_player.getPlayerList,
 setSearchRecord:_player.setSearchRecord,
 getSearchRecord:_player.getSearchRecord,
 getPlayerDetail:_player.getPlayerDetail,
-getPlayerLog:_player.getPlayerLog};exports.default=
+getPlayerLog:_player.getPlayerLog,
+getTeamRank:_team.getTeamRank,
+getTeamInfo:_team.getTeamInfo,
+getTeamDetail:_team.getTeamDetail};exports.default=
 
 
 actions;
@@ -59100,7 +59166,16 @@ type:_constant.GAME.STANDING,
 data:getStore().standing.data}));}
 
 
-var year=new Date().getFullYear();
+
+var d=new Date();
+var currentMonth=d.getMonth()+1;
+var year=undefined;
+if(currentMonth>=10){
+year=d.getFullYear().toString();}else 
+{
+year=d.getFullYear().toString()-1;}
+
+
 var channel=new _channel2.default();
 return channel.getLeagueStanding(year).
 then(function(data){
@@ -59165,7 +59240,40 @@ id){
 var url=_address2.default.playerLog(id);
 return window.fetch(url).
 then(function(res){return res.json();}).
-then(function(data){return _producer2.default.playerLog(data);});}}]);return Channel;})();exports.default=Channel;
+then(function(data){return _producer2.default.playerLog(data);});}},{key:'getTeamRank',value:function getTeamRank(
+
+
+year,month,date){
+var url=_address2.default.teamRank(date+'/'+month+'/'+year);
+return window.fetch(url).
+then(function(res){return res.json();}).
+then(function(data){return _producer2.default.teamRank(data);});}},{key:'getTeamInfo',value:function getTeamInfo(
+
+
+id){
+var url=_address2.default.teamInfo(id);
+return window.fetch(url).
+then(function(res){return res.json();}).
+then(function(data){return _producer2.default.teamInfo(data);});}},{key:'getTeamDetail',value:function getTeamDetail(
+
+
+id){
+
+var url=_address2.default.teamDetail(id);
+var urlBasic=_address2.default.teamDetailBasic(id);
+return Promise.all([
+window.fetch(url).
+then(function(res){return res.json();}).
+then(function(data){return _producer2.default.teamDetail(data);}),
+window.fetch(urlBasic).
+then(function(res){return res.json();}).
+then(function(data){return _producer2.default.teamDetailBasic(data);})]).
+
+then(function(result){
+var playerData=result[0];
+var playerInfo=result[1];
+return playerData.map(function(player){
+return babelHelpers.extends({},player,playerInfo[player.id]);});});}}]);return Channel;})();exports.default=Channel;
 });
 __d('allyoop/app/channel/address.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});
 
@@ -59213,7 +59321,26 @@ return 'http://stats.nba.com/stats/commonplayerinfo?LeagueID=00&PlayerID='+id+'&
 
 
 playerLog:function(id){
-return 'http://stats.nba.com/stats/playergamelog?LeagueID=00&PerMode=PerGame&PlayerID='+id+'&Season='+season+'&SeasonType=Regular+Season';}};exports.default=
+return 'http://stats.nba.com/stats/playergamelog?LeagueID=00&PerMode=PerGame&PlayerID='+id+'&Season='+season+'&SeasonType=Regular+Season';},
+
+
+
+
+
+teamRank:function(gameDate){
+return 'http://stats.nba.com/stats/scoreboard?DayOffset=0&LeagueID=00&gameDate='+gameDate;},
+
+
+teamInfo:function(id){
+return 'http://stats.nba.com/stats/teaminfocommon?LeagueID=00&SeasonType=Regular+Season&TeamID='+id+'&season='+season;},
+
+
+teamDetail:function(id){
+return 'http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlusMinus=N&Rank=N&Season='+season+'&SeasonSegment=&SeasonType=Regular+Season&TeamID='+id+'&VsConference=&VsDivision=';},
+
+
+teamDetailBasic:function(id){
+return 'http://stats.nba.com/stats/commonteamroster?LeagueID=00&Season='+season+'&TeamID='+id;}};exports.default=
 
 
 
@@ -59341,7 +59468,6 @@ result[team.id]=result[team.id]||{};
 result[team.id].abbr=team.abbreviation;
 result[team.id].state=team.team_stats;});
 
-
 return result;},
 
 
@@ -59428,9 +59554,102 @@ stl:item[20],
 blk:item[21],
 tov:item[22],
 foul:item[23],
-plusMinus:item[25]};});}};exports.default=
+plusMinus:item[25]};});},
 
 
+
+
+
+
+
+teamRank:function(res){
+var eastData=res.resultSets[4].rowSet;
+var westData=res.resultSets[5].rowSet;
+
+var eastern=[];
+var western=[];
+var anotherItem={};
+eastData.forEach(function(item,index){
+eastern.push({
+id:item[0],
+name:item[5],
+win:item[7],
+loss:item[8]});
+
+anotherItem=westData[index];
+western.push({
+id:anotherItem[0],
+name:anotherItem[5],
+win:anotherItem[8],
+loss:anotherItem[7]});});
+
+
+
+return {
+eastern:eastern,
+western:western};},
+
+
+
+
+
+
+
+teamInfo:function(res){
+var info=res.resultSets[0].rowSet[0];
+var dataInfo=res.resultSets[1].rowSet[0];
+return {
+teamCity:info[2],
+teamName:info[3],
+teamAbbr:info[4],
+teamConf:info[5],
+teamDivi:info[6],
+confRank:info[11],
+diviRank:info[12],
+win:info[8],
+loss:info[9],
+id:info[0],
+ptsRank:dataInfo[3],
+rebRank:dataInfo[5],
+astRank:dataInfo[7],
+oppRank:dataInfo[9]};},
+
+
+
+
+
+
+teamDetail:function(res){
+var target=res.resultSets[1].rowSet;
+return target.map(function(player){
+return {
+id:player[1],
+name:player[2],
+gp:player[3],
+pts:player[27],
+reb:player[19],
+ast:player[20],
+min:player[7]};});},
+
+
+
+
+
+
+
+teamDetailBasic:function(res){
+var target=res.resultSets[0].rowSet;
+var result={};
+target.forEach(function(player){
+result[player[12]]={
+pos:player[5],
+height:player[6],
+weight:player[7],
+num:player[4],
+age:player[9]};});
+
+
+return result;}};exports.default=
 
 
 
@@ -59598,6 +59817,73 @@ removeAll:function(){}};exports.default=
 
 
 userDefaults;
+});
+__d('allyoop/app/actions/team.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});exports.getTeamDetail=exports.getTeamInfo=exports.getTeamRank=undefined;var _constant=require('allyoop/app/constant.js');var _channel=require('allyoop/app/channel/index.js');var _channel2=babelHelpers.interopRequireDefault(_channel);
+
+
+
+
+var getTeamRank=exports.getTeamRank=function(year,month,date){
+return function(dispatch,getStore){
+if(getStore().team.loaded){
+return Promise.resolve({
+type:_constant.TEAM.RANK,
+data:getStore().team.data});}
+
+
+var channel=new _channel2.default();
+return channel.getTeamRank(year,month,date).
+then(function(data){
+return dispatch({
+type:_constant.TEAM.RANK,
+data:data});}).
+
+
+catch(function(err){return console.error(err);});};};
+
+
+
+var getTeamInfo=exports.getTeamInfo=function(id){
+return function(dispatch,getStore){
+if(getStore().team.detail[id]){
+return Promise.resolve({
+type:_constant.TEAM.INFO,
+data:getStore().team.detail[id],
+id:id});}
+
+
+var channel=new _channel2.default();
+return channel.getTeamInfo(id).
+then(function(data){
+return dispatch({
+type:_constant.TEAM.INFO,
+data:data,
+id:id});}).
+
+
+catch(function(err){return console.error(err);});};};
+
+
+
+var getTeamDetail=exports.getTeamDetail=function(id){
+return function(dispatch,getStore){
+if(getStore().team.detail[id]&&getStore().team.detail[id].players){
+return Promise.resolve({
+type:_constant.TEAM.DETAIL,
+data:getStore().team.detail[id].players,
+id:id});}
+
+
+var channel=new _channel2.default();
+return channel.getTeamDetail(id).
+then(function(data){
+return dispatch({
+type:_constant.TEAM.DETAIL,
+data:data,
+id:id});}).
+
+
+catch(function(err){return console.error(err);});};};
 });
 __d('allyoop/app/actions/application.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});exports.
 
@@ -64571,154 +64857,214 @@ __d('allyoop/app/utils/team-map.js',function(global, require, module, exports) {
 
 var teamMap={
 atl:{
+id:1610612737,
 city:'Atlanta',
 team:'Hawks',
-color:'#E03A3E'},
+color:'#E03A3E',
+conf:'eastern'},
 
 bkn:{
+id:1610612751,
 city:'Brooklyn',
 team:'Nets',
-color:'#000'},
+color:'#000',
+conf:'eastern'},
 
 bos:{
+id:1610612738,
 city:'Boston',
 team:'Celtics',
-color:'#008348'},
+color:'#008348',
+conf:'eastern'},
 
 cha:{
+id:1610612766,
 city:'Charlotte',
 team:'Hornets',
-color:'#008CA8'},
+color:'#008CA8',
+conf:'eastern'},
 
 chi:{
+id:1610612741,
 city:'Chicago',
 team:'Bulls',
-color:'#CE1141'},
+color:'#CE1141',
+conf:'eastern'},
 
 cle:{
+id:1610612739,
 city:'Cleveland',
 team:'Cavaliers',
-color:'#860038'},
+color:'#860038',
+conf:'eastern'},
 
 dal:{
+id:1610612742,
 city:'Dallas',
 team:'Mavericks',
-color:'#007DC5'},
+color:'#007DC5',
+conf:'western'},
 
 den:{
+id:1610612743,
 city:'Denver',
 team:'Nuggets',
-color:'#FFB20F'},
+color:'#FFB20F',
+conf:'western'},
 
 det:{
+id:1610612765,
 city:'Detroit',
 team:'Pistons',
-color:'#006BB6'},
+color:'#006BB6',
+conf:'eastern'},
 
 gsw:{
+id:1610612744,
 city:'Golden State',
 team:'Warriors',
-color:'#FDB927'},
+color:'#FDB927',
+conf:'western'},
 
 hou:{
+id:1610612745,
 city:'Houston',
 team:'Rockets',
-color:'#CE1141'},
+color:'#CE1141',
+conf:'western'},
 
 ind:{
+id:1610612754,
 city:'Indiana',
 team:'Pacers',
-color:'#FFC633'},
+color:'#FFC633',
+conf:'eastern'},
 
 lac:{
+id:1610612746,
 city:'Los Angeles',
 team:'Clippers',
-color:'#ED174C'},
+color:'#ED174C',
+conf:'western'},
 
 lal:{
+id:1610612747,
 city:'Los Angeles',
 team:'Lakers',
-color:'#552582'},
+color:'#552582',
+conf:'western'},
 
 mem:{
+id:1610612763,
 city:'Memphis',
 team:'Grizzlies',
-color:'#6189B9'},
+color:'#6189B9',
+conf:'western'},
 
 mia:{
+id:1610612748,
 city:'Miami',
 team:'Heat',
-color:'#98002E'},
+color:'#98002E',
+conf:'eastern'},
 
 mil:{
+id:1610612749,
 city:'Milwaukee',
 team:'Bucks',
-color:'#00471B'},
+color:'#00471B',
+conf:'eastern'},
 
 min:{
+id:1610612750,
 city:'Minnesota',
 team:'Timberwolves',
-color:'#005083'},
+color:'#005083',
+conf:'western'},
 
 nop:{
+id:1610612740,
 city:'New Orleans',
 team:'Pelicans',
-color:'#002B5C'},
+color:'#002B5C',
+conf:'western'},
 
 nyk:{
+id:1610612752,
 city:'New York',
 team:'Knicks',
-color:'#F58426'},
+color:'#F58426',
+conf:'eastern'},
 
 okc:{
+id:1610612760,
 city:'Oklahoma City',
 team:'Thunder',
-color:'#F05133'},
+color:'#F05133',
+conf:'western'},
 
 orl:{
+id:1610612753,
 city:'Orlando',
 team:'Magic',
-color:'#007DC5'},
+color:'#007DC5',
+conf:'eastern'},
 
 phi:{
+id:1610612755,
 city:'Philadelphia',
 team:'76ers',
-color:'#006BB6'},
+color:'#006BB6',
+conf:'eastern'},
 
 phx:{
+id:1610612756,
 city:'Phoenix',
 team:'Suns',
-color:'#E56020'},
+color:'#E56020',
+conf:'western'},
 
 por:{
+id:1610612757,
 city:'Portland',
 team:'Trail Blazers',
-color:'#000'},
+color:'#000',
+conf:'western'},
 
 sac:{
+id:1610612758,
 city:'Sacramento',
 team:'Kings',
-color:'#724C9F'},
+color:'#724C9F',
+conf:'western'},
 
 sas:{
+id:1610612759,
 city:'San Antonio',
 team:'Spurs',
-color:'#B6BFBF'},
+color:'#B6BFBF',
+conf:'western'},
 
 tor:{
+id:1610612761,
 city:'Toronto',
 team:'Raptors',
-color:'#CE1141'},
+color:'#CE1141',
+conf:'eastern'},
 
 uta:{
+id:1610612762,
 city:'Utah',
 team:'Jazz',
-color:'#00471B'},
+color:'#00471B',
+conf:'western'},
 
 was:{
+id:1610612764,
 city:'Washington',
 team:'Wizards',
-color:'#F5002F'}};exports.default=
+color:'#F5002F',
+conf:'eastern'}};exports.default=
 
 
 
@@ -65032,7 +65378,7 @@ fontSize:35},
 
 infoSide:{
 alignSelf:'center',
-color:'rgba(255, 255, 255, 0.3)',
+color:'rgba(255, 255, 255, 0.5)',
 fontSize:10,
 flex:1,
 marginTop:6},
@@ -65341,16 +65687,6 @@ _reactNative2.default.createElement(_reactNative.View,{style:styles.tabviewInner
 _reactNative2.default.createElement(_reactNative.Text,{style:styles.tabtext},'Teams')),
 
 tab==='teams'&&
-_reactNative2.default.createElement(_reactNative.View,{style:styles.active}))),
-
-
-
-_reactNative2.default.createElement(_reactNative.TouchableHighlight,{onPress:this.onPress.bind(this,'roster'),underlayColor:'transparent',style:styles.tab},
-_reactNative2.default.createElement(_reactNative.View,{style:styles.tabview},
-_reactNative2.default.createElement(_reactNative.View,{style:styles.tabviewInner},
-_reactNative2.default.createElement(_reactNative.Text,{style:styles.tabtext},'Roster')),
-
-tab==='roster'&&
 _reactNative2.default.createElement(_reactNative.View,{style:styles.active})))));}}]);return Tabbar;})(_reactNative.Component);exports.default=Tabbar;
 
 
@@ -65400,7 +65736,9 @@ backgroundColor:'#3471AE'},
 players:{
 backgroundColor:'#BD4C29'},
 
-teams:{},
+teams:{
+backgroundColor:'#1C8929'},
+
 roster:{}});
 
 
@@ -65778,8 +66116,7 @@ _reactNative2.default.createElement(_reactNative.View,null,
 _reactNative2.default.createElement(_reactNative.View,{style:[styles.navigation,{backgroundColor:_teamMap2.default[team].color}]},
 _reactNative2.default.createElement(_reactNative.TouchableHighlight,{
 onPress:this.onPressBack.bind(this),
-underlayColor:'transparent',
-style:styles.addIcon},
+underlayColor:'transparent'},
 _reactNative2.default.createElement(_reactNativeIcons.Icon,{
 name:'ion|ios-arrow-left',
 size:26,
@@ -65849,7 +66186,7 @@ portraitView:{
 alignSelf:'center',
 backgroundColor:'#fff',
 borderRadius:60,
-marginTop:10,
+marginTop:5,
 height:60,
 width:60},
 
@@ -65872,7 +66209,7 @@ fontSize:14},
 
 basicData:{
 flexDirection:'row',
-height:25,
+height:28,
 justifyContent:'center'},
 
 basicDataBlock:{
@@ -65883,7 +66220,7 @@ width:100},
 
 basicDataNumber:{
 color:'#909CAF',
-fontSize:17,
+fontSize:19,
 fontWeight:'500',
 marginRight:3},
 
@@ -66197,14 +66534,14 @@ __d('allyoop/app/components/player/PlayerTrend.js',function(global, require, mod
 
 
 
-var barInterval=3;
+var barInterval=2;
 var barItemTop=16;var 
 
 PlayerTrend=(function(_Component){babelHelpers.inherits(PlayerTrend,_Component);
 
 function PlayerTrend(props){babelHelpers.classCallCheck(this,PlayerTrend);var _this=babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(PlayerTrend).call(this,
 props));
-_this.unitHeight=3;return _this;}babelHelpers.createClass(PlayerTrend,[{key:'calculateLog',value:function calculateLog(
+_this.unitHeight=2;return _this;}babelHelpers.createClass(PlayerTrend,[{key:'calculateLog',value:function calculateLog(
 
 
 
@@ -66326,8 +66663,10 @@ marginTop:20},
 
 sumLeft:{
 alignItems:'flex-end',
+bottom:-4,
 flex:1,
-flexDirection:'row'},
+flexDirection:'row',
+position:'relative'},
 
 sumAvg:{
 color:'#909CAF',
@@ -66357,7 +66696,10 @@ marginLeft:3},
 
 sumPolarNumber:{
 color:'#6B7C96',
-fontSize:15}});
+fontSize:15,
+marginLeft:3,
+position:'relative',
+top:1.5}});
 
 
 
@@ -66377,8 +66719,8 @@ __d('allyoop/app/components/player/PlayerTrendBarItem.js',function(global, requi
 
 
 
-var tooltipWidth=80;
-var barWidth=10;var 
+var tooltipWidth=100;
+var barWidth=15;var 
 
 PlayerTrendBarItem=(function(_Component){babelHelpers.inherits(PlayerTrendBarItem,_Component);
 
@@ -66477,7 +66819,7 @@ _reactNative2.default.createElement(_reactNative.View,{style:[styles.bar,babelHe
 
 isHover&&
 _reactNative2.default.createElement(_reactNative.View,{style:[styles.tooltip,tooltipPosition]},
-_reactNative2.default.createElement(_reactNative.Text,{style:styles.tooltipContent},date),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.tooltipContent},value+' in '+date),
 _reactNative2.default.createElement(_reactNative.View,{style:[styles.tooltipMark,tooltipMark]})))));}}]);return PlayerTrendBarItem;})(_reactNative.Component);exports.default=PlayerTrendBarItem;
 
 
@@ -66538,6 +66880,745 @@ date:_reactNative.PropTypes.string,
 barInterval:_reactNative.PropTypes.number,
 barItemTop:_reactNative.PropTypes.number};
 });
+__d('allyoop/app/containers/Team.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _TeamList=require('allyoop/app/components/team/TeamList.js');var _TeamList2=babelHelpers.interopRequireDefault(_TeamList);var _NavigatorBar=require('allyoop/app/components/share/NavigatorBar.js');var _NavigatorBar2=babelHelpers.interopRequireDefault(_NavigatorBar);var 
+
+
+
+
+
+
+
+
+
+Team=(function(_Component){babelHelpers.inherits(Team,_Component);function Team(){babelHelpers.classCallCheck(this,Team);return babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(Team).apply(this,arguments));}babelHelpers.createClass(Team,[{key:'renderScene',value:function renderScene(
+
+route,navigator){
+if(route.component){
+var _Component2=route.component;
+return _reactNative2.default.createElement(_Component2,babelHelpers.extends({navigator:navigator,route:route},this.props));}}},{key:'render',value:function render()
+
+
+
+{
+return (
+_reactNative2.default.createElement(_reactNative.Navigator,{
+initialRoute:{
+name:'TeamList',
+component:_TeamList2.default},
+
+navigationBar:_reactNative2.default.createElement(_NavigatorBar2.default,null),
+renderScene:this.renderScene.bind(this)}));}}]);return Team;})(_reactNative.Component);exports.default=Team;
+});
+__d('allyoop/app/components/team/TeamList.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Tabbar=require('allyoop/app/components/share/Tabbar.js');var _Tabbar2=babelHelpers.interopRequireDefault(_Tabbar);var _teamMap=require('allyoop/app/utils/team-map.js');var _teamMap2=babelHelpers.interopRequireDefault(_teamMap);var _momentTimezone=require('moment-timezone/index.js');var _momentTimezone2=babelHelpers.interopRequireDefault(_momentTimezone);var _TeamConference=require('allyoop/app/components/team/TeamConference.js');var _TeamConference2=babelHelpers.interopRequireDefault(_TeamConference);var _collection=require('allyoop/app/lib/collection/index.js');var _collection2=babelHelpers.interopRequireDefault(_collection);var 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TeamList=(function(_Component){babelHelpers.inherits(TeamList,_Component);
+
+function TeamList(props){babelHelpers.classCallCheck(this,TeamList);var _this=babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(TeamList).call(this,
+props));
+_this.state={
+conference:'western'};return _this;}babelHelpers.createClass(TeamList,[{key:'componentDidMount',value:function componentDidMount()
+
+
+
+{var 
+actions=this.props.actions;
+var dateString=_momentTimezone2.default.tz(Date.now(),'America/Los_Angeles').format();
+var dateArray=dateString.replace('T','-').split('-');
+actions.getTeamRank(dateArray[0],dateArray[1],dateArray[2]);}},{key:'scrollEnd',value:function scrollEnd(
+
+
+x,y){
+if(x===0){
+this.setState({
+conference:'western'});}else 
+
+{
+this.setState({
+conference:'eastern'});}}},{key:'render',value:function render()
+
+
+
+
+{var 
+conference=this.state.conference;var 
+team=this.props.team;
+
+return (
+_reactNative2.default.createElement(_reactNative.View,{style:styles.container},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.header},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.conference},conference.toUpperCase()),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.confLabel},'conference')),
+
+_reactNative2.default.createElement(_Tabbar2.default,babelHelpers.extends({tab:'teams'},this.props)),
+team.loaded&&
+_reactNative2.default.createElement(_collection2.default,{scrollEnd:this.scrollEnd.bind(this)},
+[_reactNative2.default.createElement(_TeamConference2.default,babelHelpers.extends({data:team.data.western},this.props,{key:0})),_reactNative2.default.createElement(_TeamConference2.default,babelHelpers.extends({data:team.data.eastern},this.props,{key:1}))])));}}]);return TeamList;})(_reactNative.Component);exports.default=TeamList;
+
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flex:1},
+
+
+header:{
+backgroundColor:'#2DB43D',
+height:100,
+justifyContent:'center',
+paddingHorizontal:20},
+
+conference:{
+color:'#fff',
+fontSize:25,
+fontWeight:'300'},
+
+confLabel:{
+color:'#fff',
+fontSize:14,
+fontWeight:'200'}});
+
+
+
+TeamList.propTypes={};
+});
+__d('allyoop/app/components/team/TeamConference.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _teamMap=require('allyoop/app/utils/team-map.js');var _teamMap2=babelHelpers.interopRequireDefault(_teamMap);var _TeamDetail=require('allyoop/app/components/team/TeamDetail.js');var _TeamDetail2=babelHelpers.interopRequireDefault(_TeamDetail);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var listHeight=_reactNative.Dimensions.get('window').height-100-45;var 
+
+TeamConference=(function(_Component){babelHelpers.inherits(TeamConference,_Component);
+
+function TeamConference(props){babelHelpers.classCallCheck(this,TeamConference);var _this=babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(TeamConference).call(this,
+props));
+
+var teamMapById={};
+for(var key in _teamMap2.default){
+teamMapById[_teamMap2.default[key].id]=babelHelpers.extends({},_teamMap2.default[key],{abbr:key});}
+
+_this.teamMapById=teamMapById;return _this;}babelHelpers.createClass(TeamConference,[{key:'selectTeam',value:function selectTeam(
+
+
+id){var 
+navigator=this.props.navigator;
+navigator.push(babelHelpers.extends({},{
+name:'TeamDetail',
+component:_TeamDetail2.default,
+id:id}));}},{key:'renderRow',value:function renderRow(
+
+
+
+item,_,index){
+var team=babelHelpers.extends({},this.teamMapById[item.id],item);
+var itemStyle=index%2===0?styles.item:[styles.item,styles.itemEven];
+
+var teamLogo=team.abbr==='hou'?'hou2':team.abbr;
+return (
+_reactNative2.default.createElement(_reactNative.TouchableHighlight,{onPress:this.selectTeam.bind(this,team.id),underlayColor:'transparent'},
+_reactNative2.default.createElement(_reactNative.View,{style:itemStyle},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.order},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.orderLabel},index)),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.team},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.teamCity},team.city),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.teamName},team.team)),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.standing},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.standingLabel},team.loss+' - '+team.win)),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.logo},
+_reactNative2.default.createElement(_reactNative.Image,{style:styles.logoImage,source:{uri:teamLogo}})))));}},{key:'render',value:function render()
+
+
+
+
+
+
+{var 
+data=this.props.data;
+var dataSource=new _reactNative.ListView.DataSource({
+rowHasChanged:function(row1,row2){return row1!==row2;}}).
+cloneWithRows(data);
+
+return (
+_reactNative2.default.createElement(_reactNative.ListView,{
+dataSource:dataSource,
+renderRow:this.renderRow.bind(this),
+style:styles.listView}));}}]);return TeamConference;})(_reactNative.Component);exports.default=TeamConference;
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+
+listView:{
+height:listHeight},
+
+
+item:{
+height:70,
+flex:1,
+flexDirection:'row'},
+
+itemEven:{
+backgroundColor:'#F4F4F4'},
+
+
+order:{
+alignSelf:'center',
+width:50},
+
+orderLabel:{
+color:'#6B7C96',
+fontSize:11,
+fontWeight:'bold',
+textAlign:'center'},
+
+
+team:{
+flex:5,
+justifyContent:'center'},
+
+teamCity:{
+color:'#6B7C96',
+fontSize:18,
+fontWeight:'200'},
+
+teamName:{
+color:'#909CAF',
+fontSize:13},
+
+
+standing:{
+alignSelf:'center',
+flex:3},
+
+standingLabel:{
+color:'#6B7C96',
+textAlign:'right'},
+
+
+logo:{
+alignSelf:'center',
+flex:3},
+
+logoImage:{
+alignSelf:'center',
+height:35,
+width:35}});
+
+
+
+TeamConference.propTypes={
+data:_reactNative.PropTypes.array};
+});
+__d('allyoop/app/components/team/TeamDetail.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeIcons=require('react-native-icons/index.ios.js');var _PlayerDetail=require('allyoop/app/components/player/PlayerDetail.js');var _PlayerDetail2=babelHelpers.interopRequireDefault(_PlayerDetail);var _teamMap=require('allyoop/app/utils/team-map.js');var _teamMap2=babelHelpers.interopRequireDefault(_teamMap);var _TeamDetailPlayer=require('allyoop/app/components/team/TeamDetailPlayer.js');var _TeamDetailPlayer2=babelHelpers.interopRequireDefault(_TeamDetailPlayer);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var listHeight=_reactNative.Dimensions.get('window').height-30-90-35;var 
+
+TeamDetail=(function(_Component){babelHelpers.inherits(TeamDetail,_Component);
+
+function TeamDetail(props){babelHelpers.classCallCheck(this,TeamDetail);var _this=babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(TeamDetail).call(this,
+props));
+_this.state={
+team:null,
+dataSource:new _reactNative.ListView.DataSource({
+rowHasChanged:function(row1,row2){return row1!==row2;}})};return _this;}babelHelpers.createClass(TeamDetail,[{key:'componentDidMount',value:function componentDidMount()
+
+
+
+
+{var 
+actions=this.props.actions;var 
+id=this.props.route.id;
+
+setTimeout(function(){
+actions.getTeamInfo(id).
+then(function(){
+actions.getTeamDetail(id);});},
+
+500);}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(
+
+
+props){var 
+team=props.team;var 
+id=this.props.route.id;var 
+dataSource=this.state.dataSource;
+
+var newState={};
+if(team.detail[id].players){
+newState={
+team:team.detail[id],
+dataSource:dataSource.cloneWithRows(team.detail[id].players)};}else 
+
+{
+newState={
+team:team.detail[id]};}
+
+
+
+this.setState(newState);}},{key:'onPressBack',value:function onPressBack()
+
+
+{var 
+navigator=this.props.navigator;
+navigator.pop();}},{key:'renderRow',value:function renderRow(
+
+
+player,_,index){var _props=
+this.props;var team=_props.team;var navigator=_props.navigator;var 
+id=this.props.route.id;
+var isLast=index===team.detail[id].players.length-1;
+return _reactNative2.default.createElement(_TeamDetailPlayer2.default,{player:player,isLast:isLast,team:this.state.team,navigator:navigator,key:index});}},{key:'render',value:function render()
+
+
+{var _state=
+this.state;var team=_state.team;var dataSource=_state.dataSource;
+
+return (
+_reactNative2.default.createElement(_reactNative.View,{style:styles.container},
+team&&
+_reactNative2.default.createElement(_reactNative.View,null,
+_reactNative2.default.createElement(_reactNative.View,{style:[styles.navigation,{backgroundColor:_teamMap2.default[team.teamAbbr.toLowerCase()].color}]},
+_reactNative2.default.createElement(_reactNative.TouchableHighlight,{
+onPress:this.onPressBack.bind(this),
+underlayColor:'transparent'},
+_reactNative2.default.createElement(_reactNativeIcons.Icon,{
+name:'ion|ios-arrow-left',
+size:26,
+color:'#fff',
+style:styles.backIcon}))),
+
+
+
+_reactNative2.default.createElement(_reactNative.View,{style:[styles.header,{backgroundColor:_teamMap2.default[team.teamAbbr.toLowerCase()].color}]},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.headerTeam},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.headerTeamCity},team.teamCity),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.headerTeamName},team.teamName)),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.headerLogo},
+_reactNative2.default.createElement(_reactNative.Image,{style:styles.headerLogoImage,source:{uri:team.teamAbbr.toLowerCase()}})),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.headerRank},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.headerRankResult},team.win+'W - '+team.loss+'L'),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.headerRankConf},'#'+team.confRank+' in the '+team.teamConf+' Conference'),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.headerRankDivi},'#'+team.diviRank+' in the '+team.teamDivi+' Division'))),
+
+
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataInfo},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataInfoItem},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.itemLabel},'PPG'),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.itemData},team.ptsRank+'th')),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataInfoItem},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.itemLabel},'RPG'),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.itemData},team.rebRank+'th')),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataInfoItem},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.itemLabel},'APG'),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.itemData},team.astRank+'th')),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataInfoItem},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.itemLabel},'OPPG'),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.itemData},team.oppRank+'th'))),
+
+
+
+team.players&&
+_reactNative2.default.createElement(_reactNative.ListView,{
+dataSource:dataSource,
+renderRow:this.renderRow.bind(this),
+style:styles.listView}))));}}]);return TeamDetail;})(_reactNative.Component);exports.default=TeamDetail;
+
+
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flexDirection:'column'},
+
+
+navigation:{
+flexDirection:'row',
+height:30},
+
+backIcon:{
+height:30,
+marginLeft:2,
+marginTop:6,
+width:30},
+
+
+header:{
+height:90,
+flexDirection:'row',
+paddingHorizontal:10,
+paddingBottom:15},
+
+
+headerTeam:{
+flex:1.5,
+flexDirection:'column',
+justifyContent:'center'},
+
+headerTeamCity:{
+color:'#fff',
+fontSize:17},
+
+headerTeamName:{
+color:'#fff',
+fontSize:13},
+
+
+headerLogo:{
+flex:1,
+justifyContent:'center'},
+
+headerLogoImage:{
+alignSelf:'flex-start',
+height:70,
+width:70},
+
+
+headerRank:{
+flex:1.5,
+justifyContent:'center'},
+
+headerRankResult:{
+color:'#fff',
+fontSize:10},
+
+headerRankConf:{
+color:'#fff',
+fontSize:10},
+
+headerRankDivi:{
+color:'#fff',
+fontSize:10},
+
+
+dataInfo:{
+alignItems:'center',
+flexDirection:'row',
+height:35},
+
+dataInfoItem:{
+alignItems:'flex-end',
+flex:1,
+flexDirection:'row',
+justifyContent:'center'},
+
+itemLabel:{
+color:'#6B7C96',
+fontSize:10},
+
+itemData:{
+color:'#6B7C96',
+fontSize:15,
+fontWeight:'600',
+marginLeft:2,
+position:'relative',
+top:2},
+
+
+listView:{
+backgroundColor:'#F4F4F4',
+height:listHeight}});
+
+
+
+TeamDetail.props={};
+});
+__d('allyoop/app/components/team/TeamDetailPlayer.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeIcons=require('react-native-icons/index.ios.js');var _teamMap=require('allyoop/app/utils/team-map.js');var _teamMap2=babelHelpers.interopRequireDefault(_teamMap);var _PlayerDetail=require('allyoop/app/components/player/PlayerDetail.js');var _PlayerDetail2=babelHelpers.interopRequireDefault(_PlayerDetail);var 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TeamDetailPlayer=(function(_Component){babelHelpers.inherits(TeamDetailPlayer,_Component);function TeamDetailPlayer(){babelHelpers.classCallCheck(this,TeamDetailPlayer);return babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(TeamDetailPlayer).apply(this,arguments));}babelHelpers.createClass(TeamDetailPlayer,[{key:'onPress',value:function onPress()
+
+{var _props=
+this.props;var navigator=_props.navigator;var player=_props.player;
+navigator.push({
+name:'PlayerDetail',
+component:_PlayerDetail2.default,
+player:player});}},{key:'render',value:function render()
+
+
+
+{var _props2=
+this.props;var player=_props2.player;var isLast=_props2.isLast;var team=_props2.team;
+var nameForPortrait=player.name.toLowerCase().split(' ').join('_');
+var teamMap=_teamMap2.default[team.teamAbbr.toLowerCase()];
+
+return (
+_reactNative2.default.createElement(_reactNative.TouchableHighlight,{
+onPress:this.onPress.bind(this),
+underlayColor:'transparent'},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.container},
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.portrait},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.portraitBackground},
+_reactNative2.default.createElement(_reactNative.Image,{style:[styles.portraitImage,,{borderColor:teamMap.color}],source:{uri:'http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/'+nameForPortrait+'.png'}}))),
+
+
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.info},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.infoName},player.name),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.infoPosition},player.pos+' '+player.num)),
+
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.data},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataPerson},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataPersonItem},'Age: '+player.age),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataPersonItem},'Height: '+player.height),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataPersonItem},'Weight: '+player.weight)),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataGame},
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataGameItem},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataGameItemData},player.pts),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataGameItemLabel},'PTS')),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataGameItem},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataGameItemData},player.reb),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataGameItemLabel},'REB')),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataGameItem},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataGameItemData},player.ast),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataGameItemLabel},'AST')),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataGameItem},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataGameItemData},player.min),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataGameItemLabel},'MIN')),
+
+_reactNative2.default.createElement(_reactNative.View,{style:styles.dataGameItem},
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataGameItemData},player.gp),
+_reactNative2.default.createElement(_reactNative.Text,{style:styles.dataGameItemLabel},'GP')))))));}}]);return TeamDetailPlayer;})(_reactNative.Component);exports.default=TeamDetailPlayer;
+
+
+
+
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+borderColor:'#E1E1E1',
+borderBottomWidth:1,
+height:60,
+flexDirection:'row'},
+
+
+portrait:{
+flex:1,
+justifyContent:'center'},
+
+portraitBackground:{
+alignSelf:'center',
+backgroundColor:'#fff',
+borderRadius:18,
+height:36,
+width:36},
+
+portraitImage:{
+height:36,
+width:36,
+borderRadius:18,
+borderWidth:1},
+
+
+info:{
+flex:2,
+justifyContent:'center'},
+
+infoName:{
+color:'#7C7C7C',
+fontSize:12},
+
+infoPosition:{
+color:'#7C7C7C',
+fontSize:12},
+
+
+data:{
+flex:5,
+justifyContent:'center'},
+
+
+dataPerson:{
+flexDirection:'row'},
+
+dataPersonItem:{
+color:'#909CAF',
+fontSize:10,
+marginRight:8},
+
+
+dataGame:{
+flexDirection:'row'},
+
+dataGameItem:{
+alignItems:'flex-end',
+flexDirection:'row',
+marginRight:8},
+
+dataGameItemData:{
+color:'#6B7C96',
+fontSize:12,
+position:'relative',
+top:1},
+
+dataGameItemLabel:{
+color:'#6B7C96',
+fontSize:9}});
+
+
+
+TeamDetailPlayer.propType={
+player:_reactNative.PropTypes.object,
+isLast:_reactNative.PropTypes.bool,
+team:_reactNative.PropTypes.object};
+});
+__d('allyoop/app/lib/collection/index.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var 
+
+
+
+
+
+
+
+
+
+
+Collection=(function(_Component){babelHelpers.inherits(Collection,_Component);
+
+function Collection(props){babelHelpers.classCallCheck(this,Collection);var _this=babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(Collection).call(this,
+props));
+_this.screenWidth=_reactNative.Dimensions.get('window').width;
+_this.screenHeight=_reactNative.Dimensions.get('window').height-40;return _this;}babelHelpers.createClass(Collection,[{key:'onMomentumScrollEnd',value:function onMomentumScrollEnd(
+
+
+e){
+this.props.scrollEnd&&this.props.scrollEnd(e.nativeEvent.contentOffset.x,e.nativeEvent.contentOffset.y);}},{key:'render',value:function render()
+
+
+{var 
+screenWidth=this.screenWidth;
+
+return (
+_reactNative2.default.createElement(_reactNative.ScrollView,{
+horizontal:true,
+scrollEnabled:true,
+pagingEnabled:true,
+scrollEventThrottle:16,
+showsHorizontalScrollIndicator:false,
+showsVerticalScrollIndicator:false,
+directionalLockEnabled:true,
+alwaysBounce:false,
+alwaysBounceVertical:false,
+style:styles.container,
+onMomentumScrollEnd:this.onMomentumScrollEnd.bind(this)},
+this.props.children.map(function(child,index){
+return _reactNative2.default.createElement(_reactNative.View,{
+key:'collection'+index,
+style:{width:screenWidth}},
+child);})));}}]);return Collection;})(_reactNative.Component);exports.default=Collection;
+
+
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flexDirection:'row'}});
+
+
+
+Collection.propTypes={
+scrollEnd:_reactNative.PropTypes.func,
+children:_reactNative.PropTypes.array};
+});
 ;require("InitializeJavaScriptAppEngine");
 ;require("allyoop/index.ios.js");
-__SSTOKENSTRING = "@generated SignedSource<<e454bb1c4d77beb948270d2f133477f4>>";
+__SSTOKENSTRING = "@generated SignedSource<<3c1f69b3a9230be55205d49fabcedab7>>";

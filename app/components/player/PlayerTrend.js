@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 2,
+    marginTop: 2
   },
   sumPolarLabel: {
     color: '#909CAF',

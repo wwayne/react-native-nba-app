@@ -120,7 +120,6 @@ const producer = {
       result[team.id].abbr = team.abbreviation
       result[team.id].state = team.team_stats
     })
-
     return result
   },
 
@@ -210,6 +209,99 @@ const producer = {
         plusMinus: item[25]
       }
     })
+  },
+
+  /**
+   * @return {eastern: [{id, name, win, loss}], western:[]}
+   */
+  teamRank: (res) => {
+    const eastData = res.resultSets[4].rowSet
+    const westData = res.resultSets[5].rowSet
+
+    let eastern = []
+    let western = []
+    let anotherItem = {}
+    eastData.forEach((item, index) => {
+      eastern.push({
+        id: item[0],
+        name: item[5],
+        win: item[7],
+        loss: item[8]
+      })
+      anotherItem = westData[index]
+      western.push({
+        id: anotherItem[0],
+        name: anotherItem[5],
+        win: anotherItem[8],
+        loss: anotherItem[7]
+      })
+    })
+
+    return {
+      eastern,
+      western
+    }
+  },
+
+  /**
+   * @return {teamCity, teamName, teamAbbr, teamConf, teamDivi, confRank, diviRank,
+   win, loss, id, ptsRank, rebRank, astRank, oppRank}
+   */
+  teamInfo: (res) => {
+    const info = res.resultSets[0].rowSet[0]
+    const dataInfo = res.resultSets[1].rowSet[0]
+    return {
+      teamCity: info[2],
+      teamName: info[3],
+      teamAbbr: info[4],
+      teamConf: info[5],
+      teamDivi: info[6],
+      confRank: info[11],
+      diviRank: info[12],
+      win: info[8],
+      loss: info[9],
+      id: info[0],
+      ptsRank: dataInfo[3],
+      rebRank: dataInfo[5],
+      astRank: dataInfo[7],
+      oppRank: dataInfo[9]
+    }
+  },
+
+  /**
+   * @return [{id, name, gp, pts, reb, ast, min}]
+   */
+  teamDetail: (res) => {
+    const target = res.resultSets[1].rowSet
+    return target.map(player => {
+      return {
+        id: player[1],
+        name: player[2],
+        gp: player[3],
+        pts: player[27],
+        reb: player[19],
+        ast: player[20],
+        min: player[7]
+      }
+    })
+  },
+
+  /**
+   * @return {id: {pos, height, weight, num, age}}
+   */
+  teamDetailBasic: (res) => {
+    const target = res.resultSets[0].rowSet
+    let result = {}
+    target.forEach(player => {
+      result[player[12]] = {
+        pos: player[5],
+        height: player[6],
+        weight: player[7],
+        num: player[4],
+        age: player[9]
+      }
+    })
+    return result
   }
 }
 

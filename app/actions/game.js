@@ -62,7 +62,16 @@ export function getLeagueStanding () {
         data: getStore().standing.data
       }))
     }
-    const year = new Date().getFullYear()
+
+    const d = new Date()
+    const currentMonth = d.getMonth() + 1
+    let year
+    if (currentMonth >= 10) {
+      year = d.getFullYear().toString()
+    } else {
+      year = d.getFullYear().toString() - 1
+    }
+
     const channel = new Channel()
     return channel.getLeagueStanding(year)
       .then(data => {
