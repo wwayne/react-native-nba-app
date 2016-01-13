@@ -9,7 +9,8 @@ import React, {
   PixelRatio,
   Image,
   TouchableHighlight,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  InteractionManager
 } from 'react-native'
 import teamMap from '../../utils/team-map'
 import {Icon} from 'react-native-icons'
@@ -39,28 +40,29 @@ export default class GameDetail extends Component {
     const game = route.game
     const date = route.date
 
-    /* Only for ui performance */
-    let interval = false
-    let indicator = true
-    if (!game.detail.loaded) {
-      setTimeout(() => {
-        actions.getGameDetail(game.id, game.type, date[0], date[1], date[2])
-        interval = this.keepRequest(game)
-        this.setState({
-          interval,
-          indicator
-        })
-      }, 1000)
-    } else {
-      setTimeout(() => {
-        indicator = false
-        interval = this.keepRequest(game)
-        this.setState({
-          interval,
-          indicator
-        })
-      }, 1000)
-    }
+    InteractionManager.runAfterInteractions(() => {
+      let interval = false
+      let indicator = true
+      if (!game.detail.loaded) {
+        setTimeout(() => {
+          actions.getGameDetail(game.id, game.type, date[0], date[1], date[2])
+          interval = this.keepRequest(game)
+          this.setState({
+            interval,
+            indicator
+          })
+        }, 1000)
+      } else {
+        setTimeout(() => {
+          indicator = false
+          interval = this.keepRequest(game)
+          this.setState({
+            interval,
+            indicator
+          })
+        }, 1000)
+      }
+    })
   }
 
   componentWillReceiveProps (prop) {
@@ -115,7 +117,7 @@ export default class GameDetail extends Component {
     const homeAbb = game.home.team.toLowerCase()
     const visitorAbb = game.visitor.team.toLowerCase()
 
-    /* Calcu for process and type */
+    /* Calculate for process and type */
     let gameProcess = ''
     let cssType = ''
     switch (game.type) {

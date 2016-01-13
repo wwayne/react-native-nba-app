@@ -9,7 +9,8 @@ import React, {
   ListView,
   TouchableHighlight,
   PropTypes,
-  Dimensions
+  Dimensions,
+  InteractionManager
 } from 'react-native'
 
 import {Icon} from 'react-native-icons'
@@ -40,13 +41,13 @@ export default class TeamDetail extends Component {
   componentDidMount () {
     const {actions} = this.props
     const {id} = this.props.route
-    // TODO InteractionManager
-    setTimeout(() => {
+
+    InteractionManager.runAfterInteractions(() => {
       actions.getTeamInfo(id)
-        .then(() => {
-          actions.getTeamDetail(id)
-        })
-    }, 500)
+      .then(() => {
+        actions.getTeamDetail(id)
+      })
+    })
   }
 
   componentWillReceiveProps (props) {

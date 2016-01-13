@@ -9,7 +9,8 @@ import React, {
   ScrollView,
   TouchableHighlight,
   PropTypes,
-  Dimensions
+  Dimensions,
+  InteractionManager
 } from 'react-native'
 
 import {Icon} from 'react-native-icons'
@@ -33,12 +34,12 @@ export default class PlayerDetail extends Component {
     const {actions} = this.props
     const {player} = this.props.route
 
-    setTimeout(() => {
+    InteractionManager.runAfterInteractions(() => {
       actions.getPlayerDetail(player.id)
         .then(() => {
           actions.getPlayerLog(player.id)
         })
-    }, 500)
+    })
   }
 
   componentWillReceiveProps (props) {
@@ -60,7 +61,6 @@ export default class PlayerDetail extends Component {
     const player = playerLoaded[route.player.id] || this.state.player
 
     const team = player && player.team.toLowerCase()
-
     /* ScrollView need a specifical height */
     const scrollHeight = Dimensions.get('window').height - navigationHeight - headerHeight
     return (

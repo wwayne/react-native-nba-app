@@ -31,6 +31,9 @@ export default class Game extends Component {
           component: GameList
         }}
         navigationBar={<NavigatorBar />}
+        configureScene={() => ({
+          ...Navigator.SceneConfigs.FloatFromRight
+        })}
         renderScene={this.renderScene.bind(this)}
       />
     )

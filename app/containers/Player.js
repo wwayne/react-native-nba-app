@@ -24,6 +24,9 @@ export default class Player extends Component {
           name: 'PlayerIndex',
           component: PlayerIndex
         }}
+        configureScene={() => ({
+          ...Navigator.SceneConfigs.FloatFromRight
+        })}
         navigationBar={<NavigatorBar />}
         renderScene={this.renderScene.bind(this)}
       />

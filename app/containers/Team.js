@@ -24,6 +24,9 @@ export default class Team extends Component {
           name: 'TeamList',
           component: TeamList
         }}
+        configureScene={() => ({
+          ...Navigator.SceneConfigs.FloatFromRight
+        })}
         navigationBar={<NavigatorBar />}
         renderScene={this.renderScene.bind(this)}
       />

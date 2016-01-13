@@ -40,7 +40,7 @@ export default class GameList extends Component {
   componentWillReceiveProps (props) {
     const {live, over, unstart, actions} = props
     const {dataSource} = this.state
-
+    console.log(props)
     const rows = live.data.concat(unstart.data).concat(over.data)
     if (live.data.length > 0) {
       setTimeout(() => {
