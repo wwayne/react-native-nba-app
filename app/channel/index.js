@@ -59,7 +59,7 @@ export default class Channel {
   }
 
   getTeamRank (year, month, date) {
-    const url = address.teamRank(`${date}/${month}/${year}`)
+    const url = address.teamRank(`${month}/${date}/${year}`)
     return window.fetch(url)
       .then(res => res.json())
       .then(data => producer.teamRank(data))

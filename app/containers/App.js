@@ -9,7 +9,10 @@ import React, {
 import {connect} from 'react-redux/native'
 import {bindActionCreators} from 'redux'
 
-import allActions from '../actions'
+import applicationActions from '../actions/application'
+import gameActions from '../actions/game'
+import playerActions from '../actions/player'
+import teamActions from '../actions/team'
 
 import Game from './Game'
 import Player from './Player'
@@ -33,18 +36,18 @@ export default class App extends Component {
 
   render () {
     const {tab} = this.state
-    const {game, player, team, actions} = this.props
+    const {game, player, team, gameActions, playerActions, teamActions} = this.props
 
     return (
       <View style={styles.container}>
         {tab === 'game' &&
-          <Game {...game} actions={actions} />
+          <Game {...game} actions={gameActions} />
         }
         {tab === 'players' &&
-          <Player {...player} actions={actions} />
+          <Player {...player} actions={playerActions} />
         }
         {tab === 'teams' &&
-          <Team {...team} actions={actions} />
+          <Team {...team} actions={teamActions} />
         }
       </View>
     )
@@ -84,6 +87,8 @@ export default connect(state => {
   }
 }, dispatch => {
   return {
-    actions: bindActionCreators(allActions, dispatch)
+    gameActions: bindActionCreators(Object.assign({}, applicationActions, gameActions), dispatch),
+    playerActions: bindActionCreators(Object.assign({}, applicationActions, playerActions), dispatch),
+    teamActions: bindActionCreators(Object.assign({}, applicationActions, teamActions), dispatch),
   }
 })(App)

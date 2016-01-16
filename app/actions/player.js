@@ -4,7 +4,7 @@ import {PLAYER} from '../constant'
 import Channel from '../channel'
 import userDefaults from '../lib/userDefaults'
 
-export const getPlayerList = () => {
+const getPlayerList = () => {
   return (dispatch, getStore) => {
     if (getStore().playerList.isLoaded) {
       return Promise.resolve(dispatch({
@@ -24,7 +24,7 @@ export const getPlayerList = () => {
   }
 }
 
-export const setSearchRecord = player => {
+const setSearchRecord = player => {
   return dispatch => {
     return userDefaults.get(PLAYER.RECENT)
       .then(recent => {
@@ -51,7 +51,7 @@ export const setSearchRecord = player => {
   }
 }
 
-export const getSearchRecord = id => {
+const getSearchRecord = id => {
   return dispatch => {
     return userDefaults.get(PLAYER.RECENT)
       .then(recent => {
@@ -67,7 +67,7 @@ export const getSearchRecord = id => {
   }
 }
 
-export const getPlayerDetail = id => {
+const getPlayerDetail = id => {
   return (dispatch, getStore) => {
     if (getStore().playerLoaded[id]) {
       return Promise.resolve(dispatch({
@@ -89,7 +89,7 @@ export const getPlayerDetail = id => {
   }
 }
 
-export const getPlayerLog = id => {
+const getPlayerLog = id => {
   return (dispatch, getStore) => {
     if (getStore().playerLoaded[id] && getStore().playerLoaded[id].log) {
       return Promise.resolve(dispatch({
@@ -111,3 +111,9 @@ export const getPlayerLog = id => {
   }
 }
 
+export default {
+  getPlayerList,
+  setSearchRecord,
+  getSearchRecord,
+  getPlayerLog
+}

@@ -6,7 +6,7 @@ import { GAME } from '../constant'
 /**
  * Get info of game general
  */
-export function getGameGeneral (year, month, date) {
+const getGameGeneral = (year, month, date) => {
   return (dispatch, getStore) => {
     const channel = new Channel()
     return channel.getGameGeneral(year, month, date)
@@ -25,7 +25,7 @@ export function getGameGeneral (year, month, date) {
  * @note id = game_id & tye = game_type
  * @return game {Object}
  */
-export function getGameDetail (id, type, year, month, date) {
+const getGameDetail = (id, type, year, month, date) => {
   return (dispatch, getStore) => {
     /* If the game is finish and have detail data, no need to request again */
     if (type === 'over') {
@@ -54,7 +54,7 @@ export function getGameDetail (id, type, year, month, date) {
 /**
  * Get every team's standing
  */
-export function getLeagueStanding () {
+const getLeagueStanding = () => {
   return (dispatch, getStore) => {
     if (getStore().standing.loaded) {
       return Promise.resolve(dispatch({
@@ -82,3 +82,10 @@ export function getLeagueStanding () {
       })
   }
 }
+
+export default {
+  getGameGeneral,
+  getGameDetail,
+  getLeagueStanding
+}
+

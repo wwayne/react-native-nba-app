@@ -14,6 +14,7 @@ export const getTeamRank = (year, month, date) => {
     const channel = new Channel()
     return channel.getTeamRank(year, month, date)
       .then(data => {
+        console.log('here')
         return dispatch({
           type: TEAM.RANK,
           data: data
@@ -65,4 +66,10 @@ export const getTeamDetail = (id) => {
       })
       .catch(err => console.error(err))
   }
+}
+
+export default {
+  getTeamRank,
+  getTeamInfo,
+  getTeamDetail
 }
