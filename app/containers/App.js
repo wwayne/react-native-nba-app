@@ -74,7 +74,8 @@ export default connect(state => {
       live: state.live,
       over: state.over,
       unstart: state.unstart,
-      standing: state.standing
+      standing: state.standing,
+      application: state.application
     },
     player: {
       playerList: state.playerList,

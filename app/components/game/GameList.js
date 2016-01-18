@@ -38,18 +38,22 @@ export default class GameList extends Component {
   }
 
   componentWillReceiveProps (props) {
-    const {live, over, unstart, actions} = props
-    const {dataSource} = this.state
-    console.log(props)
+    const {live, over, unstart, actions, application} = props
+    const {dataSource, date} = this.state
+
     const rows = live.data.concat(unstart.data).concat(over.data)
-    if (live.data.length > 0) {
-      setTimeout(() => {
-        actions.getGameGeneral()
-      }, 5000)
-    } else if (unstart.data.length > 0) {
-      setTimeout(() => {
-        actions.getGameGeneral()
-      }, 120000)
+
+    /* Judge if the navigator is on Game List page */
+    if (application.navigator === 'gameIndex') {
+      if (live.data.length > 0) {
+        setTimeout(() => {
+          actions.getGameGeneral(date[0], date[1], date[2])
+        }, 5000)
+      } else if (unstart.data.length > 0) {
+        setTimeout(() => {
+          actions.getGameGeneral(date[0], date[1], date[2])
+        }, 120000)
+      }
     }
 
     if (this.mount) {

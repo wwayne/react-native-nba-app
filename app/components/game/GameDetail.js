@@ -28,7 +28,6 @@ export default class GameDetail extends Component {
     const homeName = teamMap[homeAbb].city + ' ' + teamMap[homeAbb].team
     const visitorName = teamMap[visitorAbb].city + ' ' + teamMap[visitorAbb].team
     this.state = {
-      interval: false,
       selectedIndex: 0,
       teamValues: [homeName, visitorName],
       indicator: true
@@ -39,61 +38,37 @@ export default class GameDetail extends Component {
     const {actions, route} = this.props
     const game = route.game
     const date = route.date
-
     InteractionManager.runAfterInteractions(() => {
-      let interval = false
-      let indicator = true
-      if (!game.detail.loaded) {
-        setTimeout(() => {
-          actions.getGameDetail(game.id, game.type, date[0], date[1], date[2])
-          interval = this.keepRequest(game)
-          this.setState({
-            interval,
-            indicator
-          })
-        }, 1000)
-      } else {
-        setTimeout(() => {
-          indicator = false
-          interval = this.keepRequest(game)
-          this.setState({
-            interval,
-            indicator
-          })
-        }, 1000)
-      }
+      actions.getGameDetail(game.id, game.type, date[0], date[1], date[2])
+        .catch(err => console.error(err))
     })
   }
 
-  componentWillReceiveProps (prop) {
-    this.setState({
-      indicator: false
-    })
-  }
-
-  keepRequest (game) {
-    /* Keeping update every 10s if in live condition */
-    const {actions, route} = this.props
+  componentWillReceiveProps (props) {
+    const {actions, route} = props
+    const game = route.game
     const date = route.date
-    let interval = false
+    let indicator = true
 
-    if (game.type === 'live') {
-      clearInterval(this.state.interval)
-      interval = setInterval(() => {
-        actions.getGameDetail(game.id, game.type, date[0], date[1], date[2])
-      }, 10000)
+    if (game.detail.loaded) {
+      indicator = false
+      if (game.detail.data.type === 'live') {
+        setTimeout(() => {
+          actions.getGameDetail(game.id, 'live', date[0], date[1], date[2])
+        }, 10000)
+      }
     }
-    return interval
-  }
 
-  componentWillUnmount () {
-    const {interval} = this.state
-    clearInterval(interval)
+    this.setState({
+      indicator
+    })
   }
 
   onBackPress () {
-    const {navigator} = this.props
-    navigator.pop()
+    const {navigator, actions} = this.props
+    actions.toNavigation('gameIndex')
+      .then(() => navigator.pop())
+      .catch(err => console.error(err))
   }
 
   onChange (index) {
@@ -101,12 +76,12 @@ export default class GameDetail extends Component {
       selectedIndex: index,
       indicator: true
     })
-    // Only for ui performance, will feel obviously stuck without indicator
-    setTimeout(() => {
+
+    InteractionManager.runAfterInteractions(() => {
       this.setState({
         indicator: false
       })
-    }, 100)
+    })
   }
 
   render () {
@@ -116,7 +91,7 @@ export default class GameDetail extends Component {
     const game = route.game
     const homeAbb = game.home.team.toLowerCase()
     const visitorAbb = game.visitor.team.toLowerCase()
-
+    console.log(game)
     /* Calculate for process and type */
     let gameProcess = ''
     let cssType = ''

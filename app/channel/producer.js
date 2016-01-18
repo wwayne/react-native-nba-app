@@ -61,7 +61,7 @@ const producer = {
   },
 
   /**
-   * @return {home: {players: {Array}, team, score}, visitor: {<=same}, general: {process}}
+   * @return {type, home: {players: {Array}, team, score}, visitor: {<=same}, general: {process}}
    * @example player
         assists: "1"
         blocks: "1"
@@ -97,13 +97,14 @@ const producer = {
       home: {},
       visitor: {}
     }
-
     Object.keys(result).forEach(side => {
       result[side].team = data[side].team_key
       result[side].score = data[side].score
       result[side].player = data[side].players.player
     })
 
+    const process = parseInt(data['period_time'].game_status, 10)
+    result.type = process === 3 ? 'over' : (process === 2 ? 'live' : 'unstart')
     return result
   },
 
@@ -225,8 +226,8 @@ const producer = {
       eastern.push({
         id: item[0],
         name: item[5],
-        win: item[7],
-        loss: item[8]
+        win: item[8],
+        loss: item[7]
       })
       anotherItem = westData[index]
       western.push({

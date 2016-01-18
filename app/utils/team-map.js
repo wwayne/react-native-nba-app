@@ -89,7 +89,7 @@ const teamMap = {
     id: 1610612746,
     city: 'Los Angeles',
     team: 'Clippers',
-    color: '#ED174C',
+    color: '#222',
     conf: 'western'
   },
   lal: {

@@ -2,7 +2,7 @@
 
 import Enum from 'es6-enum'
 
-export const APP = Enum('TAB')
+export const APP = Enum('TAB', 'NAVIGATION')
 
 export const GAME = Enum('INFO', 'DETAIL', 'STANDING')
 

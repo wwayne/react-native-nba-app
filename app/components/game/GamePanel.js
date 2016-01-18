@@ -17,14 +17,18 @@ import GameDetail from './GameDetail'
 export default class GamePanel extends Component {
 
   onPressRow () {
-    const {navigator, game, date} = this.props
+    const {navigator, game, date, actions} = this.props
     if (game.type !== 'unstart') {
-      navigator.push(Object.assign({}, {
-        name: 'GameDetail',
-        component: GameDetail,
-        game,
-        date
-      }))
+      actions.toNavigation('gameDetail')
+        .then(() => {
+          navigator.push(Object.assign({}, {
+            name: 'GameDetail',
+            component: GameDetail,
+            game,
+            date
+          }))
+        })
+        .catch(err => console.error(err))
     }
   }
 

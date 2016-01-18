@@ -4,14 +4,23 @@ import createReducer from '../utils/create-reducer'
 
 import {APP} from '../constant'
 
+/* First navigatore of each tab named [tab]Index */
 const initialState = {
-  tab: 'game'
+  tab: 'game',
+  navigator: 'gameIndex'
 }
 
 const actionHandler = {
   [APP.TAB]: (state, action) => {
     return Object.assign({}, state, {
-      tab: action.data
+      tab: action.data,
+      navigator: tab + 'Index'
+    })
+  },
+
+  [APP.NAVIGATOR]: (state, action) => {
+    return Object.assign({}, state, {
+      navigator: action.data
     })
   }
 }

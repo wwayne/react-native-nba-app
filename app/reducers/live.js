@@ -51,7 +51,6 @@ const actionHandler = {
       }
       return false
     })
-
     return newState
   }
 }
