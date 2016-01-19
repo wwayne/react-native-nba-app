@@ -33,9 +33,9 @@ export default class PlayerIndex extends Component {
 
   componentDidMount () {
     const {actions} = this.props
-    actions.getSearchRecord()
+    actions.getPlayerList()
       .then(() => {
-        actions.getPlayerList()
+        actions.getSearchRecord()
       })
   }
 

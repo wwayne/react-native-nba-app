@@ -115,5 +115,6 @@ export default {
   getPlayerList,
   setSearchRecord,
   getSearchRecord,
+  getPlayerDetail,
   getPlayerLog
 }
