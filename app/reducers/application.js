@@ -14,11 +14,11 @@ const actionHandler = {
   [APP.TAB]: (state, action) => {
     return Object.assign({}, state, {
       tab: action.data,
-      navigator: tab + 'Index'
+      navigator: action.data + 'Index'
     })
   },
 
-  [APP.NAVIGATOR]: (state, action) => {
+  [APP.NAVIGATION]: (state, action) => {
     return Object.assign({}, state, {
       navigator: action.data
     })

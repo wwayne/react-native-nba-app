@@ -8,14 +8,18 @@ import { GAME } from '../constant'
  */
 const getGameGeneral = (year, month, date) => {
   return (dispatch, getStore) => {
-    const channel = new Channel()
-    return channel.getGameGeneral(year, month, date)
-      .then(data => {
-        return dispatch({
-          type: GAME.INFO,
-          data
+    if (getStore().application.navigator === 'gameIndex') {
+      const channel = new Channel()
+      return channel.getGameGeneral(year, month, date)
+        .then(data => {
+          return dispatch({
+            type: GAME.INFO,
+            data
+          })
         })
-      })
+    } else {
+      return Promise.resolve()
+    }
   }
 }
 
@@ -27,27 +31,30 @@ const getGameGeneral = (year, month, date) => {
  */
 const getGameDetail = (id, type, year, month, date) => {
   return (dispatch, getStore) => {
-    /* If the game is finish and have detail data, no need to request again */
-    if (type === 'over') {
-      const game = getStore().over.data.find((g) => { return g.id === id })
-      if (game.detail && game.detail.loaded) {
-        return Promise.resolve(dispatch({
-          type: GAME.DETAIL,
-          data: game.detail.data
-        }))
+    if (getStore().application.navigator === 'gameDetail') {
+      /* If the game is finish and have detail data, no need to request again */
+      if (type === 'over') {
+        const game = getStore().over.data.find((g) => { return g.id === id })
+        if (game.detail && game.detail.loaded) {
+          return Promise.resolve(dispatch({
+            type: GAME.DETAIL,
+            data: game.detail.data
+          }))
+        }
       }
-    }
-
-    const channel = new Channel()
-    return channel.getGameDetail(year, month, date, id)
-      .then(data => {
-        return dispatch({
-          type: GAME.DETAIL,
-          gameId: id,
-          gameType: type,
-          data
+      const channel = new Channel()
+      return channel.getGameDetail(year, month, date, id)
+        .then(data => {
+          return dispatch({
+            type: GAME.DETAIL,
+            gameId: id,
+            gameType: type,
+            data
+          })
         })
-      })
+    } else {
+      return Promise.resolve()
+    }
   }
 }
 

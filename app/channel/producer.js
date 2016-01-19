@@ -41,8 +41,12 @@ const producer = {
         case 2:
           // Live
           item.type = 'live'
+          let game_clock
+          if (process.game_clock) {
+            game_clock = parseInt(process.game_clock.split(':')[0]) < 10 ? '0' + process.game_clock : process.game_clock
+          }
           item.process = {
-            time: process.game_clock || 'End',
+            time: game_clock || 'End',
             quarter: 'Q' + process.period_value
           }
           result.live.push(item)
@@ -61,7 +65,7 @@ const producer = {
   },
 
   /**
-   * @return {type, home: {players: {Array}, team, score}, visitor: {<=same}, general: {process}}
+   * @return {type, home: {players: {Array}, team, score}, visitor: {<=same}, process: {time, quarter}}
    * @example player
         assists: "1"
         blocks: "1"
@@ -103,8 +107,16 @@ const producer = {
       result[side].player = data[side].players.player
     })
 
-    const process = parseInt(data['period_time'].game_status, 10)
-    result.type = process === 3 ? 'over' : (process === 2 ? 'live' : 'unstart')
+    const gameType = parseInt(data['period_time'].game_status, 10)
+    result.type = gameType === 3 ? 'over' : (gameType === 2 ? 'live' : 'unstart')
+
+    if (result.type === 'live') {
+      const process = data.period_time
+      result.process = {
+        time: process.game_clock || 'End',
+        quarter: 'Q' + process.period_value
+      }
+    }
     return result
   },
 

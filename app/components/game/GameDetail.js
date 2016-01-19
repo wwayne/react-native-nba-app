@@ -20,48 +20,62 @@ import GamePlayers from './GamePlayers'
 export default class GameDetail extends Component {
   constructor (props) {
     super(props)
-
-    const {game} = props.route
+    const {game, date} = props.route
     const homeAbb = game.home.team.toLowerCase()
     const visitorAbb = game.visitor.team.toLowerCase()
-
     const homeName = teamMap[homeAbb].city + ' ' + teamMap[homeAbb].team
     const visitorName = teamMap[visitorAbb].city + ' ' + teamMap[visitorAbb].team
     this.state = {
       selectedIndex: 0,
       teamValues: [homeName, visitorName],
-      indicator: true
+      indicator: true,
+      gameType: game.type,
+      game
     }
+    this.date = date
+    this.gameId = game.id
+    this.timeout = null
   }
 
   componentDidMount () {
-    const {actions, route} = this.props
-    const game = route.game
-    const date = route.date
+    const {actions} = this.props
+    const {gameType} = this.state
+    const {gameId, date} = this
     InteractionManager.runAfterInteractions(() => {
-      actions.getGameDetail(game.id, game.type, date[0], date[1], date[2])
+      actions.getGameDetail(gameId, gameType, date[0], date[1], date[2])
         .catch(err => console.error(err))
     })
   }
 
   componentWillReceiveProps (props) {
-    const {actions, route} = props
-    const game = route.game
-    const date = route.date
-    let indicator = true
-
-    if (game.detail.loaded) {
-      indicator = false
-      if (game.detail.data.type === 'live') {
-        setTimeout(() => {
-          actions.getGameDetail(game.id, 'live', date[0], date[1], date[2])
+    const {actions} = props
+    const {gameType} = this.state
+    const date = this.date
+    let newState = {}
+    /* gameType come from route in the begining, could be out of date */
+    if (gameType === 'live') {
+      let game = props.live.data.find(item => {
+        return item.id === this.gameId
+      })
+      if (game) {
+        newState.gameType = 'live'
+        newState.game = game
+        newState.indicator = !game.detail.loaded
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() => {
+          actions.getGameDetail(this.gameId, 'live', date[0], date[1], date[2])
         }, 10000)
+      } else {
+        // Game has already finished
+        newState.gameType = 'over'
+        newState.game = props.over.data.find(item => {
+          return item.id === this.gameId
+        })
       }
     }
-
-    this.setState({
-      indicator
-    })
+    this.setState(Object.assign({
+      indicator: false
+    }, newState))
   }
 
   onBackPress () {
@@ -85,13 +99,10 @@ export default class GameDetail extends Component {
   }
 
   render () {
-    const {selectedIndex, teamValues, indicator} = this.state
-    const {route} = this.props
-    const indicatorAnimating = true
-    const game = route.game
+    const {selectedIndex, teamValues, indicator, gameType, game} = this.state
     const homeAbb = game.home.team.toLowerCase()
     const visitorAbb = game.visitor.team.toLowerCase()
-    console.log(game)
+
     /* Calculate for process and type */
     let gameProcess = ''
     let cssType = ''
@@ -183,7 +194,7 @@ export default class GameDetail extends Component {
         {indicator &&
           <View style={styles.indicatorView}>
             <ActivityIndicatorIOS
-              animating={indicatorAnimating}
+              animating
               color={selectedIndex === 0 ? teamMap[homeAbb].color : teamMap[visitorAbb].color}
               style={styles.indicator}
               size='large'

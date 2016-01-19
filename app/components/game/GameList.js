@@ -25,7 +25,8 @@ export default class GameList extends Component {
       date: this.getToday(),
       isToday: true
     }
-    this.mount = true
+    this.mount = true // Control the state of mount
+    this.timeout = null // Control the state of setTimeout
   }
 
  /**
@@ -40,17 +41,18 @@ export default class GameList extends Component {
   componentWillReceiveProps (props) {
     const {live, over, unstart, actions, application} = props
     const {dataSource, date} = this.state
-
     const rows = live.data.concat(unstart.data).concat(over.data)
 
     /* Judge if the navigator is on Game List page */
     if (application.navigator === 'gameIndex') {
       if (live.data.length > 0) {
-        setTimeout(() => {
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() => {
           actions.getGameGeneral(date[0], date[1], date[2])
         }, 5000)
       } else if (unstart.data.length > 0) {
-        setTimeout(() => {
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() => {
           actions.getGameGeneral(date[0], date[1], date[2])
         }, 120000)
       }
