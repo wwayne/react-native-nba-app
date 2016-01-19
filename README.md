@@ -6,8 +6,16 @@
 
 **The project is under performance improvement and trying to compatible with Android**
 
-## Demo (in iPhone6)
-![demo](https://cloud.githubusercontent.com/assets/5305874/12059946/80c2e626-afa0-11e5-95d5-5fff1ad0558b.gif)
+## Demonstrate
+### Games
+![game](https://cloud.githubusercontent.com/assets/5305874/12422631/e33d57ca-bf02-11e5-8bdf-e10df77fc1fb.gif)
+
+### Players
+![player](https://cloud.githubusercontent.com/assets/5305874/12422675/19ae6696-bf03-11e5-87d5-6abc805b62b8.gif)
+
+### Teams
+![team](https://cloud.githubusercontent.com/assets/5305874/12422777/7dc6d870-bf03-11e5-82eb-634b14d34f16.gif)
+
 
 
 ## Develop

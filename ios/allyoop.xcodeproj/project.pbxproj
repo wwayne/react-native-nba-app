@@ -27,10 +27,10 @@
 		B003DD781C09EE7B000D1852 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B003DD771C09EE7B000D1852 /* Images.xcassets */; };
 		B04702381C1A53C20046F24C /* RNUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04702371C1A53C20046F24C /* RNUserDefaults.swift */; };
 		B047023B1C1A541B0046F24C /* RNUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B047023A1C1A541B0046F24C /* RNUserDefaults.m */; };
-		B0B046F51C4545BD00CC0231 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B0B046F41C4545BD00CC0231 /* main.jsbundle */; };
 		B0BCA2A91C0BD28E0034908C /* FAKIonIcons.h in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */; };
 		B0BCA2AA1C0BD28E0034908C /* FAKIonIcons.m in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A71C0BD28E0034908C /* FAKIonIcons.m */; };
 		B0BCA2AB1C0BD28E0034908C /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A81C0BD28E0034908C /* ionicons.ttf */; };
+		B0CDD7401C4E88DB002251B5 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B0CDD73F1C4E88DB002251B5 /* main.jsbundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,10 +147,10 @@
 		B04702371C1A53C20046F24C /* RNUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNUserDefaults.swift; path = allyoop/RNUserDefaults.swift; sourceTree = "<group>"; };
 		B047023A1C1A541B0046F24C /* RNUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNUserDefaults.m; path = allyoop/RNUserDefaults.m; sourceTree = "<group>"; };
 		B05CEB5E1C1BA6A20022B5FD /* RNUserDefaults-bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RNUserDefaults-bridge.h"; path = "allyoop/RNUserDefaults-bridge.h"; sourceTree = "<group>"; };
-		B0B046F41C4545BD00CC0231 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../main.jsbundle; sourceTree = "<group>"; };
 		B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIonIcons.h; sourceTree = "<group>"; };
 		B0BCA2A71C0BD28E0034908C /* FAKIonIcons.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIonIcons.m; sourceTree = "<group>"; };
 		B0BCA2A81C0BD28E0034908C /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
+		B0CDD73F1C4E88DB002251B5 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../main.jsbundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,7 +315,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				B0B046F41C4545BD00CC0231 /* main.jsbundle */,
+				B0CDD73F1C4E88DB002251B5 /* main.jsbundle */,
 				B003DD791C09F0C8000D1852 /* icon */,
 				13B07FAE1A68108700A75B9A /* allyoop */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -574,7 +574,7 @@
 				B003DD751C09EDA3000D1852 /* FAKIcon.h in Resources */,
 				B003DD761C09EDA3000D1852 /* FAKIcon.m in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				B0B046F51C4545BD00CC0231 /* main.jsbundle in Resources */,
+				B0CDD7401C4E88DB002251B5 /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

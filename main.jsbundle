@@ -58596,10 +58596,12 @@ if(game.id===action.gameId){
 game.detail=game.detail||{};
 game.detail.data=action.data;
 game.detail.loaded=true;
+game.process=action.data.process;
+game.home.score=action.data.home.score;
+game.visitor.score=action.data.visitor.score;
 return true;}
 
 return false;});
-
 
 return newState;}),_actionHandler);exports.default=
 
@@ -58620,7 +58622,7 @@ __d('allyoop/app/constant.js',function(global, require, module, exports) {  'use
 
 
 
-var APP=exports.APP=(0,_es6Enum2.default)('TAB');
+var APP=exports.APP=(0,_es6Enum2.default)('TAB','NAVIGATION');
 
 var GAME=exports.GAME=(0,_es6Enum2.default)('INFO','DETAIL','STANDING');
 
@@ -58832,20 +58834,29 @@ data:action.data};});exports.default=
 
 (0,_createReducer2.default)(initialState,actionHandler);
 });
-__d('allyoop/app/reducers/application.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _createReducer=require('allyoop/app/utils/create-reducer.js');var _createReducer2=babelHelpers.interopRequireDefault(_createReducer);var _constant=require('allyoop/app/constant.js');
+__d('allyoop/app/reducers/application.js',function(global, require, module, exports) {  'use strict';var _actionHandler;Object.defineProperty(exports,"__esModule",{value:true});var _createReducer=require('allyoop/app/utils/create-reducer.js');var _createReducer2=babelHelpers.interopRequireDefault(_createReducer);var _constant=require('allyoop/app/constant.js');
+
 
 
 
 
 
 var initialState={
-tab:'teams'};
+tab:'game',
+navigator:'gameIndex'};
 
 
-var actionHandler=babelHelpers.defineProperty({},
+var actionHandler=(_actionHandler={},babelHelpers.defineProperty(_actionHandler,
 _constant.APP.TAB,function(state,action){
 return babelHelpers.extends({},state,{
-tab:action.data});});exports.default=
+tab:action.data,
+navigator:action.data+'Index'});}),babelHelpers.defineProperty(_actionHandler,
+
+
+
+_constant.APP.NAVIGATION,function(state,action){
+return babelHelpers.extends({},state,{
+navigator:action.data});}),_actionHandler);exports.default=
 
 
 
@@ -58988,7 +58999,10 @@ return typeof action==='function'?action(dispatch,getState):next(action);};};}
 
 module.exports=exports['default'];
 });
-__d('allyoop/app/containers/App.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _native=require('react-redux/native.js');var _redux=require('redux/lib/index.js');var _actions=require('allyoop/app/actions/index.js');var _actions2=babelHelpers.interopRequireDefault(_actions);var _Game=require('allyoop/app/containers/Game.js');var _Game2=babelHelpers.interopRequireDefault(_Game);var _Player=require('allyoop/app/containers/Player.js');var _Player2=babelHelpers.interopRequireDefault(_Player);var _Team=require('allyoop/app/containers/Team.js');var _Team2=babelHelpers.interopRequireDefault(_Team);var 
+__d('allyoop/app/containers/App.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _native=require('react-redux/native.js');var _redux=require('redux/lib/index.js');var _application=require('allyoop/app/actions/application.js');var _application2=babelHelpers.interopRequireDefault(_application);var _game=require('allyoop/app/actions/game.js');var _game2=babelHelpers.interopRequireDefault(_game);var _player=require('allyoop/app/actions/player.js');var _player2=babelHelpers.interopRequireDefault(_player);var _team=require('allyoop/app/actions/team.js');var _team2=babelHelpers.interopRequireDefault(_team);var _Game=require('allyoop/app/containers/Game.js');var _Game2=babelHelpers.interopRequireDefault(_Game);var _Player=require('allyoop/app/containers/Player.js');var _Player2=babelHelpers.interopRequireDefault(_Player);var _Team=require('allyoop/app/containers/Team.js');var _Team2=babelHelpers.interopRequireDefault(_Team);var 
+
+
+
 
 
 
@@ -59023,18 +59037,18 @@ tab:application.tab});}},{key:'render',value:function render()
 
 {var 
 tab=this.state.tab;var _props=
-this.props;var game=_props.game;var player=_props.player;var team=_props.team;var actions=_props.actions;
+this.props;var game=_props.game;var player=_props.player;var team=_props.team;var gameActions=_props.gameActions;var playerActions=_props.playerActions;var teamActions=_props.teamActions;
 
 return (
 _reactNative2.default.createElement(_reactNative.View,{style:styles.container},
 tab==='game'&&
-_reactNative2.default.createElement(_Game2.default,babelHelpers.extends({},game,{actions:actions})),
+_reactNative2.default.createElement(_Game2.default,babelHelpers.extends({},game,{actions:gameActions})),
 
 tab==='players'&&
-_reactNative2.default.createElement(_Player2.default,babelHelpers.extends({},player,{actions:actions})),
+_reactNative2.default.createElement(_Player2.default,babelHelpers.extends({},player,{actions:playerActions})),
 
 tab==='teams'&&
-_reactNative2.default.createElement(_Team2.default,babelHelpers.extends({},team,{actions:actions}))));}}]);return App;})(_reactNative.Component);exports.default=App;
+_reactNative2.default.createElement(_Team2.default,babelHelpers.extends({},team,{actions:teamActions}))));}}]);return App;})(_reactNative.Component);exports.default=App;
 
 
 
@@ -59061,7 +59075,8 @@ game:{
 live:state.live,
 over:state.over,
 unstart:state.unstart,
-standing:state.standing},
+standing:state.standing,
+application:state.application},
 
 player:{
 playerList:state.playerList,
@@ -59074,35 +59089,46 @@ playerLoaded:state.playerLoaded}};},
 
 function(dispatch){
 return {
-actions:(0,_redux.bindActionCreators)(_actions2.default,dispatch)};})(
+gameActions:(0,_redux.bindActionCreators)(babelHelpers.extends({},_application2.default,_game2.default),dispatch),
+playerActions:(0,_redux.bindActionCreators)(babelHelpers.extends({},_application2.default,_player2.default),dispatch),
+teamActions:(0,_redux.bindActionCreators)(babelHelpers.extends({},_application2.default,_player2.default,_team2.default),dispatch)};})(
 
 App);
 });
-__d('allyoop/app/actions/index.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _game=require('allyoop/app/actions/game.js');var _player=require('allyoop/app/actions/player.js');var _team=require('allyoop/app/actions/team.js');var _application=require('allyoop/app/actions/application.js');
+__d('allyoop/app/actions/application.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _constant=require('allyoop/app/constant.js');
 
 
 
 
 
 
-var actions={
-changeTab:_application.changeTab,
-getGameGeneral:_game.getGameGeneral,
-getGameDetail:_game.getGameDetail,
-getLeagueStanding:_game.getLeagueStanding,
-getPlayerList:_player.getPlayerList,
-setSearchRecord:_player.setSearchRecord,
-getSearchRecord:_player.getSearchRecord,
-getPlayerDetail:_player.getPlayerDetail,
-getPlayerLog:_player.getPlayerLog,
-getTeamRank:_team.getTeamRank,
-getTeamInfo:_team.getTeamInfo,
-getTeamDetail:_team.getTeamDetail};exports.default=
+var changeTab=function(tab){
+return function(dispatch){
+return Promise.resolve(dispatch({
+type:_constant.APP.TAB,
+data:tab}));};};
 
 
-actions;
+
+
+
+
+
+
+var toNavigation=function(targetComponent){
+return function(dispatch){
+return Promise.resolve(dispatch({
+type:_constant.APP.NAVIGATION,
+data:targetComponent}));};};exports.default=
+
+
+
+
+{
+changeTab:changeTab,
+toNavigation:toNavigation};
 });
-__d('allyoop/app/actions/game.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});exports.
+__d('allyoop/app/actions/game.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _channel=require('allyoop/app/channel/index.js');var _channel2=babelHelpers.interopRequireDefault(_channel);var _constant=require('allyoop/app/constant.js');
 
 
 
@@ -59110,27 +59136,19 @@ __d('allyoop/app/actions/game.js',function(global, require, module, exports) {  
 
 
 
-getGameGeneral=getGameGeneral;exports.
+var getGameGeneral=function(year,month,date){
+return function(dispatch,getStore){
+if(getStore().application.navigator==='gameIndex'){
+var channel=new _channel2.default();
+return channel.getGameGeneral(year,month,date).
+then(function(data){
+return dispatch({
+type:_constant.GAME.INFO,
+data:data});});}else 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-getGameDetail=getGameDetail;exports.
-
+{
+return Promise.resolve();}};};
 
 
 
@@ -59141,6 +59159,31 @@ getGameDetail=getGameDetail;exports.
 
 
 
+var getGameDetail=function(id,type,year,month,date){
+return function(dispatch,getStore){
+if(getStore().application.navigator==='gameDetail'){
+
+if(type==='over'){
+var game=getStore().over.data.find(function(g){return g.id===id;});
+if(game.detail&&game.detail.loaded){
+return Promise.resolve(dispatch({
+type:_constant.GAME.DETAIL,
+data:game.detail.data}));}}
+
+
+
+var channel=new _channel2.default();
+return channel.getGameDetail(year,month,date,id).
+then(function(data){
+return dispatch({
+type:_constant.GAME.DETAIL,
+gameId:id,
+gameType:type,
+data:data});});}else 
+
+
+{
+return Promise.resolve();}};};
 
 
 
@@ -59148,17 +59191,7 @@ getGameDetail=getGameDetail;exports.
 
 
 
-
-
-
-
-
-
-
-
-
-
-getLeagueStanding=getLeagueStanding;var _channel=require('allyoop/app/channel/index.js');var _channel2=babelHelpers.interopRequireDefault(_channel);var _constant=require('allyoop/app/constant.js');function getGameGeneral(year,month,date){return function(dispatch,getStore){var channel=new _channel2.default();return channel.getGameGeneral(year,month,date).then(function(data){return dispatch({type:_constant.GAME.INFO,data:data});});};}function getGameDetail(id,type,year,month,date){return function(dispatch,getStore){if(type==='over'){var game=getStore().over.data.find(function(g){return g.id===id;});if(game.detail&&game.detail.loaded){return Promise.resolve(dispatch({type:_constant.GAME.DETAIL,data:game.detail.data}));}}var channel=new _channel2.default();return channel.getGameDetail(year,month,date,id).then(function(data){return dispatch({type:_constant.GAME.DETAIL,gameId:id,gameType:type,data:data});});};}function getLeagueStanding(){
+var getLeagueStanding=function(){
 return function(dispatch,getStore){
 if(getStore().standing.loaded){
 return Promise.resolve(dispatch({
@@ -59181,7 +59214,16 @@ return channel.getLeagueStanding(year).
 then(function(data){
 return dispatch({
 type:_constant.GAME.STANDING,
-data:data});});};}
+data:data});});};};exports.default=
+
+
+
+
+
+{
+getGameGeneral:getGameGeneral,
+getGameDetail:getGameDetail,
+getLeagueStanding:getLeagueStanding};
 });
 __d('allyoop/app/channel/index.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _address=require('allyoop/app/channel/address.js');var _address2=babelHelpers.interopRequireDefault(_address);var _producer=require('allyoop/app/channel/producer.js');var _producer2=babelHelpers.interopRequireDefault(_producer);var 
 
@@ -59244,7 +59286,7 @@ then(function(data){return _producer2.default.playerLog(data);});}},{key:'getTea
 
 
 year,month,date){
-var url=_address2.default.teamRank(date+'/'+month+'/'+year);
+var url=_address2.default.teamRank(month+'/'+date+'/'+year);
 return window.fetch(url).
 then(function(res){return res.json();}).
 then(function(data){return _producer2.default.teamRank(data);});}},{key:'getTeamInfo',value:function getTeamInfo(
@@ -59389,8 +59431,12 @@ break;
 case 2:
 
 item.type='live';
+var game_clock=undefined;
+if(process.game_clock){
+game_clock=parseInt(process.game_clock.split(':')[0])<10?'0'+process.game_clock:process.game_clock;}
+
 item.process={
-time:process.game_clock||'End',
+time:game_clock||'End',
 quarter:'Q'+process.period_value};
 
 result.live.push(item);
@@ -59445,11 +59491,20 @@ var result={
 home:{},
 visitor:{}};
 
-
 Object.keys(result).forEach(function(side){
 result[side].team=data[side].team_key;
 result[side].score=data[side].score;
 result[side].player=data[side].players.player;});
+
+
+var gameType=parseInt(data['period_time'].game_status,10);
+result.type=gameType===3?'over':gameType===2?'live':'unstart';
+
+if(result.type==='live'){
+var process=data.period_time;
+result.process={
+time:process.game_clock||'End',
+quarter:'Q'+process.period_value};}
 
 
 return result;},
@@ -59573,8 +59628,8 @@ eastData.forEach(function(item,index){
 eastern.push({
 id:item[0],
 name:item[5],
-win:item[7],
-loss:item[8]});
+win:item[8],
+loss:item[7]});
 
 anotherItem=westData[index];
 western.push({
@@ -59655,13 +59710,13 @@ return result;}};exports.default=
 
 producer;
 });
-__d('allyoop/app/actions/player.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});exports.getPlayerLog=exports.getPlayerDetail=exports.getSearchRecord=exports.setSearchRecord=exports.getPlayerList=undefined;var _constant=require('allyoop/app/constant.js');var _channel=require('allyoop/app/channel/index.js');var _channel2=babelHelpers.interopRequireDefault(_channel);var _userDefaults=require('allyoop/app/lib/userDefaults/index.js');var _userDefaults2=babelHelpers.interopRequireDefault(_userDefaults);
+__d('allyoop/app/actions/player.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _constant=require('allyoop/app/constant.js');var _channel=require('allyoop/app/channel/index.js');var _channel2=babelHelpers.interopRequireDefault(_channel);var _userDefaults=require('allyoop/app/lib/userDefaults/index.js');var _userDefaults2=babelHelpers.interopRequireDefault(_userDefaults);
 
 
 
 
 
-var getPlayerList=exports.getPlayerList=function(){
+var getPlayerList=function(){
 return function(dispatch,getStore){
 if(getStore().playerList.isLoaded){
 return Promise.resolve(dispatch({
@@ -59681,7 +59736,7 @@ catch(function(err){return console.error(err);});};};
 
 
 
-var setSearchRecord=exports.setSearchRecord=function(player){
+var setSearchRecord=function(player){
 return function(dispatch){
 return _userDefaults2.default.get(_constant.PLAYER.RECENT).
 then(function(recent){
@@ -59708,7 +59763,7 @@ data:originData});});});};};
 
 
 
-var getSearchRecord=exports.getSearchRecord=function(id){
+var getSearchRecord=function(id){
 return function(dispatch){
 return _userDefaults2.default.get(_constant.PLAYER.RECENT).
 then(function(recent){
@@ -59724,7 +59779,7 @@ data:originData});});};};
 
 
 
-var getPlayerDetail=exports.getPlayerDetail=function(id){
+var getPlayerDetail=function(id){
 return function(dispatch,getStore){
 if(getStore().playerLoaded[id]){
 return Promise.resolve(dispatch({
@@ -59746,7 +59801,7 @@ catch(function(err){return console.error(err);});};};
 
 
 
-var getPlayerLog=exports.getPlayerLog=function(id){
+var getPlayerLog=function(id){
 return function(dispatch,getStore){
 if(getStore().playerLoaded[id]&&getStore().playerLoaded[id].log){
 return Promise.resolve(dispatch({
@@ -59764,7 +59819,16 @@ data:data,
 id:id});}).
 
 
-catch(function(err){return console.error(err);});};};
+catch(function(err){return console.error(err);});};};exports.default=
+
+
+
+{
+getPlayerList:getPlayerList,
+setSearchRecord:setSearchRecord,
+getSearchRecord:getSearchRecord,
+getPlayerDetail:getPlayerDetail,
+getPlayerLog:getPlayerLog};
 });
 __d('allyoop/app/lib/userDefaults/index.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _NativeModules=require('NativeModules');
 
@@ -59883,20 +59947,14 @@ data:data,
 id:id});}).
 
 
-catch(function(err){return console.error(err);});};};
-});
-__d('allyoop/app/actions/application.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});exports.
+catch(function(err){return console.error(err);});};};exports.default=
 
 
 
-
-
-
-changeTab=changeTab;var _constant=require('allyoop/app/constant.js');function changeTab(tab){
-return function(dispatch){
-return Promise.resolve(dispatch({
-type:_constant.APP.TAB,
-data:tab}));};}
+{
+getTeamRank:getTeamRank,
+getTeamInfo:getTeamInfo,
+getTeamDetail:getTeamDetail};
 });
 __d('allyoop/app/containers/Game.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _GameList=require('allyoop/app/components/game/GameList.js');var _GameList2=babelHelpers.interopRequireDefault(_GameList);var _NavigatorBar=require('allyoop/app/components/share/NavigatorBar.js');var _NavigatorBar2=babelHelpers.interopRequireDefault(_NavigatorBar);var 
 
@@ -59931,6 +59989,9 @@ name:'GameList',
 component:_GameList2.default},
 
 navigationBar:_reactNative2.default.createElement(_NavigatorBar2.default,null),
+configureScene:function(){return babelHelpers.extends({},
+_reactNative.Navigator.SceneConfigs.FloatFromRight);},
+
 renderScene:this.renderScene.bind(this)}));}}]);return Game;})(_reactNative.Component);exports.default=Game;
 
 
@@ -59968,7 +60029,8 @@ rowHasChanged:function(row1,row2){return row1!==row2;}}),
 date:_this.getToday(),
 isToday:true};
 
-_this.mount=true;return _this;}babelHelpers.createClass(GameList,[{key:'componentDidMount',value:function componentDidMount()
+_this.mount=true;
+_this.timeout=null;return _this;}babelHelpers.createClass(GameList,[{key:'componentDidMount',value:function componentDidMount()
 
 
 
@@ -59981,18 +60043,23 @@ actions.getGameGeneral(date[0],date[1],date[2]);}},{key:'componentWillReceivePro
 
 
 props){var 
-live=props.live;var over=props.over;var unstart=props.unstart;var actions=props.actions;var 
-dataSource=this.state.dataSource;
-
+live=props.live;var over=props.over;var unstart=props.unstart;var actions=props.actions;var application=props.application;var _state=
+this.state;var dataSource=_state.dataSource;var date=_state.date;
 var rows=live.data.concat(unstart.data).concat(over.data);
+
+
+if(application.navigator==='gameIndex'){
 if(live.data.length>0){
-setTimeout(function(){
-actions.getGameGeneral();},
+clearTimeout(this.timeout);
+this.timeout=setTimeout(function(){
+actions.getGameGeneral(date[0],date[1],date[2]);},
 5000);}else 
 if(unstart.data.length>0){
-setTimeout(function(){
-actions.getGameGeneral();},
-120000);}
+clearTimeout(this.timeout);
+this.timeout=setTimeout(function(){
+actions.getGameGeneral(date[0],date[1],date[2]);},
+120000);}}
+
 
 
 if(this.mount){
@@ -60050,8 +60117,8 @@ isToday:true});}}},{key:'render',value:function render()
 
 
 
-{var _state=
-this.state;var dataSource=_state.dataSource;var date=_state.date;var _props=
+{var _state2=
+this.state;var dataSource=_state2.dataSource;var date=_state2.date;var _props=
 this.props;var live=_props.live;var over=_props.over;var unstart=_props.unstart;
 var gameCount=live.data.length+over.data.length+unstart.data.length;
 
@@ -64709,14 +64776,18 @@ __d('allyoop/app/components/game/GamePanel.js',function(global, require, module,
 GamePanel=(function(_Component){babelHelpers.inherits(GamePanel,_Component);function GamePanel(){babelHelpers.classCallCheck(this,GamePanel);return babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(GamePanel).apply(this,arguments));}babelHelpers.createClass(GamePanel,[{key:'onPressRow',value:function onPressRow()
 
 {var _props=
-this.props;var navigator=_props.navigator;var game=_props.game;var date=_props.date;
+this.props;var navigator=_props.navigator;var game=_props.game;var date=_props.date;var actions=_props.actions;
 if(game.type!=='unstart'){
+actions.toNavigation('gameDetail').
+then(function(){
 navigator.push(babelHelpers.extends({},{
 name:'GameDetail',
 component:_GameDetail2.default,
 game:game,
-date:date}));}}},{key:'render',value:function render()
+date:date}));}).
 
+
+catch(function(err){return console.error(err);});}}},{key:'render',value:function render()
 
 
 
@@ -64944,7 +65015,7 @@ lac:{
 id:1610612746,
 city:'Los Angeles',
 team:'Clippers',
-color:'#ED174C',
+color:'#222',
 conf:'western'},
 
 lal:{
@@ -65088,82 +65159,73 @@ __d('allyoop/app/components/game/GameDetail.js',function(global, require, module
 
 
 
+
 GameDetail=(function(_Component){babelHelpers.inherits(GameDetail,_Component);
 function GameDetail(props){babelHelpers.classCallCheck(this,GameDetail);var _this=babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(GameDetail).call(this,
-props));var 
-
-game=props.route.game;
+props));var _props$route=
+props.route;var game=_props$route.game;var date=_props$route.date;
 var homeAbb=game.home.team.toLowerCase();
 var visitorAbb=game.visitor.team.toLowerCase();
-
 var homeName=_teamMap2.default[homeAbb].city+' '+_teamMap2.default[homeAbb].team;
 var visitorName=_teamMap2.default[visitorAbb].city+' '+_teamMap2.default[visitorAbb].team;
 _this.state={
-interval:false,
 selectedIndex:0,
 teamValues:[homeName,visitorName],
-indicator:true};return _this;}babelHelpers.createClass(GameDetail,[{key:'componentDidMount',value:function componentDidMount()
+indicator:true,
+gameType:game.type,
+game:game};
+
+_this.date=date;
+_this.gameId=game.id;
+_this.timeout=null;return _this;}babelHelpers.createClass(GameDetail,[{key:'componentDidMount',value:function componentDidMount()
+
+
+{var 
+actions=this.props.actions;var 
+gameType=this.state.gameType;var 
+gameId=this.gameId;var date=this.date;
+_reactNative.InteractionManager.runAfterInteractions(function(){
+actions.getGameDetail(gameId,gameType,date[0],date[1],date[2]).
+catch(function(err){return console.error(err);});});}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(
 
 
 
-{var _this2=this;var _props=
-this.props;var actions=_props.actions;var route=_props.route;
-var game=route.game;
-var date=route.date;
+props){var _this2=this;var 
+actions=props.actions;var 
+gameType=this.state.gameType;
+var date=this.date;
+var newState={};
 
+if(gameType==='live'){
+var game=props.live.data.find(function(item){
+return item.id===_this2.gameId;});
 
-var interval=false;
-var indicator=true;
-if(!game.detail.loaded){
-setTimeout(function(){
-actions.getGameDetail(game.id,game.type,date[0],date[1],date[2]);
-interval=_this2.keepRequest(game);
-_this2.setState({
-interval:interval,
-indicator:indicator});},
-
-1000);}else 
+if(game){
+newState.gameType='live';
+newState.game=game;
+newState.indicator=!game.detail.loaded;
+clearTimeout(this.timeout);
+this.timeout=setTimeout(function(){
+actions.getGameDetail(_this2.gameId,'live',date[0],date[1],date[2]);},
+10000);}else 
 {
-setTimeout(function(){
-indicator=false;
-interval=_this2.keepRequest(game);
-_this2.setState({
-interval:interval,
-indicator:indicator});},
 
-1000);}}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(
+newState.gameType='over';
+newState.game=props.over.data.find(function(item){
+return item.id===_this2.gameId;});}}
 
 
 
-prop){
-this.setState({
-indicator:false});}},{key:'keepRequest',value:function keepRequest(
+this.setState(babelHelpers.extends({
+indicator:false},
+newState));}},{key:'onBackPress',value:function onBackPress()
 
 
-
-game){var _props2=
-
-this.props;var actions=_props2.actions;var route=_props2.route;
-var date=route.date;
-var interval=false;
-
-if(game.type==='live'){
-clearInterval(this.state.interval);
-interval=setInterval(function(){
-actions.getGameDetail(game.id,game.type,date[0],date[1],date[2]);},
-10000);}
-
-return interval;}},{key:'componentWillUnmount',value:function componentWillUnmount()
-
-
-{var 
-interval=this.state.interval;
-clearInterval(interval);}},{key:'onBackPress',value:function onBackPress()
-
-
-{var 
-navigator=this.props.navigator;
-navigator.pop();}},{key:'onChange',value:function onChange(
+{var _props=
+this.props;var navigator=_props.navigator;var actions=_props.actions;
+actions.toNavigation('gameIndex').
+then(function(){return navigator.pop();}).
+catch(function(err){return console.error(err);});}},{key:'onChange',value:function onChange(
 
 
 index){var _this3=this;
@@ -65172,18 +65234,15 @@ selectedIndex:index,
 indicator:true});
 
 
-setTimeout(function(){
+_reactNative.InteractionManager.runAfterInteractions(function(){
 _this3.setState({
-indicator:false});},
+indicator:false});});}},{key:'render',value:function render()
 
-100);}},{key:'render',value:function render()
+
 
 
 {var _state=
-this.state;var selectedIndex=_state.selectedIndex;var teamValues=_state.teamValues;var indicator=_state.indicator;var 
-route=this.props.route;
-var indicatorAnimating=true;
-var game=route.game;
+this.state;var selectedIndex=_state.selectedIndex;var teamValues=_state.teamValues;var indicator=_state.indicator;var gameType=_state.gameType;var game=_state.game;
 var homeAbb=game.home.team.toLowerCase();
 var visitorAbb=game.visitor.team.toLowerCase();
 
@@ -65278,7 +65337,7 @@ _reactNative2.default.createElement(_reactNative.View,{style:visitorCss==='Activ
 indicator&&
 _reactNative2.default.createElement(_reactNative.View,{style:styles.indicatorView},
 _reactNative2.default.createElement(_reactNative.ActivityIndicatorIOS,{
-animating:indicatorAnimating,
+animating:true,
 color:selectedIndex===0?_teamMap2.default[homeAbb].color:_teamMap2.default[visitorAbb].color,
 style:styles.indicator,
 size:'large'})),
@@ -65814,6 +65873,9 @@ initialRoute:{
 name:'PlayerIndex',
 component:_PlayerIndex2.default},
 
+configureScene:function(){return babelHelpers.extends({},
+_reactNative.Navigator.SceneConfigs.FloatFromRight);},
+
 navigationBar:_reactNative2.default.createElement(_NavigatorBar2.default,null),
 renderScene:this.renderScene.bind(this)}));}}]);return Player;})(_reactNative.Component);exports.default=Player;
 });
@@ -65852,9 +65914,9 @@ _this.mount=true;return _this;}babelHelpers.createClass(PlayerIndex,[{key:'compo
 
 {var 
 actions=this.props.actions;
-actions.getSearchRecord().
+actions.getPlayerList().
 then(function(){
-actions.getPlayerList();});}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(
+actions.getSearchRecord();});}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(
 
 
 
@@ -66062,6 +66124,7 @@ __d('allyoop/app/components/player/PlayerDetail.js',function(global, require, mo
 
 
 
+
 var navigationHeight=30;
 var headerHeight=120;var 
 
@@ -66078,12 +66141,12 @@ player:null};return _this;}babelHelpers.createClass(PlayerDetail,[{key:'componen
 actions=this.props.actions;var 
 player=this.props.route.player;
 
-setTimeout(function(){
+_reactNative.InteractionManager.runAfterInteractions(function(){
 actions.getPlayerDetail(player.id).
 then(function(){
-actions.getPlayerLog(player.id);});},
+actions.getPlayerLog(player.id);});});}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(
 
-500);}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(
+
 
 
 props){var 
@@ -66105,8 +66168,6 @@ this.props;var route=_props.route;var playerLoaded=_props.playerLoaded;
 var player=playerLoaded[route.player.id]||this.state.player;
 
 var team=player&&player.team.toLowerCase();
-var nameForImage=player&&player.firstName.toLowerCase()+'_'+player.lastName.toLowerCase();
-
 
 var scrollHeight=_reactNative.Dimensions.get('window').height-navigationHeight-headerHeight;
 return (
@@ -66127,7 +66188,7 @@ style:styles.backIcon}))),
 
 _reactNative2.default.createElement(_reactNative.View,{style:[styles.header,{backgroundColor:_teamMap2.default[team].color}]},
 _reactNative2.default.createElement(_reactNative.View,{style:styles.portraitView},
-_reactNative2.default.createElement(_reactNative.Image,{style:styles.portrait,source:{uri:'http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/'+nameForImage+'.png'}})),
+_reactNative2.default.createElement(_reactNative.Image,{style:styles.portrait,source:{uri:'http://stats.nba.com/media/players/230x185/'+player.id+'.png'}})),
 
 _reactNative2.default.createElement(_reactNative.Text,{style:styles.name},player.firstName+' '+player.lastName),
 _reactNative2.default.createElement(_reactNative.Text,{style:styles.jersey},player.jersey)),
@@ -66791,7 +66852,6 @@ tooltipMark.left=5;
 tooltipMark.marginLeft=0;
 
 delete tooltipMark.borderLeftWidth;}else 
-
 if(isHoverCoveredRight){
 delete tooltipPosition.left;
 delete tooltipPosition.marginLeft;
@@ -66906,12 +66966,13 @@ initialRoute:{
 name:'TeamList',
 component:_TeamList2.default},
 
+configureScene:function(){return babelHelpers.extends({},
+_reactNative.Navigator.SceneConfigs.FloatFromRight);},
+
 navigationBar:_reactNative2.default.createElement(_NavigatorBar2.default,null),
 renderScene:this.renderScene.bind(this)}));}}]);return Team;})(_reactNative.Component);exports.default=Team;
 });
-__d('allyoop/app/components/team/TeamList.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Tabbar=require('allyoop/app/components/share/Tabbar.js');var _Tabbar2=babelHelpers.interopRequireDefault(_Tabbar);var _teamMap=require('allyoop/app/utils/team-map.js');var _teamMap2=babelHelpers.interopRequireDefault(_teamMap);var _momentTimezone=require('moment-timezone/index.js');var _momentTimezone2=babelHelpers.interopRequireDefault(_momentTimezone);var _TeamConference=require('allyoop/app/components/team/TeamConference.js');var _TeamConference2=babelHelpers.interopRequireDefault(_TeamConference);var _collection=require('allyoop/app/lib/collection/index.js');var _collection2=babelHelpers.interopRequireDefault(_collection);var 
-
-
+__d('allyoop/app/components/team/TeamList.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Tabbar=require('allyoop/app/components/share/Tabbar.js');var _Tabbar2=babelHelpers.interopRequireDefault(_Tabbar);var _momentTimezone=require('moment-timezone/index.js');var _momentTimezone2=babelHelpers.interopRequireDefault(_momentTimezone);var _TeamConference=require('allyoop/app/components/team/TeamConference.js');var _TeamConference2=babelHelpers.interopRequireDefault(_TeamConference);var _collection=require('allyoop/app/lib/collection/index.js');var _collection2=babelHelpers.interopRequireDefault(_collection);var 
 
 
 
@@ -66998,7 +67059,9 @@ fontWeight:'200'}});
 
 
 
-TeamList.propTypes={};
+TeamList.propTypes={
+actions:_reactNative.PropTypes.object,
+team:_reactNative.PropTypes.object};
 });
 __d('allyoop/app/components/team/TeamConference.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _teamMap=require('allyoop/app/utils/team-map.js');var _teamMap2=babelHelpers.interopRequireDefault(_teamMap);var _TeamDetail=require('allyoop/app/components/team/TeamDetail.js');var _TeamDetail2=babelHelpers.interopRequireDefault(_TeamDetail);
 
@@ -67153,9 +67216,10 @@ width:35}});
 
 
 TeamConference.propTypes={
-data:_reactNative.PropTypes.array};
+data:_reactNative.PropTypes.array,
+navigator:_reactNative.PropTypes.object};
 });
-__d('allyoop/app/components/team/TeamDetail.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeIcons=require('react-native-icons/index.ios.js');var _PlayerDetail=require('allyoop/app/components/player/PlayerDetail.js');var _PlayerDetail2=babelHelpers.interopRequireDefault(_PlayerDetail);var _teamMap=require('allyoop/app/utils/team-map.js');var _teamMap2=babelHelpers.interopRequireDefault(_teamMap);var _TeamDetailPlayer=require('allyoop/app/components/team/TeamDetailPlayer.js');var _TeamDetailPlayer2=babelHelpers.interopRequireDefault(_TeamDetailPlayer);
+__d('allyoop/app/components/team/TeamDetail.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeIcons=require('react-native-icons/index.ios.js');var _teamMap=require('allyoop/app/utils/team-map.js');var _teamMap2=babelHelpers.interopRequireDefault(_teamMap);var _TeamDetailPlayer=require('allyoop/app/components/team/TeamDetailPlayer.js');var _TeamDetailPlayer2=babelHelpers.interopRequireDefault(_TeamDetailPlayer);
 
 
 
@@ -67179,12 +67243,19 @@ var listHeight=_reactNative.Dimensions.get('window').height-30-90-35;var
 TeamDetail=(function(_Component){babelHelpers.inherits(TeamDetail,_Component);
 
 function TeamDetail(props){babelHelpers.classCallCheck(this,TeamDetail);var _this=babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(TeamDetail).call(this,
-props));
-_this.state={
-team:null,
-dataSource:new _reactNative.ListView.DataSource({
-rowHasChanged:function(row1,row2){return row1!==row2;}})};return _this;}babelHelpers.createClass(TeamDetail,[{key:'componentDidMount',value:function componentDidMount()
+props));var 
+id=_this.props.route.id;var 
+team=_this.props.team;
+var dataSource=new _reactNative.ListView.DataSource({
+rowHasChanged:function(row1,row2){return row1!==row2;}});
 
+if(team.detail[id]&&team.detail[id].players){
+dataSource=dataSource.cloneWithRows(team.detail[id].players);}
+
+
+_this.state={
+team:team.detail[id],
+dataSource:dataSource};return _this;}babelHelpers.createClass(TeamDetail,[{key:'componentDidMount',value:function componentDidMount()
 
 
 
@@ -67192,12 +67263,12 @@ rowHasChanged:function(row1,row2){return row1!==row2;}})};return _this;}babelHel
 actions=this.props.actions;var 
 id=this.props.route.id;
 
-setTimeout(function(){
+_reactNative.InteractionManager.runAfterInteractions(function(){
 actions.getTeamInfo(id).
 then(function(){
-actions.getTeamDetail(id);});},
+actions.getTeamDetail(id);});});}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(
 
-500);}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(
+
 
 
 props){var 
@@ -67392,10 +67463,13 @@ height:listHeight}});
 
 
 
-TeamDetail.props={};
+TeamDetail.propTypes={
+route:_reactNative.PropTypes.object,
+team:_reactNative.PropTypes.object,
+actions:_reactNative.PropTypes.object,
+navigator:_reactNative.PropTypes.object};
 });
-__d('allyoop/app/components/team/TeamDetailPlayer.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeIcons=require('react-native-icons/index.ios.js');var _teamMap=require('allyoop/app/utils/team-map.js');var _teamMap2=babelHelpers.interopRequireDefault(_teamMap);var _PlayerDetail=require('allyoop/app/components/player/PlayerDetail.js');var _PlayerDetail2=babelHelpers.interopRequireDefault(_PlayerDetail);var 
-
+__d('allyoop/app/components/team/TeamDetailPlayer.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _teamMap=require('allyoop/app/utils/team-map.js');var _teamMap2=babelHelpers.interopRequireDefault(_teamMap);var _PlayerDetail=require('allyoop/app/components/player/PlayerDetail.js');var _PlayerDetail2=babelHelpers.interopRequireDefault(_PlayerDetail);var 
 
 
 
@@ -67422,8 +67496,7 @@ player:player});}},{key:'render',value:function render()
 
 
 {var _props2=
-this.props;var player=_props2.player;var isLast=_props2.isLast;var team=_props2.team;
-var nameForPortrait=player.name.toLowerCase().split(' ').join('_');
+this.props;var player=_props2.player;var team=_props2.team;
 var teamMap=_teamMap2.default[team.teamAbbr.toLowerCase()];
 
 return (
@@ -67434,7 +67507,7 @@ _reactNative2.default.createElement(_reactNative.View,{style:styles.container},
 
 _reactNative2.default.createElement(_reactNative.View,{style:styles.portrait},
 _reactNative2.default.createElement(_reactNative.View,{style:styles.portraitBackground},
-_reactNative2.default.createElement(_reactNative.Image,{style:[styles.portraitImage,,{borderColor:teamMap.color}],source:{uri:'http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/'+nameForPortrait+'.png'}}))),
+_reactNative2.default.createElement(_reactNative.Image,{style:[styles.portraitImage,{borderColor:teamMap.color}],source:{uri:'http://stats.nba.com/media/players/230x185/'+player.id+'.png'}}))),
 
 
 
@@ -67529,7 +67602,7 @@ flexDirection:'row'},
 dataPersonItem:{
 color:'#909CAF',
 fontSize:10,
-marginRight:8},
+marginRight:10},
 
 
 dataGame:{
@@ -67538,7 +67611,7 @@ flexDirection:'row'},
 dataGameItem:{
 alignItems:'flex-end',
 flexDirection:'row',
-marginRight:8},
+marginRight:10},
 
 dataGameItemData:{
 color:'#6B7C96',
@@ -67552,10 +67625,10 @@ fontSize:9}});
 
 
 
-TeamDetailPlayer.propType={
+TeamDetailPlayer.propTypes={
 player:_reactNative.PropTypes.object,
-isLast:_reactNative.PropTypes.bool,
-team:_reactNative.PropTypes.object};
+team:_reactNative.PropTypes.object,
+navigator:_reactNative.PropTypes.object};
 });
 __d('allyoop/app/lib/collection/index.js',function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var 
 
@@ -67621,4 +67694,4 @@ children:_reactNative.PropTypes.array};
 });
 ;require("InitializeJavaScriptAppEngine");
 ;require("allyoop/index.ios.js");
-__SSTOKENSTRING = "@generated SignedSource<<3c1f69b3a9230be55205d49fabcedab7>>";
+__SSTOKENSTRING = "@generated SignedSource<<533d93d3e8480842f7a8f36454954f1a>>";

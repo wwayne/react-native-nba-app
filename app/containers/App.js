@@ -90,6 +90,6 @@ export default connect(state => {
   return {
     gameActions: bindActionCreators(Object.assign({}, applicationActions, gameActions), dispatch),
     playerActions: bindActionCreators(Object.assign({}, applicationActions, playerActions), dispatch),
-    teamActions: bindActionCreators(Object.assign({}, applicationActions, teamActions), dispatch),
+    teamActions: bindActionCreators(Object.assign({}, applicationActions, playerActions, teamActions), dispatch),
   }
 })(App)
