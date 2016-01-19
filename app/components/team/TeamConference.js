@@ -57,7 +57,7 @@ export default class TeamConference extends Component {
       <TouchableHighlight onPress={this.selectTeam.bind(this, team.id)} underlayColor='transparent'>
         <View style={itemStyle}>
           <View style={styles.order}>
-            <Text style={styles.orderLabel}>{index}</Text>
+            <Text style={styles.orderLabel}>{parseInt(index, 10) + 1}</Text>
           </View>
           <View style={styles.team}>
             <Text style={styles.teamCity}>{team.city}</Text>

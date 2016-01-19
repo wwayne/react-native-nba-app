@@ -2,11 +2,11 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 [![Circle CI](https://circleci.com/gh/wwayne/react-native-nba-app/tree/master.svg?style=svg)](https://circleci.com/gh/wwayne/react-native-nba-app/tree/master)
 
-![group](https://cloud.githubusercontent.com/assets/5305874/12267988/c9942ad8-b985-11e5-8704-0b68b396c2f1.png)
+![group](https://cloud.githubusercontent.com/assets/5305874/12059257/dacf1ad0-af92-11e5-920c-ba4818d8dc1d.png)
 
 **The project is under performance improvement and trying to compatible with Android**
 
-## Demonstrate
+## Demonstration
 ### Games
 ![game](https://cloud.githubusercontent.com/assets/5305874/12422631/e33d57ca-bf02-11e5-8bdf-e10df77fc1fb.gif)
 
