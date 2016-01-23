@@ -2,7 +2,8 @@
 
 import React, {
   Component,
-  StatusBarIOS
+  StatusBarIOS,
+  Platform
 } from 'react-native'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux/native'
@@ -19,7 +20,9 @@ const store = createStoreWithMW(reducers)
 export default class Root extends Component {
 
   componentDidMount () {
-    StatusBarIOS.setHidden(true)
+    if (Platform.OS === 'ios') {
+      StatusBarIOS.setHidden(true)
+    }
   }
 
   render () {

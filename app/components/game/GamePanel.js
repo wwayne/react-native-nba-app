@@ -1,6 +1,5 @@
 'use strict'
 
-import teamMap from '../../utils/team-map'
 import React, {
   PropTypes,
   Component,
@@ -9,10 +8,12 @@ import React, {
   Text,
   TouchableHighlight,
   Image,
-  PixelRatio
+  PixelRatio,
+  Platform
 } from 'react-native'
 
 import GameDetail from './GameDetail'
+import teamMap from '../../utils/team-map'
 
 export default class GamePanel extends Component {
 
@@ -58,12 +59,15 @@ export default class GamePanel extends Component {
         return
     }
 
+    const homeTeamLogo = teamMap[homeAbb].logo
+    const visitorTeamLogo = teamMap[visitorAbb].logo
+
     return (
       <TouchableHighlight onPress={this.onPressRow.bind(this)} underlayColor='transparent'>
         <View style={[styles.container, {backgroundColor: teamMap[homeAbb].color}]} >
 
           <View style={styles.team}>
-            <Image style={styles.teamLogo} source={{uri: homeAbb}}/>
+            <Image style={styles.teamLogo} source={homeTeamLogo}/>
             <Text style={styles.teamCity}>{teamMap[homeAbb].city}</Text>
             <Text style={styles.teamName}>{teamMap[homeAbb].team}</Text>
           </View>
@@ -80,7 +84,7 @@ export default class GamePanel extends Component {
           </View>
 
           <View style={styles.team}>
-            <Image style={styles.teamLogo} source={{uri: visitorAbb}} />
+            <Image style={styles.teamLogo} source={visitorTeamLogo} />
             <Text style={styles.teamCity}>{teamMap[visitorAbb].city}</Text>
             <Text style={styles.teamName}>{teamMap[visitorAbb].team}</Text>
           </View>
@@ -95,6 +99,8 @@ GamePanel.propTypes = {
   game: PropTypes.object,
   date: PropTypes.array
 }
+
+const gameFontSize = Platform.OS === 'ios' ? 31 : 25
 
 const styles = StyleSheet.create({
   container: {
@@ -153,7 +159,7 @@ const styles = StyleSheet.create({
   infoScore: {
     color: '#fff',
     fontWeight: '100',
-    fontSize: 31,
+    fontSize: gameFontSize,
     textAlign: 'center',
     width: 50
   },

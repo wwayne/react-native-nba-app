@@ -27,6 +27,7 @@ export default class Channel {
     const det_url = address.gameDetail(`${year}${month}${date}`, gameId)
     return window.fetch(det_url)
       .then(res => res.json())
+      .then(data => {console.log(data); return data})
       .then(data => producer.gameDetail(data))
   }
 

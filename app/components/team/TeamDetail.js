@@ -85,6 +85,7 @@ export default class TeamDetail extends Component {
   render () {
     const {team, dataSource} = this.state
 
+    const teamLogo = teamInfo[team.teamAbbr.toLowerCase()].logo
     return (
       <View style={styles.container}>
         {team &&
@@ -107,7 +108,7 @@ export default class TeamDetail extends Component {
                 <Text style={styles.headerTeamName}>{team.teamName}</Text>
               </View>
               <View style={styles.headerLogo}>
-                <Image style={styles.headerLogoImage} source={{uri: team.teamAbbr.toLowerCase()}} />
+                <Image style={styles.headerLogoImage} source={teamLogo} />
               </View>
               <View style={styles.headerRank}>
                 <Text style={styles.headerRankResult}>{team.win + 'W - ' + team.loss + 'L' }</Text>
