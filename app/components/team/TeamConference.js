@@ -52,7 +52,8 @@ export default class TeamConference extends Component {
     const team = Object.assign({}, this.teamMapById[item.id], item)
     const itemStyle = index % 2 === 0 ? styles.item : [styles.item, styles.itemEven]
 
-    const teamLogo = team.abbr === 'hou' ? 'hou2' : team.abbr
+    const teamLogo = team.abbr === 'hou' ? teamMap[team.abbr].logo2 : teamMap[team.abbr].logo
+
     return (
       <TouchableHighlight onPress={this.selectTeam.bind(this, team.id)} underlayColor='transparent'>
         <View style={itemStyle}>
@@ -67,7 +68,7 @@ export default class TeamConference extends Component {
             <Text style={styles.standingLabel}>{team.loss + ' - ' + team.win}</Text>
           </View>
           <View style={styles.logo}>
-            <Image style={styles.logoImage} source={{uri: teamLogo}} />
+            <Image style={styles.logoImage} source={teamLogo} />
           </View>
         </View>
       </TouchableHighlight>

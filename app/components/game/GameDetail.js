@@ -10,7 +10,8 @@ import React, {
   Image,
   TouchableHighlight,
   ActivityIndicatorIOS,
-  InteractionManager
+  InteractionManager,
+  Platform
 } from 'react-native'
 import teamMap from '../../utils/team-map'
 import {Icon} from 'react-native-icons'
@@ -99,7 +100,7 @@ export default class GameDetail extends Component {
   }
 
   render () {
-    const {selectedIndex, teamValues, indicator, gameType, game} = this.state
+    const {selectedIndex, teamValues, indicator, game} = this.state
     const homeAbb = game.home.team.toLowerCase()
     const visitorAbb = game.visitor.team.toLowerCase()
 
@@ -132,6 +133,9 @@ export default class GameDetail extends Component {
       visitorStand = visitorStandState.wins + '-' + visitorStandState.losses
     }
 
+    const homeTeamLogo = teamMap[homeAbb].logo
+    const visitorTeamLogo = teamMap[visitorAbb].logo
+
     /* Current team chosen */
     const homeCss = selectedIndex === 0 ? 'Active' : 'Inactive'
     const visitorCss = selectedIndex === 1 ? 'Active' : 'Inactive'
@@ -146,7 +150,7 @@ export default class GameDetail extends Component {
         {/* Sum info */}
         <View style={[styles.sumContainer, {backgroundColor: teamMap[homeAbb].color}]} >
           <View style={styles.team}>
-            <Image style={styles.teamLogo} source={{uri: homeAbb}}/>
+            <Image style={styles.teamLogo} source={homeTeamLogo}/>
             <Text style={styles.teamCity}>{teamMap[homeAbb].city}</Text>
             <Text style={styles.teamName}>{teamMap[homeAbb].team}</Text>
             <Text style={styles.standing}>{homeStand}</Text>
@@ -170,7 +174,7 @@ export default class GameDetail extends Component {
           </View>
 
           <View style={styles.team}>
-            <Image style={styles.teamLogo} source={{uri: visitorAbb}}/>
+            <Image style={styles.teamLogo} source={visitorTeamLogo}/>
             <Text style={styles.teamCity}>{teamMap[visitorAbb].city}</Text>
             <Text style={styles.teamName}>{teamMap[visitorAbb].team}</Text>
             <Text style={styles.standing}>{visitorStand}</Text>
@@ -191,7 +195,8 @@ export default class GameDetail extends Component {
             </View>
           </TouchableHighlight>
         </View>
-        {indicator &&
+        {/* TODO: activity indicator can be a component */}
+        {indicator && Platform.OS === 'ios' &&
           <View style={styles.indicatorView}>
             <ActivityIndicatorIOS
               animating
@@ -199,6 +204,11 @@ export default class GameDetail extends Component {
               style={styles.indicator}
               size='large'
             />
+          </View>
+        }
+        {indicator && Platform.OS === 'android' &&
+          <View style={styles.indicatorView}>
+            <Text>Loading...</Text>
           </View>
         }
         {!indicator && game.detail.loaded &&
