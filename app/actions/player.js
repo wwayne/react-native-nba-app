@@ -29,8 +29,8 @@ const setSearchRecord = player => {
     return userDefaults.get(PLAYER.RECENT)
       .then(recent => {
         let originData = []
-        if (recent.found) {
-          originData = Object.assign([], recent.data)
+        if (recent) {
+          originData = Object.assign([], recent)
         }
 
         /* If recent record has player, return */
@@ -56,13 +56,16 @@ const getSearchRecord = id => {
     return userDefaults.get(PLAYER.RECENT)
       .then(recent => {
         let originData = []
-        if (recent.found) {
-          originData = Object.assign([], recent.data)
+        if (recent) {
+          originData = Object.assign([], recent)
         }
         return dispatch({
           type: PLAYER.RECENT,
           data: originData
         })
+      })
+      .catch(err => {
+        console.error('err', err)
       })
   }
 }

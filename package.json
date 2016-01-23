@@ -21,6 +21,7 @@
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
-    "snazzy": "^2.0.1"
+    "snazzy": "^2.0.1",
+    "standard": "^5.4.1"
   }
 }

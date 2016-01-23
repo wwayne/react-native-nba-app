@@ -97,7 +97,8 @@ export default class GamePanel extends Component {
 GamePanel.propTypes = {
   navigator: PropTypes.object,
   game: PropTypes.object,
-  date: PropTypes.array
+  date: PropTypes.array,
+  actions: PropTypes.object
 }
 
 const gameFontSize = Platform.OS === 'ios' ? 31 : 25

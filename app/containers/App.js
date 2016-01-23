@@ -64,7 +64,9 @@ App.propTypes = {
   game: PropTypes.object,
   player: PropTypes.object,
   team: PropTypes.object,
-  actions: PropTypes.object
+  gameActions: PropTypes.object,
+  playerActions: PropTypes.object,
+  teamActions: PropTypes.object
 }
 
 export default connect(state => {
@@ -90,6 +92,6 @@ export default connect(state => {
   return {
     gameActions: bindActionCreators(Object.assign({}, applicationActions, gameActions), dispatch),
     playerActions: bindActionCreators(Object.assign({}, applicationActions, playerActions), dispatch),
-    teamActions: bindActionCreators(Object.assign({}, applicationActions, playerActions, teamActions), dispatch),
+    teamActions: bindActionCreators(Object.assign({}, applicationActions, playerActions, teamActions), dispatch)
   }
 })(App)

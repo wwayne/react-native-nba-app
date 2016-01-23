@@ -100,7 +100,7 @@ export default class GameDetail extends Component {
   }
 
   render () {
-    const {selectedIndex, teamValues, indicator, gameType, game} = this.state
+    const {selectedIndex, teamValues, indicator, game} = this.state
     const homeAbb = game.home.team.toLowerCase()
     const visitorAbb = game.visitor.team.toLowerCase()
 

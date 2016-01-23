@@ -1,50 +1,27 @@
 /**
- * Customer component to use ios UserDeafults
+ * ABORT: Customer component to use ios UserDeafults
  * @see https://facebook.github.io/react-native/docs/native-modules-ios.html#exporting-swift
+ *
+ * In order to support both platforms, a better choice is to use AsyncStore
  */
 
 'use strict'
 
-import { RNUserDefaults } from 'NativeModules'
+import {AsyncStorage} from 'react-native'
 
-// TODO: Create a package for all situation
-
+/* Only store string to store, easy for management */
 const userDefaults = {
   set: (key, value) => {
-    return new Promise((resolve, reject) => {
-      const jsonValue = JSON.stringify(value)
-      RNUserDefaults.setObject(key, jsonValue, (data) => {
-        resolve(data)
-      })
-    })
+    const jsonValue = JSON.stringify(value)
+    return AsyncStorage.setItem(key, jsonValue)
   },
 
   get: (key) => {
-    return new Promise((resolve, reject) => {
-      RNUserDefaults.getString(key, (data) => {
-        if (data) {
-          return resolve({
-            found: true,
-            data: JSON.parse(data)
-          })
-        }
-        resolve({
-          found: false
-        })
+    return AsyncStorage.getItem(key)
+      .then(data => {
+        if (data) return JSON.parse(data)
+        return null
       })
-    })
-  },
-
-  remove: (key) => {
-    return new Promise((resolve, reject) => {
-      RNUserDefaults.removeObject(key, (data) => {
-        resolve(data)
-      })
-    })
-  },
-
-  removeAll: () => {
-
   }
 }
 

@@ -43,7 +43,7 @@ const producer = {
           item.type = 'live'
           let game_clock
           if (process.game_clock) {
-            game_clock = parseInt(process.game_clock.split(':')[0]) < 10 ? '0' + process.game_clock : process.game_clock
+            game_clock = parseInt(process.game_clock.split(':')[0], 10) < 10 ? '0' + process.game_clock : process.game_clock
           }
           item.process = {
             time: game_clock || 'End',
