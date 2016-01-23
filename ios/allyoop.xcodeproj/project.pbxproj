@@ -18,19 +18,16 @@
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		B003DD6A1C09EB8D000D1852 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B003DD691C09EB2D000D1852 /* libReactNativeIcons.a */; };
-		B003DD751C09EDA3000D1852 /* FAKIcon.h in Resources */ = {isa = PBXBuildFile; fileRef = B003DD731C09EDA3000D1852 /* FAKIcon.h */; };
-		B003DD761C09EDA3000D1852 /* FAKIcon.m in Resources */ = {isa = PBXBuildFile; fileRef = B003DD741C09EDA3000D1852 /* FAKIcon.m */; };
-		B003DD781C09EE7B000D1852 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B003DD771C09EE7B000D1852 /* Images.xcassets */; };
-		B04702381C1A53C20046F24C /* RNUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04702371C1A53C20046F24C /* RNUserDefaults.swift */; };
-		B047023B1C1A541B0046F24C /* RNUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B047023A1C1A541B0046F24C /* RNUserDefaults.m */; };
-		B0BCA2A91C0BD28E0034908C /* FAKIonIcons.h in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */; };
-		B0BCA2AA1C0BD28E0034908C /* FAKIonIcons.m in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A71C0BD28E0034908C /* FAKIonIcons.m */; };
-		B0BCA2AB1C0BD28E0034908C /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0BCA2A81C0BD28E0034908C /* ionicons.ttf */; };
-		B0CDD7401C4E88DB002251B5 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B0CDD73F1C4E88DB002251B5 /* main.jsbundle */; };
+		B07B56641C5271EC00E1ACAB /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B07B56631C5271CB00E1ACAB /* libReactNativeIcons.a */; };
+		B07B566A1C52726A00E1ACAB /* FAKIcon.h in Resources */ = {isa = PBXBuildFile; fileRef = B07B56651C52726A00E1ACAB /* FAKIcon.h */; };
+		B07B566B1C52726A00E1ACAB /* FAKIcon.m in Resources */ = {isa = PBXBuildFile; fileRef = B07B56661C52726A00E1ACAB /* FAKIcon.m */; };
+		B07B566C1C52726A00E1ACAB /* FAKIonIcons.h in Resources */ = {isa = PBXBuildFile; fileRef = B07B56671C52726A00E1ACAB /* FAKIonIcons.h */; };
+		B07B566D1C52726A00E1ACAB /* FAKIonIcons.m in Resources */ = {isa = PBXBuildFile; fileRef = B07B56681C52726A00E1ACAB /* FAKIonIcons.m */; };
+		B07B566E1C52726A00E1ACAB /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B07B56691C52726A00E1ACAB /* ionicons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,9 +108,9 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		B003DD681C09EB2D000D1852 /* PBXContainerItemProxy */ = {
+		B07B56621C5271CB00E1ACAB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = B003DD641C09EB2C000D1852 /* ReactNativeIcons.xcodeproj */;
+			containerPortal = B07B56541C5271CA00E1ACAB /* ReactNativeIcons.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 2F5A3EB81ACDBF8000439386;
 			remoteInfo = ReactNativeIcons;
@@ -135,22 +132,18 @@
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = allyoop/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = allyoop/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = allyoop/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = allyoop/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = allyoop/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		B003DD641C09EB2C000D1852 /* ReactNativeIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeIcons.xcodeproj; path = "../node_modules/react-native-icons/ios/ReactNativeIcons.xcodeproj"; sourceTree = "<group>"; };
-		B003DD731C09EDA3000D1852 /* FAKIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIcon.h; sourceTree = "<group>"; };
-		B003DD741C09EDA3000D1852 /* FAKIcon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIcon.m; sourceTree = "<group>"; };
-		B003DD771C09EE7B000D1852 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B04702371C1A53C20046F24C /* RNUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNUserDefaults.swift; path = allyoop/RNUserDefaults.swift; sourceTree = "<group>"; };
-		B047023A1C1A541B0046F24C /* RNUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNUserDefaults.m; path = allyoop/RNUserDefaults.m; sourceTree = "<group>"; };
-		B05CEB5E1C1BA6A20022B5FD /* RNUserDefaults-bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RNUserDefaults-bridge.h"; path = "allyoop/RNUserDefaults-bridge.h"; sourceTree = "<group>"; };
-		B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIonIcons.h; sourceTree = "<group>"; };
-		B0BCA2A71C0BD28E0034908C /* FAKIonIcons.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIonIcons.m; sourceTree = "<group>"; };
-		B0BCA2A81C0BD28E0034908C /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
-		B0CDD73F1C4E88DB002251B5 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../main.jsbundle; sourceTree = "<group>"; };
+		B07B56541C5271CA00E1ACAB /* ReactNativeIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeIcons.xcodeproj; path = "../node_modules/react-native-icons/ios/ReactNativeIcons.xcodeproj"; sourceTree = "<group>"; };
+		B07B56651C52726A00E1ACAB /* FAKIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIcon.h; sourceTree = "<group>"; };
+		B07B56661C52726A00E1ACAB /* FAKIcon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIcon.m; sourceTree = "<group>"; };
+		B07B56671C52726A00E1ACAB /* FAKIonIcons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FAKIonIcons.h; sourceTree = "<group>"; };
+		B07B56681C52726A00E1ACAB /* FAKIonIcons.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FAKIonIcons.m; sourceTree = "<group>"; };
+		B07B56691C52726A00E1ACAB /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B003DD6A1C09EB8D000D1852 /* libReactNativeIcons.a in Frameworks */,
+				B07B56641C5271EC00E1ACAB /* libReactNativeIcons.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -258,15 +251,12 @@
 		13B07FAE1A68108700A75B9A /* allyoop */ = {
 			isa = PBXGroup;
 			children = (
-				B003DD771C09EE7B000D1852 /* Images.xcassets */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				B04702371C1A53C20046F24C /* RNUserDefaults.swift */,
-				B047023A1C1A541B0046F24C /* RNUserDefaults.m */,
-				B05CEB5E1C1BA6A20022B5FD /* RNUserDefaults-bridge.h */,
 			);
 			name = allyoop;
 			sourceTree = "<group>";
@@ -290,6 +280,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				B07B56541C5271CA00E1ACAB /* ReactNativeIcons.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -315,8 +306,11 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				B0CDD73F1C4E88DB002251B5 /* main.jsbundle */,
-				B003DD791C09F0C8000D1852 /* icon */,
+				B07B56651C52726A00E1ACAB /* FAKIcon.h */,
+				B07B56661C52726A00E1ACAB /* FAKIcon.m */,
+				B07B56671C52726A00E1ACAB /* FAKIonIcons.h */,
+				B07B56681C52726A00E1ACAB /* FAKIonIcons.m */,
+				B07B56691C52726A00E1ACAB /* ionicons.ttf */,
 				13B07FAE1A68108700A75B9A /* allyoop */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* allyoopTests */,
@@ -335,25 +329,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B003DD651C09EB2C000D1852 /* Products */ = {
+		B07B56551C5271CA00E1ACAB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B003DD691C09EB2D000D1852 /* libReactNativeIcons.a */,
+				B07B56631C5271CB00E1ACAB /* libReactNativeIcons.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		B003DD791C09F0C8000D1852 /* icon */ = {
-			isa = PBXGroup;
-			children = (
-				B0BCA2A61C0BD28E0034908C /* FAKIonIcons.h */,
-				B0BCA2A71C0BD28E0034908C /* FAKIonIcons.m */,
-				B0BCA2A81C0BD28E0034908C /* ionicons.ttf */,
-				B003DD641C09EB2C000D1852 /* ReactNativeIcons.xcodeproj */,
-				B003DD731C09EDA3000D1852 /* FAKIcon.h */,
-				B003DD741C09EDA3000D1852 /* FAKIcon.m */,
-			);
-			name = icon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,6 +365,7 @@
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
+				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 			);
 			buildRules = (
 			);
@@ -400,7 +382,6 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -463,8 +444,8 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = B003DD651C09EB2C000D1852 /* Products */;
-					ProjectRef = B003DD641C09EB2C000D1852 /* ReactNativeIcons.xcodeproj */;
+					ProductGroup = B07B56551C5271CA00E1ACAB /* Products */;
+					ProjectRef = B07B56541C5271CA00E1ACAB /* ReactNativeIcons.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -546,11 +527,11 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B003DD691C09EB2D000D1852 /* libReactNativeIcons.a */ = {
+		B07B56631C5271CB00E1ACAB /* libReactNativeIcons.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libReactNativeIcons.a;
-			remoteRef = B003DD681C09EB2D000D1852 /* PBXContainerItemProxy */;
+			remoteRef = B07B56621C5271CB00E1ACAB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -567,18 +548,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0BCA2A91C0BD28E0034908C /* FAKIonIcons.h in Resources */,
-				B0BCA2AA1C0BD28E0034908C /* FAKIonIcons.m in Resources */,
-				B0BCA2AB1C0BD28E0034908C /* ionicons.ttf in Resources */,
-				B003DD781C09EE7B000D1852 /* Images.xcassets in Resources */,
-				B003DD751C09EDA3000D1852 /* FAKIcon.h in Resources */,
-				B003DD761C09EDA3000D1852 /* FAKIcon.m in Resources */,
+				B07B566A1C52726A00E1ACAB /* FAKIcon.h in Resources */,
+				B07B566B1C52726A00E1ACAB /* FAKIcon.m in Resources */,
+				B07B566C1C52726A00E1ACAB /* FAKIonIcons.h in Resources */,
+				B07B566D1C52726A00E1ACAB /* FAKIonIcons.m in Resources */,
+				B07B566E1C52726A00E1ACAB /* ionicons.ttf in Resources */,
+				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				B0CDD7401C4E88DB002251B5 /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		00E356EA1AD99517003FC87E /* Sources */ = {
@@ -593,9 +590,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B04702381C1A53C20046F24C /* RNUserDefaults.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				B047023B1C1A541B0046F24C /* RNUserDefaults.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -664,8 +659,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -676,8 +669,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = allyoop;
-				SWIFT_OBJC_BRIDGING_HEADER = "allyoop/RNUserDefaults-bridge.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -685,9 +676,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -697,7 +685,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = allyoop;
-				SWIFT_OBJC_BRIDGING_HEADER = "allyoop/RNUserDefaults-bridge.h";
 			};
 			name = Release;
 		};
