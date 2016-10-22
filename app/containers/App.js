@@ -18,7 +18,7 @@ import Game from './Game'
 import Player from './Player'
 import Team from './Team'
 
-export default class App extends Component {
+class App extends Component {
 
   constructor (props) {
     super(props)
